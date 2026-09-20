@@ -23,22 +23,25 @@ def clear_user_history(user_id: int):
 SYSTEM_PROMPT = """
 Anda adalah asisten AI pribadi bernama 'Selobrow' di Telegram yang cerdas, ramah, dan sangat membantu dalam kehidupan sehari-hari.
 PENTING: Nama Anda adalah 'Selobrow', BUKAN Aria. Selalu perkenalkan dan sebut diri Anda sebagai Selobrow.
-Tugas utama Anda:
-1. Mengelola Keuangan Pengguna:
-   - Jika pengguna menyebutkan pengeluaran atau pemasukan (contoh: "tadi makan siang 25rb", "beli bensin 30.000", "dapat transferan 500k dari klien", "gaji masuk 5jt"), panggil fungsi catat_transaksi_keuangan.
+
+KEMAMPUAN UTAMA ANDA:
+1. MEMBACA & MENGANALISIS DOKUMEN PDF:
+   - Anda BISA dan MAMPU membaca file PDF (laporan keuangan, invoice tagihan, mutasi rekening bank, rekap transaksi, dan dokumen bisnis).
+   - Jika pengguna bertanya apakah Anda bisa membaca file PDF, JAWAB DENGAN YAKIN: "Bisa banget! Silakan langsung kirimkan file PDF laporan atau invoice Anda ke sini, saya akan baca dan buatkan ringkasan lengkapnya, serta data keuangan di bot ini juga bisa diunduh ke format Excel (.xlsx)."
+2. MEMINDAI FOTO STRUK / NOTA / KWITANSI:
+   - Anda BISA membaca dan menganalisis foto struk belanjaan (Indomaret, Alfamart, SPBU, cafe, resto, nota belanja).
+   - Anda otomatis mengenali merchant, rincian barang, total pembayaran, dan mencatatnya ke pembukuan keuangan.
+3. MENGELOLA KEUANGAN & EKSPOR EXCEL:
+   - Jika pengguna menyebutkan pengeluaran/pemasukan ("makan 25rb", "beli bensin 35k", "transfer 500k"), panggil `catat_transaksi_keuangan`.
    - Konversi singkatan angka secara akurat: 'rb'/'k' = ribu (25rb -> 25000), 'jt' = juta (2.5jt -> 2500000).
    - Tentukan jenisnya secara tepat: 'pengeluaran' atau 'pemasukan'.
-   - Pilih kategori yang sesuai (contoh: Makanan, Transportasi, Belanja, Tagihan, Hiburan, Kesehatan, Gaji, Bisnis, Lain-lain).
-   - Jika pengguna bertanya tentang saldo, sisa uang, atau pengeluaran, panggil cek_saldo atau buat_laporan_keuangan.
-2. Asisten Produktivitas & Harian:
-   - Jika pengguna ingin mencatat to-do atau tugas (contoh: "catat tugas beli susu", "ingatkan besok jam 9 meeting"), panggil tambah_tugas_harian.
-   - Jika ingin melihat tugas yang belum selesai, panggil lihat_daftar_tugas.
-   - Jika ingin menyelesaikan tugas, panggil selesaikan_tugas.
-   - Jika ingin mencatat ide atau memo bebas, panggil simpan_catatan.
-3. Interaksi Umum:
-   - Jawab pertanyaan harian, beri saran finansial bijak, bantu buat draft teks, ide masakan, dll.
-   - Gunakan gaya bahasa santai, sopan, bersahabat khas Indonesia dengan emoji yang pas.
-   - Format jawaban rapi dengan bold, bullet points, dan monospace jika menampilkan angka/kode.
+   - Jika pengguna bertanya saldo atau laporan, panggil `cek_saldo` atau `buat_laporan_keuangan`.
+   - Pengguna bisa mengunduh file spreadsheet Excel (.xlsx) dengan tombol 'Download Excel' atau command /excel.
+4. ASISTEN PRODUKTIVITAS & HARIAN:
+   - Catat to-do list (`tambah_tugas_harian`), lihat to-do (`lihat_daftar_tugas`), selesai (`selesaikan_tugas`).
+   - Simpan memo/catatan harian (`simpan_catatan`), lihat memo (`lihat_catatan`).
+5. INTERAKSI UMUM:
+   - Selalu ramah, gunakan bahasa Indonesia yang santai, sopan, bersahabat dengan emoji yang pas.
 """
 
 def create_tools_for_user(user_id: int):
@@ -308,6 +311,22 @@ async def process_user_document(user_id: int, user_name: str, doc_bytes: bytes, 
         client = get_client()
         tools = create_tools_for_user(user_id)
 
+        # Ekstraksi teks digital dari PDF menggunakan pypdf
+        extracted_text = ""
+        try:
+            import pypdf
+            import io
+            reader = pypdf.PdfReader(io.BytesIO(doc_bytes))
+            pages = []
+            for i, page in enumerate(reader.pages):
+                txt = page.extract_text() or ""
+                if txt.strip():
+                    pages.append(f"[Halaman {i+1}]:\n{txt.strip()}")
+            if pages:
+                extracted_text = "\n\n".join(pages)
+        except Exception as pe:
+            logger.warning(f"Ekstraksi teks pypdf: {pe}")
+
         prompt_text = (
             f"[User: {user_name} mengirim file dokumen: {file_name}]. Caption: '{caption if caption else 'Analisis dokumen ini'}'\n"
             "Analisis dokumen PDF ini secara mendalam:\n"
@@ -317,13 +336,19 @@ async def process_user_document(user_id: int, user_name: str, doc_bytes: bytes, 
             "4. Jika pengguna meminta konversi ke format Excel atau pengguna butuh file spreadsheet, beri tahu bahwa ringkasan laporan keuangan di bot ini juga bisa diunduh langsung dalam format file Excel (.xlsx) dengan tombol 'Download Excel' atau mengetik /excel."
         )
 
-        doc_part = types.Part.from_bytes(data=doc_bytes, mime_type=mime_type)
-        instruction_part = types.Part.from_text(text=prompt_text)
+        if extracted_text:
+            prompt_text += f"\n\nTEKS ISI DOKUMEN:\n{extracted_text[:15000]}"
+
+        parts = [types.Part.from_text(text=prompt_text)]
+        try:
+            parts.append(types.Part.from_bytes(data=doc_bytes, mime_type=mime_type))
+        except Exception:
+            pass
 
         history = user_histories.setdefault(user_id, [])
         user_content = types.Content(
             role="user",
-            parts=[doc_part, instruction_part]
+            parts=parts
         )
         contents = list(history) + [user_content]
 

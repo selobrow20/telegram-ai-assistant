@@ -108,6 +108,21 @@ async def cmd_excel(message: Message):
         except Exception:
             pass
 
+@dp.message(Command("resetsaldo"))
+@dp.message(Command("resetkeuangan"))
+async def cmd_reset_saldo(message: Message):
+    user_id = message.from_user.id
+    count = db.reset_user_finances(user_id)
+    await message.answer(
+        f"🗑️ *BERHASIL RESET KEUANGAN*\n\n"
+        f"Sebanyak {count} transaksi telah dihapus.\n"
+        f"💰 *Saldo saat ini:* `Rp 0`\n"
+        f"📥 *Total Pemasukan:* `Rp 0`\n"
+        f"📤 *Total Pengeluaran:* `Rp 0`\n\n"
+        f"_Pembukuan keuangan Anda sekarang bersih dan siap dimulai dari awal!_",
+        parse_mode=ParseMode.MARKDOWN
+    )
+
 @dp.message(Command("tugas"))
 async def cmd_tugas(message: Message):
     user_id = message.from_user.id

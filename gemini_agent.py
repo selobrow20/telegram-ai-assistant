@@ -136,11 +136,17 @@ def create_tools_for_user(user_id: int):
         bal = db.get_balance(user_id)
         return f"Berhasil menyimpan {count} transaksi ke database. Total Pemasukan: {finance.format_rupiah(bal['total_income'])}, Total Pengeluaran: {finance.format_rupiah(bal['total_expense'])}, Saldo: {finance.format_rupiah(bal['balance'])}."
 
+    def reset_keuangan() -> str:
+        """Mereset saldo dan menghapus seluruh riwayat transaksi keuangan pengguna agar mulai dari Rp 0 kembali."""
+        count = db.reset_user_finances(user_id)
+        return f"Saldo dan seluruh riwayat transaksi ({count} transaksi) berhasil di-reset menjadi Rp 0. Pembukuan keuangan Anda sekarang bersih dan siap dimulai dari awal!"
+
     return [
         catat_transaksi_keuangan,
         catat_banyak_transaksi,
         cek_saldo,
         buat_laporan_keuangan,
+        reset_keuangan,
         tambah_tugas_harian,
         lihat_daftar_tugas,
         selesaikan_tugas,

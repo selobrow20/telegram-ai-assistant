@@ -172,6 +172,13 @@ def delete_transaction(user_id: int, trans_id: int) -> bool:
         conn.commit()
         return cursor.rowcount > 0
 
+def reset_user_finances(user_id: int) -> int:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM transactions WHERE user_id = ?', (user_id,))
+        conn.commit()
+        return cursor.rowcount
+
 # --- Modul Catatan & To-Do Harian ---
 
 def add_task(user_id: int, title: str, due_date: Optional[str] = None) -> int:

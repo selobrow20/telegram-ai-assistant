@@ -319,24 +319,29 @@ async def handle_document_message(message: Message, bot: Bot):
                 caption=caption
             )
         else:
-            reply_text = await gemini_agent.process_user_document(
-                user_id=user_id,
-                user_name=user_name,
+            status_msg = await message.answer("⏳ Sedang membaca laporan PDF dan menyusun file Excel (.xlsx)...")
+            import pdf_converter
+            summary_text, excel_path = await pdf_converter.convert_pdf_document_to_excel(
                 doc_bytes=doc_bytes,
                 file_name=file_name,
-                mime_type="application/pdf",
                 caption=caption
             )
 
-        excel_kb = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text="📥 Download Laporan Excel (.xlsx)", callback_data="menu_excel")],
-            [InlineKeyboardButton(text="💰 Cek Saldo", callback_data="menu_saldo"), InlineKeyboardButton(text="📑 Laporan", callback_data="menu_lap_month")]
-        ])
+            try:
+                await message.answer(summary_text, parse_mode=ParseMode.MARKDOWN)
+            except Exception:
+                await message.answer(summary_text)
 
-        try:
-            await message.answer(reply_text, reply_markup=excel_kb, parse_mode=ParseMode.MARKDOWN)
-        except Exception:
-            await message.answer(reply_text, reply_markup=excel_kb)
+            await message.answer_document(
+                FSInputFile(excel_path),
+                caption=f"📊 File Excel dari laporan: {file_name}\n_Dibuat khusus dari PDF tanpa mengubah database catatan harian._",
+                parse_mode=ParseMode.MARKDOWN
+            )
+
+            try:
+                await status_msg.delete()
+            except Exception:
+                pass
     except Exception as e:
         logger.error(f"Gagal memproses dokumen: {e}", exc_info=True)
         await message.answer(f"Maaf, gagal memproses dokumen: {e}")

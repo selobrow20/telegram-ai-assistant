@@ -54,7 +54,8 @@ def get_main_keyboard() -> InlineKeyboardMarkup:
             InlineKeyboardButton(text="📥 Download Laporan Excel (.xlsx)", callback_data="menu_excel")
         ],
         [
-            InlineKeyboardButton(text="💡 Contoh Perintah / Bantuan", callback_data="menu_help")
+            InlineKeyboardButton(text="🗑️ Reset Saldo ke Rp 0", callback_data="menu_resetsaldo"),
+            InlineKeyboardButton(text="💡 Bantuan", callback_data="menu_help")
         ]
     ]
     return InlineKeyboardMarkup(inline_keyboard=buttons)
@@ -225,6 +226,18 @@ async def handle_callbacks(callback: CallbackQuery):
                 await msg.delete()
             except Exception:
                 pass
+    elif data == "menu_resetsaldo":
+        count = db.reset_user_finances(user_id)
+        await callback.message.answer(
+            f"🗑️ *BERHASIL RESET KEUANGAN*\n\n"
+            f"Sebanyak {count} transaksi telah dihapus.\n"
+            f"💰 *Saldo saat ini:* `Rp 0`\n"
+            f"📥 *Total Pemasukan:* `Rp 0`\n"
+            f"📤 *Total Pengeluaran:* `Rp 0`\n\n"
+            f"_Pembukuan keuangan Anda sekarang bersih dan siap dimulai dari awal!_",
+            reply_markup=get_main_keyboard(),
+            parse_mode=ParseMode.MARKDOWN
+        )
     elif data == "menu_help":
         await cmd_help(callback.message)
 
@@ -370,6 +383,22 @@ async def handle_text_message(message: Message, bot: Bot):
 
     # Indikator typing
     await bot.send_chat_action(chat_id=message.chat.id, action="typing")
+
+    # Intersep langsung perintah reset saldo
+    lower_text = user_text.strip().lower()
+    if "reset saldo" in lower_text or "reset keuangan" in lower_text or lower_text in ["/resetsaldo", "/resetkeuangan"]:
+        count = db.reset_user_finances(user_id)
+        await message.answer(
+            f"🗑️ *BERHASIL RESET KEUANGAN*\n\n"
+            f"Sebanyak {count} transaksi telah dihapus.\n"
+            f"💰 *Saldo saat ini:* `Rp 0`\n"
+            f"📥 *Total Pemasukan:* `Rp 0`\n"
+            f"📤 *Total Pengeluaran:* `Rp 0`\n\n"
+            f"_Pembukuan keuangan Anda sekarang bersih dan siap dimulai dari awal!_",
+            reply_markup=get_main_keyboard(),
+            parse_mode=ParseMode.MARKDOWN
+        )
+        return
 
     reply_text = await gemini_agent.process_user_text(
         user_id=user_id,

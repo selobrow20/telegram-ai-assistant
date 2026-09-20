@@ -1,6 +1,7 @@
-﻿.venv/
+.venv/
 __pycache__/
 *.pyc
 .env
 data/audio_temp/
 data/*.mp3
+data/exports/

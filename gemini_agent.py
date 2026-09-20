@@ -224,3 +224,114 @@ async def process_user_voice(user_id: int, user_name: str, voice_bytes: bytes, m
     except Exception as e:
         logger.error(f"Error in process_user_voice: {e}", exc_info=True)
         return f"Maaf, terjadi kendala saat memproses audio suara: {e}"
+
+async def process_user_image(user_id: int, user_name: str, image_bytes: bytes, mime_type: str = "image/jpeg", caption: str = "") -> str:
+    try:
+        client = get_client()
+        tools = create_tools_for_user(user_id)
+
+        prompt_text = (
+            f"[User: {user_name} mengirim foto/gambar]. Caption pengguna: '{caption if caption else 'Tidak ada'}'\n"
+            "Analisis gambar tersebut secara teliti.\n"
+            "JIKA GAMBAR ADALAH STRUK BELANJA, NOTA, KWITANSI, ATAU TIKET:\n"
+            "1. Identifikasi nama toko/merchant (misal: Indomaret, Alfamart, SPBU, Cafe, Resto, dll).\n"
+            "2. Identifikasi tanggal & jam jika ada.\n"
+            "3. Rinci barang/item yang dibeli beserta harganya.\n"
+            "4. Cari JUMLAH TOTAL AKHIR (Grand Total) pembayaran.\n"
+            "5. WAJIB PANGGIL fungsi `catat_transaksi_keuangan` untuk mencatat nominal total tersebut sebagai pengeluaran dengan kategori yang sesuai (misal: Makanan, Belanja, Transportasi, Kesehatan, dsb).\n"
+            "6. Berikan balasan yang rapi dan terstruktur: Nama Merchant, Tanggal, Rincian Barang, Total Nominal, dan konfirmasi bahwa transaksi sudah berhasil dicatat otomatis.\n"
+            "JIKA GAMBAR LAIN (Grafik/Foto/Teks): Jelaskan isi gambar dan jawab sesuai caption/pertanyaan pengguna."
+        )
+
+        image_part = types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
+        instruction_part = types.Part.from_text(text=prompt_text)
+
+        history = user_histories.setdefault(user_id, [])
+        user_content = types.Content(
+            role="user",
+            parts=[image_part, instruction_part]
+        )
+        contents = list(history) + [user_content]
+
+        config = types.GenerateContentConfig(
+            system_instruction=SYSTEM_PROMPT,
+            tools=tools,
+            temperature=0.4
+        )
+
+        response = client.models.generate_content(
+            model=GEMINI_MODEL,
+            contents=contents,
+            config=config
+        )
+
+        reply_text = response.text or "Foto berhasil dianalisis."
+
+        model_content = types.Content(
+            role="model",
+            parts=[types.Part.from_text(text=reply_text)]
+        )
+        history.append(user_content)
+        history.append(model_content)
+
+        if len(history) > MAX_HISTORY:
+            user_histories[user_id] = history[-MAX_HISTORY:]
+
+        return reply_text
+    except Exception as e:
+        logger.error(f"Error in process_user_image: {e}", exc_info=True)
+        return f"Maaf, terjadi kendala saat memproses gambar/struk: {e}"
+
+async def process_user_document(user_id: int, user_name: str, doc_bytes: bytes, file_name: str, mime_type: str = "application/pdf", caption: str = "") -> str:
+    try:
+        client = get_client()
+        tools = create_tools_for_user(user_id)
+
+        prompt_text = (
+            f"[User: {user_name} mengirim file dokumen: {file_name}]. Caption: '{caption if caption else 'Analisis dokumen ini'}'\n"
+            "Analisis dokumen PDF ini secara mendalam:\n"
+            "1. Pahami isi utama laporan, mutasi rekening, invoice, atau laporan keuangan di dalamnya.\n"
+            "2. Berikan ringkasan eksekutif yang jelas dan terstruktur dalam format bullet points rapi.\n"
+            "3. Jika ada angka penting (total pendapatan, total pengeluaran, laba/rugi, saldo akhir, item tagihan), sebutkan secara jelas.\n"
+            "4. Jika pengguna meminta konversi ke format Excel atau pengguna butuh file spreadsheet, beri tahu bahwa ringkasan laporan keuangan di bot ini juga bisa diunduh langsung dalam format file Excel (.xlsx) dengan tombol 'Download Excel' atau mengetik /excel."
+        )
+
+        doc_part = types.Part.from_bytes(data=doc_bytes, mime_type=mime_type)
+        instruction_part = types.Part.from_text(text=prompt_text)
+
+        history = user_histories.setdefault(user_id, [])
+        user_content = types.Content(
+            role="user",
+            parts=[doc_part, instruction_part]
+        )
+        contents = list(history) + [user_content]
+
+        config = types.GenerateContentConfig(
+            system_instruction=SYSTEM_PROMPT,
+            tools=tools,
+            temperature=0.4
+        )
+
+        response = client.models.generate_content(
+            model=GEMINI_MODEL,
+            contents=contents,
+            config=config
+        )
+
+        reply_text = response.text or "Dokumen PDF telah berhasil dianalisis."
+
+        model_content = types.Content(
+            role="model",
+            parts=[types.Part.from_text(text=reply_text)]
+        )
+        history.append(user_content)
+        history.append(model_content)
+
+        if len(history) > MAX_HISTORY:
+            user_histories[user_id] = history[-MAX_HISTORY:]
+
+        return reply_text
+    except Exception as e:
+        logger.error(f"Error in process_user_document: {e}", exc_info=True)
+        return f"Maaf, terjadi kendala saat membaca dokumen PDF: {e}"
+

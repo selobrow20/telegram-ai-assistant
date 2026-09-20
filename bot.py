@@ -51,6 +51,9 @@ def get_main_keyboard() -> InlineKeyboardMarkup:
             InlineKeyboardButton(text="📝 Catatan Harian", callback_data="menu_notes")
         ],
         [
+            InlineKeyboardButton(text="📥 Download Laporan Excel (.xlsx)", callback_data="menu_excel")
+        ],
+        [
             InlineKeyboardButton(text="💡 Contoh Perintah / Bantuan", callback_data="menu_help")
         ]
     ]
@@ -85,6 +88,25 @@ async def cmd_laporan(message: Message):
     user_id = message.from_user.id
     report = finance.generate_financial_report(user_id, "month")
     await message.answer(report, reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
+
+@dp.message(Command("excel"))
+@dp.message(Command("export"))
+async def cmd_excel(message: Message):
+    user_id = message.from_user.id
+    msg = await message.answer("⏳ Sedang menyiapkan laporan keuangan Excel...")
+    try:
+        excel_path = finance.export_financial_report_excel(user_id, "all")
+        await message.answer_document(
+            FSInputFile(excel_path),
+            caption="📊 Berikut file Laporan Keuangan Anda dalam format Excel (.xlsx)."
+        )
+    except Exception as e:
+        await message.answer(f"Gagal membuat file Excel: {e}")
+    finally:
+        try:
+            await msg.delete()
+        except Exception:
+            pass
 
 @dp.message(Command("tugas"))
 async def cmd_tugas(message: Message):
@@ -173,6 +195,21 @@ async def handle_callbacks(callback: CallbackQuery):
             for n in notes:
                 lines.append(f"• {n['content']}")
             await callback.message.answer("\n".join(lines), reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
+    elif data == "menu_excel":
+        msg = await callback.message.answer("⏳ Sedang menyiapkan laporan keuangan Excel...")
+        try:
+            excel_path = finance.export_financial_report_excel(user_id, "all")
+            await callback.message.answer_document(
+                FSInputFile(excel_path),
+                caption="📊 Berikut file Laporan Keuangan Anda dalam format Excel (.xlsx)."
+            )
+        except Exception as e:
+            await callback.message.answer(f"Gagal membuat file Excel: {e}")
+        finally:
+            try:
+                await msg.delete()
+            except Exception:
+                pass
     elif data == "menu_help":
         await cmd_help(callback.message)
 
@@ -223,6 +260,82 @@ async def handle_voice_message(message: Message, bot: Bot):
     finally:
         if temp_voice_path:
             tts.cleanup_audio_file(temp_voice_path)
+
+@dp.message(F.photo)
+async def handle_photo_message(message: Message, bot: Bot):
+    user_id = message.from_user.id
+    user_name = message.from_user.first_name or "Teman"
+    caption = message.caption or ""
+
+    await bot.send_chat_action(chat_id=message.chat.id, action="typing")
+    try:
+        photo = message.photo[-1]
+        photo_file = await bot.get_file(photo.file_id)
+        
+        photo_io = io.BytesIO()
+        await bot.download_file(photo_file.file_path, destination=photo_io)
+        image_bytes = photo_io.getvalue()
+
+        reply_text = await gemini_agent.process_user_image(
+            user_id=user_id,
+            user_name=user_name,
+            image_bytes=image_bytes,
+            mime_type="image/jpeg",
+            caption=caption
+        )
+
+        try:
+            await message.answer(reply_text, parse_mode=ParseMode.MARKDOWN)
+        except Exception:
+            await message.answer(reply_text)
+    except Exception as e:
+        logger.error(f"Gagal memproses foto: {e}", exc_info=True)
+        await message.answer(f"Maaf, gagal memproses foto: {e}")
+
+@dp.message(F.document)
+async def handle_document_message(message: Message, bot: Bot):
+    user_id = message.from_user.id
+    user_name = message.from_user.first_name or "Teman"
+    caption = message.caption or ""
+    doc = message.document
+
+    await bot.send_chat_action(chat_id=message.chat.id, action="typing")
+    try:
+        doc_file = await bot.get_file(doc.file_id)
+        doc_io = io.BytesIO()
+        await bot.download_file(doc_file.file_path, destination=doc_io)
+        doc_bytes = doc_io.getvalue()
+
+        mime_type = doc.mime_type or "application/pdf"
+        file_name = doc.file_name or "dokumen.pdf"
+
+        # Jika pengguna mengirim gambar dalam bentuk dokumen file
+        if mime_type.startswith("image/"):
+            reply_text = await gemini_agent.process_user_image(
+                user_id=user_id,
+                user_name=user_name,
+                image_bytes=doc_bytes,
+                mime_type=mime_type,
+                caption=caption
+            )
+        else:
+            reply_text = await gemini_agent.process_user_document(
+                user_id=user_id,
+                user_name=user_name,
+                doc_bytes=doc_bytes,
+                file_name=file_name,
+                mime_type="application/pdf",
+                caption=caption
+            )
+
+        try:
+            await message.answer(reply_text, parse_mode=ParseMode.MARKDOWN)
+        except Exception:
+            await message.answer(reply_text)
+    except Exception as e:
+        logger.error(f"Gagal memproses dokumen: {e}", exc_info=True)
+        await message.answer(f"Maaf, gagal memproses dokumen: {e}")
+
 
 @dp.message(F.text)
 async def handle_text_message(message: Message, bot: Bot):

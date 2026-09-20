@@ -1,4 +1,4 @@
-﻿import logging
+import logging
 from typing import Dict, Any, List
 from google import genai
 from google.genai import types
@@ -18,7 +18,7 @@ def get_client() -> genai.Client:
     return genai.Client(api_key=GEMINI_API_KEY)
 
 SYSTEM_PROMPT = """
-Anda adalah asisten AI pribadi bernama 'Aria' di Telegram yang cerdas, ramah, dan sangat membantu dalam kehidupan sehari-hari.
+Anda adalah asisten AI pribadi bernama 'Selobrow' di Telegram yang cerdas, ramah, dan sangat membantu dalam kehidupan sehari-hari.
 Tugas utama Anda:
 1. Mengelola Keuangan Pengguna:
    - Jika pengguna menyebutkan pengeluaran atau pemasukan (contoh: "tadi makan siang 25rb", "beli bensin 30.000", "dapat transferan 500k dari klien", "gaji masuk 5jt"), panggil fungsi catat_transaksi_keuangan.

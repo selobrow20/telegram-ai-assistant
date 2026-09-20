@@ -1,9 +1,9 @@
 @echo off
-title Telegram AI Assistant - Aria
+title Telegram AI Assistant - Selobrow
 cd /d "%~dp0"
 
 echo ===================================================
-echo     MEMULAI ASISTEN AI TELEGRAM (ARIA)
+echo     MEMULAI ASISTEN AI TELEGRAM (SELOBROW)
 echo ===================================================
 
 if not exist ".venv\Scripts\python.exe" (

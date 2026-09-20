@@ -60,7 +60,7 @@ def get_main_keyboard() -> InlineKeyboardMarkup:
 async def cmd_start(message: Message):
     user_name = message.from_user.first_name if message.from_user else "Teman"
     welcome_text = (
-        f"👋 Halo, *{user_name}*! Saya **Aria**, asisten AI pribadi Anda.\n\n"
+        f"👋 Halo, *{user_name}*! Saya **Selobrow**, asisten AI pribadi Anda.\n\n"
         "Saya siap membantu kebutuhan sehari-hari Anda:\n"
         "🎙️ *Interaksi Suara & Teks*: Anda bisa mengetik atau langsung kirim **Voice Note** (pesan suara)!\n"
         "💸 *Catatan Keuangan Otomatis*: Cukup sebutkan pengeluaran/pemasukan Anda.\n"
@@ -258,7 +258,7 @@ async def main():
     bot = Bot(token=TELEGRAM_BOT_TOKEN)
     logger.info("Menghapus webhook lama jika ada...")
     await bot.delete_webhook(drop_pending_updates=True)
-    logger.info("Bot Telegram AI Aria siap beroperasi! Menunggu pesan...")
+    logger.info("Bot Telegram AI Selobrow siap beroperasi! Menunggu pesan...")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":

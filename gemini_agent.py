@@ -127,8 +127,18 @@ def create_tools_for_user(user_id: int):
             res += f"- [#{n['id']}] {t}{n['content']} ({n['created_at'][:10]})\n"
         return res
 
+    def catat_banyak_transaksi(daftar_transaksi: list) -> str:
+        """Mencatat banyak transaksi keuangan sekaligus ke database (berguna saat membaca tabel PDF laporan, mutasi, atau rekap penjualan).
+        Args:
+            daftar_transaksi: List of dicts, masing-masing memuat 'type' ('pemasukan'/'pengeluaran'), 'amount' (angka rupiah), 'category' (kategori), dan 'description' (keterangan).
+        """
+        count = db.add_multiple_transactions(user_id, daftar_transaksi)
+        bal = db.get_balance(user_id)
+        return f"Berhasil menyimpan {count} transaksi ke database. Total Pemasukan: {finance.format_rupiah(bal['total_income'])}, Total Pengeluaran: {finance.format_rupiah(bal['total_expense'])}, Saldo: {finance.format_rupiah(bal['balance'])}."
+
     return [
         catat_transaksi_keuangan,
+        catat_banyak_transaksi,
         cek_saldo,
         buat_laporan_keuangan,
         tambah_tugas_harian,
@@ -328,12 +338,13 @@ async def process_user_document(user_id: int, user_name: str, doc_bytes: bytes, 
             logger.warning(f"Ekstraksi teks pypdf: {pe}")
 
         prompt_text = (
-            f"[User: {user_name} mengirim file dokumen: {file_name}]. Caption: '{caption if caption else 'Analisis dokumen ini'}'\n"
+            f"[User: {user_name} mengirim file dokumen: {file_name}]. Caption: '{caption if caption else 'Analisis dan masukkan ke pembukuan'}'\n"
             "Analisis dokumen PDF ini secara mendalam:\n"
-            "1. Pahami isi utama laporan, mutasi rekening, invoice, atau laporan keuangan di dalamnya.\n"
-            "2. Berikan ringkasan eksekutif yang jelas dan terstruktur dalam format bullet points rapi.\n"
-            "3. Jika ada angka penting (total pendapatan, total pengeluaran, laba/rugi, saldo akhir, item tagihan), sebutkan secara jelas.\n"
-            "4. Jika pengguna meminta konversi ke format Excel atau pengguna butuh file spreadsheet, beri tahu bahwa ringkasan laporan keuangan di bot ini juga bisa diunduh langsung dalam format file Excel (.xlsx) dengan tombol 'Download Excel' atau mengetik /excel."
+            "1. Pahami isi utama laporan, omzet penjualan, mutasi rekening, invoice, atau laporan keuangan di dalamnya.\n"
+            "2. Berikan ringkasan eksekutif yang jelas dan terstruktur dalam format bullet points rapi (Omzet/Pendapatan, Pengeluaran, Laba Bersih, Catatan Operasional).\n"
+            "3. PENTING & WAJIB: Jika dokumen PDF memuat ringkasan keuangan (seperti Total Omzet/Pemasukan dan Total Pengeluaran/Modal) atau rincian transaksi, SEGERA PANGGIL fungsi `catat_transaksi_keuangan` atau `catat_banyak_transaksi` untuk LANGSUNG MEMASUKKAN angka-angka tersebut ke database pembukuan keuangan!\n"
+            "   - Contoh: Catat Total Uang Masuk sebagai 'pemasukan' kategori 'Penjualan' (misal dari Shopee/Klien), dan Total Uang Keluar sebagai 'pengeluaran' kategori 'Operasional'.\n"
+            "4. Informasikan ke pengguna bahwa data omzet dan pengeluaran dari PDF tersebut SUDAH BERHASIL TERCATAT ke database dan otomatis langsung masuk ke file spreadsheet Excel (.xlsx) saat mengetik /excel."
         )
 
         if extracted_text:

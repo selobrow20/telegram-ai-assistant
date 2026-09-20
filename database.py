@@ -1,4 +1,4 @@
-﻿import sqlite3
+import sqlite3
 from datetime import datetime, date, timedelta
 from typing import List, Dict, Any, Optional
 from config import DATABASE_PATH
@@ -57,6 +57,27 @@ def add_transaction(user_id: int, type_: str, amount: float, category: str, desc
         ''', (user_id, type_.lower(), float(amount), category.strip().title(), description.strip(), trans_date))
         conn.commit()
         return cursor.lastrowid
+
+def add_multiple_transactions(user_id: int, transactions: List[Dict[str, Any]]) -> int:
+    today_str = date.today().isoformat()
+    inserted = 0
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        for t in transactions:
+            t_type = "income" if "masuk" in str(t.get("type", "")).lower() or "income" in str(t.get("type", "")).lower() else "expense"
+            amt = float(t.get("amount", 0))
+            if amt <= 0:
+                continue
+            cat = str(t.get("category", "Lain-lain")).strip().title()
+            desc = str(t.get("description", "")).strip()
+            dt = str(t.get("date") or today_str)
+            cursor.execute('''
+                INSERT INTO transactions (user_id, type, amount, category, description, date)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ''', (user_id, t_type, amt, cat, desc, dt))
+            inserted += 1
+        conn.commit()
+    return inserted
 
 def get_balance(user_id: int) -> Dict[str, float]:
     with get_connection() as conn:

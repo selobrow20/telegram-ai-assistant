@@ -56,8 +56,11 @@ def get_main_keyboard() -> InlineKeyboardMarkup:
     ]
     return InlineKeyboardMarkup(inline_keyboard=buttons)
 
+@dp.message(Command("reset"))
 @dp.message(CommandStart())
 async def cmd_start(message: Message):
+    user_id = message.from_user.id
+    gemini_agent.clear_user_history(user_id)
     user_name = message.from_user.first_name if message.from_user else "Teman"
     welcome_text = (
         f"👋 Halo, *{user_name}*! Saya **Selobrow**, asisten AI pribadi Anda.\n\n"

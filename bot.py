@@ -328,10 +328,15 @@ async def handle_document_message(message: Message, bot: Bot):
                 caption=caption
             )
 
+        excel_kb = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="📥 Download Laporan Excel (.xlsx)", callback_data="menu_excel")],
+            [InlineKeyboardButton(text="💰 Cek Saldo", callback_data="menu_saldo"), InlineKeyboardButton(text="📑 Laporan", callback_data="menu_lap_month")]
+        ])
+
         try:
-            await message.answer(reply_text, parse_mode=ParseMode.MARKDOWN)
+            await message.answer(reply_text, reply_markup=excel_kb, parse_mode=ParseMode.MARKDOWN)
         except Exception:
-            await message.answer(reply_text)
+            await message.answer(reply_text, reply_markup=excel_kb)
     except Exception as e:
         logger.error(f"Gagal memproses dokumen: {e}", exc_info=True)
         await message.answer(f"Maaf, gagal memproses dokumen: {e}")

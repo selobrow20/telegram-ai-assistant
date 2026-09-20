@@ -21,6 +21,7 @@ import database as db
 import finance
 import gemini_agent
 import tts
+import pdf_converter
 
 # Setup Logging
 logging.basicConfig(
@@ -90,24 +91,70 @@ async def cmd_laporan(message: Message):
     report = finance.generate_financial_report(user_id, "month")
     await message.answer(report, reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
 
+async def send_excel_selection_or_direct(target, user_id: int):
+    last_pdf = pdf_converter.user_last_pdf.get(user_id)
+    if last_pdf and os.path.exists(last_pdf.get("excel_path", "")):
+        kb = InlineKeyboardMarkup(
+            inline_keyboard=[
+                [
+                    InlineKeyboardButton(
+                        text=f"📄 Excel dari PDF ({last_pdf['file_name'][:20]})",
+                        callback_data="dl_excel_pdf"
+                    )
+                ],
+                [
+                    InlineKeyboardButton(
+                        text="💼 Excel Catatan Harian (Database)",
+                        callback_data="dl_excel_db"
+                    )
+                ]
+            ]
+        )
+        msg_text = (
+            "📊 *PILIHAN FILE EXCEL*\n\n"
+            "Anda memiliki 2 jenis file spreadsheet Excel yang dapat diunduh:\n\n"
+            f"1️⃣ *Laporan dari File PDF Terakhir*\n"
+            f"   📁 `{last_pdf['file_name']}`\n"
+            f"   _File spreadsheet yang diekstrak langsung secara terpisah dari dokumen PDF Anda (tanpa menyentuh database harian)._\n\n"
+            f"2️⃣ *Laporan Keuangan Harian (Database)*\n"
+            f"   _Rekap transaksi pembukuan keuangan pribadi harian Anda di database bot._\n\n"
+            "Silakan klik tombol di bawah untuk memilih file mana yang ingin Anda unduh:"
+        )
+        if isinstance(target, CallbackQuery):
+            await target.message.answer(msg_text, reply_markup=kb, parse_mode=ParseMode.MARKDOWN)
+        else:
+            await target.answer(msg_text, reply_markup=kb, parse_mode=ParseMode.MARKDOWN)
+    else:
+        status_msg = None
+        send_target = target.message if isinstance(target, CallbackQuery) else target
+        try:
+            status_msg = await send_target.answer("⏳ Sedang menyiapkan laporan keuangan Excel...")
+            excel_path = finance.export_financial_report_excel(user_id, "all")
+            await send_target.answer_document(
+                FSInputFile(excel_path),
+                caption=(
+                    "📊 *File Laporan Keuangan Harian (Database)*\n\n"
+                    "_File di atas berisi rekap transaksi keuangan harian dari database bot._\n\n"
+                    "💡 *Ingin buat Excel dari file PDF lain?*\n"
+                    "Cukup kirimkan file dokumen PDF (misal laporan penjualan/printing, invoice, atau mutasi bank) ke chat ini, dan Selobrow akan otomatis membuatkan file Excel khusus dari PDF tersebut tanpa mengubah database harian Anda!"
+                ),
+                parse_mode=ParseMode.MARKDOWN
+            )
+        except Exception as e:
+            await send_target.answer(f"Gagal membuat file Excel: {e}")
+        finally:
+            if status_msg:
+                try:
+                    await status_msg.delete()
+                except Exception:
+                    pass
+
 @dp.message(Command("excel"))
 @dp.message(Command("export"))
 async def cmd_excel(message: Message):
     user_id = message.from_user.id
-    msg = await message.answer("⏳ Sedang menyiapkan laporan keuangan Excel...")
-    try:
-        excel_path = finance.export_financial_report_excel(user_id, "all")
-        await message.answer_document(
-            FSInputFile(excel_path),
-            caption="📊 Berikut file Laporan Keuangan Anda dalam format Excel (.xlsx)."
-        )
-    except Exception as e:
-        await message.answer(f"Gagal membuat file Excel: {e}")
-    finally:
-        try:
-            await msg.delete()
-        except Exception:
-            pass
+    await send_excel_selection_or_direct(message, user_id)
+
 
 @dp.message(Command("resetsaldo"))
 @dp.message(Command("resetkeuangan"))
@@ -212,15 +259,32 @@ async def handle_callbacks(callback: CallbackQuery):
                 lines.append(f"• {n['content']}")
             await callback.message.answer("\n".join(lines), reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
     elif data == "menu_excel":
-        msg = await callback.message.answer("⏳ Sedang menyiapkan laporan keuangan Excel...")
+        await send_excel_selection_or_direct(callback, user_id)
+    elif data == "dl_excel_pdf":
+        last_pdf = pdf_converter.user_last_pdf.get(user_id)
+        if last_pdf and os.path.exists(last_pdf.get("excel_path", "")):
+            await callback.message.answer_document(
+                FSInputFile(last_pdf["excel_path"]),
+                caption=(
+                    f"📊 *File Excel dari Laporan PDF:*\n"
+                    f"📁 `{last_pdf['file_name']}`\n\n"
+                    f"_File ini dibuat khusus dari data dokumen PDF Anda tanpa mengubah database pembukuan harian._"
+                ),
+                parse_mode=ParseMode.MARKDOWN
+            )
+        else:
+            await callback.message.answer("⚠️ File Excel dari PDF belum tersedia di sesi ini. Silakan kirimkan file PDF Anda terlebih dahulu ya!")
+    elif data == "dl_excel_db":
+        msg = await callback.message.answer("⏳ Sedang menyiapkan laporan keuangan database...")
         try:
             excel_path = finance.export_financial_report_excel(user_id, "all")
             await callback.message.answer_document(
                 FSInputFile(excel_path),
-                caption="📊 Berikut file Laporan Keuangan Anda dalam format Excel (.xlsx)."
+                caption="📊 *File Laporan Keuangan Harian (Database Bot)*\n_Berikut rekap catatan pembukuan harian Anda._",
+                parse_mode=ParseMode.MARKDOWN
             )
         except Exception as e:
-            await callback.message.answer(f"Gagal membuat file Excel: {e}")
+            await callback.message.answer(f"Gagal mengekspor database: {e}")
         finally:
             try:
                 await msg.delete()
@@ -347,12 +411,15 @@ async def handle_document_message(message: Message, bot: Bot):
                 caption=caption
             )
         else:
-            status_msg = await message.answer("⏳ Sedang membaca laporan PDF dan menyusun file Excel (.xlsx)...")
-            import pdf_converter
+            status_msg = await message.answer(
+                f"⏳ Sedang membaca dan menganalisis PDF `{file_name}` untuk disusun ke spreadsheet Excel (.xlsx)...",
+                parse_mode=ParseMode.MARKDOWN
+            )
             summary_text, excel_path = await pdf_converter.convert_pdf_document_to_excel(
                 doc_bytes=doc_bytes,
                 file_name=file_name,
-                caption=caption
+                caption=caption,
+                user_id=user_id
             )
 
             try:
@@ -360,9 +427,25 @@ async def handle_document_message(message: Message, bot: Bot):
             except Exception:
                 await message.answer(summary_text)
 
+            kb = InlineKeyboardMarkup(
+                inline_keyboard=[
+                    [
+                        InlineKeyboardButton(
+                            text="💼 Download Excel Database Harian",
+                            callback_data="dl_excel_db"
+                        )
+                    ]
+                ]
+            )
+
             await message.answer_document(
                 FSInputFile(excel_path),
-                caption=f"📊 File Excel dari laporan: {file_name}\n_Dibuat khusus dari PDF tanpa mengubah database catatan harian._",
+                caption=(
+                    f"📊 *File Excel dari Dokumen PDF:*\n"
+                    f"📁 `{file_name}`\n\n"
+                    f"_File Excel ini dibuat khusus secara terpisah langsung dari isi PDF Anda tanpa mencampuri database harian._"
+                ),
+                reply_markup=kb,
                 parse_mode=ParseMode.MARKDOWN
             )
 
@@ -372,7 +455,7 @@ async def handle_document_message(message: Message, bot: Bot):
                 pass
     except Exception as e:
         logger.error(f"Gagal memproses dokumen: {e}", exc_info=True)
-        await message.answer(f"Maaf, gagal memproses dokumen: {e}")
+        await message.answer(f"Maaf, terjadi kendala saat memproses dokumen: {e}")
 
 
 @dp.message(F.text)
@@ -399,6 +482,50 @@ async def handle_text_message(message: Message, bot: Bot):
             parse_mode=ParseMode.MARKDOWN
         )
         return
+
+    # Intersep permintaan Excel khusus dari PDF
+    if any(k in lower_text for k in ["excel pdf", "excel dari pdf", "laporan pdf excel", "unduh excel pdf", "download excel pdf", "buatkan excel pdf"]):
+        last_pdf = pdf_converter.user_last_pdf.get(user_id)
+        if last_pdf and os.path.exists(last_pdf.get("excel_path", "")):
+            await message.answer_document(
+                FSInputFile(last_pdf["excel_path"]),
+                caption=f"📊 *File Excel dari PDF: {last_pdf['file_name']}*\n_Dibuat khusus dari dokumen PDF Anda._",
+                parse_mode=ParseMode.MARKDOWN
+            )
+            return
+        else:
+            await message.answer(
+                "⚠️ Belum ada file PDF yang Anda kirimkan pada sesi ini.\n\n"
+                "Silakan langsung kirimkan file dokumen PDF (seperti laporan printing, invoice, atau mutasi bank) ke chat ini, dan saya akan otomatis membuatkan file Excel untuk Anda! 😊"
+            )
+            return
+
+    # Intersep permintaan Excel Database harian
+    if any(k in lower_text for k in ["excel database", "excel db", "excel harian", "laporan harian excel"]):
+        msg = await message.answer("⏳ Sedang menyiapkan file Excel database...")
+        try:
+            excel_path = finance.export_financial_report_excel(user_id, "all")
+            await message.answer_document(
+                FSInputFile(excel_path),
+                caption="📊 *File Laporan Keuangan Harian (Database)*\n_Berikut rekap catatan keuangan harian Anda._",
+                parse_mode=ParseMode.MARKDOWN
+            )
+        finally:
+            try:
+                await msg.delete()
+            except Exception:
+                pass
+        return
+
+    # Intersep permintaan umum download/buat Excel
+    if lower_text in [
+        "/excel", "/export", "download excel", "download laporan excel",
+        "📊 download laporan excel", "excel", "buatkan excel", "laporan excel",
+        "buat excel", "kirim excel", "minta excel", "unduh excel"
+    ]:
+        await send_excel_selection_or_direct(message, user_id)
+        return
+
 
     reply_text = await gemini_agent.process_user_text(
         user_id=user_id,

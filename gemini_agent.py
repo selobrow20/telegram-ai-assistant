@@ -135,6 +135,39 @@ def create_tools_for_user(user_id: int):
         lihat_catatan
     ]
 
+def generate_with_fallback(client: genai.Client, contents: list, config: types.GenerateContentConfig):
+    models = [
+        "gemini-flash-latest",
+        "gemini-3.5-flash",
+        "gemini-3.6-flash",
+        "gemini-3.1-flash-lite",
+        "gemini-flash-lite-latest"
+    ]
+    last_error = None
+    for m in models:
+        try:
+            return client.models.generate_content(
+                model=m,
+                contents=contents,
+                config=config
+            )
+        except Exception as err:
+            last_error = err
+            err_msg = str(err)
+            logger.warning(f"Model {m} kendala: {err_msg[:80]}. Mencoba model cadangan...")
+            if any(k in err_msg for k in ["429", "RESOURCE_EXHAUSTED", "503", "NOT_FOUND", "404"]):
+                continue
+            raise err
+    raise last_error
+
+def format_friendly_error(e: Exception) -> str:
+    err = str(e)
+    if "429" in err or "RESOURCE_EXHAUSTED" in err:
+        return "⚡ *Batas Kecepatan Tercapai (Rate Limit)*\n\nGoogle Gemini membatasi kecepatan permintaan akun gratis per menit. Mohon tunggu sekitar **5–10 detik** lalu kirim kembali pesan Anda ya!"
+    elif "503" in err or "UNAVAILABLE" in err:
+        return "⏳ *Server AI Sedang Sibuk*\n\nServer Google sedang mengalami lonjakan antrean. Mohon tunggu sebentar lalu coba lagi."
+    return f"Maaf, terjadi kendala saat memproses: {err[:140]}"
+
 async def process_user_text(user_id: int, user_name: str, text: str) -> str:
     try:
         client = get_client()
@@ -155,11 +188,7 @@ async def process_user_text(user_id: int, user_name: str, text: str) -> str:
             temperature=0.7
         )
 
-        response = client.models.generate_content(
-            model=GEMINI_MODEL,
-            contents=contents,
-            config=config
-        )
+        response = generate_with_fallback(client, contents, config)
 
         reply_text = response.text or "Baik, sudah diproses!"
 
@@ -177,7 +206,7 @@ async def process_user_text(user_id: int, user_name: str, text: str) -> str:
         return reply_text
     except Exception as e:
         logger.error(f"Error in process_user_text: {e}", exc_info=True)
-        return f"Maaf, terjadi kendala saat memproses permintaan: {e}"
+        return format_friendly_error(e)
 
 async def process_user_voice(user_id: int, user_name: str, voice_bytes: bytes, mime_type: str = "audio/ogg") -> str:
     try:
@@ -202,11 +231,7 @@ async def process_user_voice(user_id: int, user_name: str, voice_bytes: bytes, m
             temperature=0.7
         )
 
-        response = client.models.generate_content(
-            model=GEMINI_MODEL,
-            contents=contents,
-            config=config
-        )
+        response = generate_with_fallback(client, contents, config)
 
         reply_text = response.text or "Pesan suara Anda telah saya dengarkan dan saya proses."
 
@@ -223,7 +248,7 @@ async def process_user_voice(user_id: int, user_name: str, voice_bytes: bytes, m
         return reply_text
     except Exception as e:
         logger.error(f"Error in process_user_voice: {e}", exc_info=True)
-        return f"Maaf, terjadi kendala saat memproses audio suara: {e}"
+        return format_friendly_error(e)
 
 async def process_user_image(user_id: int, user_name: str, image_bytes: bytes, mime_type: str = "image/jpeg", caption: str = "") -> str:
     try:
@@ -259,11 +284,7 @@ async def process_user_image(user_id: int, user_name: str, image_bytes: bytes, m
             temperature=0.4
         )
 
-        response = client.models.generate_content(
-            model=GEMINI_MODEL,
-            contents=contents,
-            config=config
-        )
+        response = generate_with_fallback(client, contents, config)
 
         reply_text = response.text or "Foto berhasil dianalisis."
 
@@ -280,7 +301,7 @@ async def process_user_image(user_id: int, user_name: str, image_bytes: bytes, m
         return reply_text
     except Exception as e:
         logger.error(f"Error in process_user_image: {e}", exc_info=True)
-        return f"Maaf, terjadi kendala saat memproses gambar/struk: {e}"
+        return format_friendly_error(e)
 
 async def process_user_document(user_id: int, user_name: str, doc_bytes: bytes, file_name: str, mime_type: str = "application/pdf", caption: str = "") -> str:
     try:
@@ -312,11 +333,7 @@ async def process_user_document(user_id: int, user_name: str, doc_bytes: bytes, 
             temperature=0.4
         )
 
-        response = client.models.generate_content(
-            model=GEMINI_MODEL,
-            contents=contents,
-            config=config
-        )
+        response = generate_with_fallback(client, contents, config)
 
         reply_text = response.text or "Dokumen PDF telah berhasil dianalisis."
 
@@ -333,5 +350,5 @@ async def process_user_document(user_id: int, user_name: str, doc_bytes: bytes, 
         return reply_text
     except Exception as e:
         logger.error(f"Error in process_user_document: {e}", exc_info=True)
-        return f"Maaf, terjadi kendala saat membaca dokumen PDF: {e}"
+        return format_friendly_error(e)
 

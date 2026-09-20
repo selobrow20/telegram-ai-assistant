@@ -137,11 +137,11 @@ def create_tools_for_user(user_id: int):
 
 def generate_with_fallback(client: genai.Client, contents: list, config: types.GenerateContentConfig):
     models = [
-        "gemini-flash-latest",
-        "gemini-3.5-flash",
-        "gemini-3.6-flash",
         "gemini-3.1-flash-lite",
-        "gemini-flash-lite-latest"
+        "gemini-flash-lite-latest",
+        "gemini-3.5-flash-lite",
+        "gemini-flash-latest",
+        "gemini-3.5-flash"
     ]
     last_error = None
     for m in models:

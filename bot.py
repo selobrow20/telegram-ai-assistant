@@ -1084,6 +1084,19 @@ async def handle_text_message(message: Message, bot: Bot):
         await cmd_pengingat(message)
         return
 
+    # Intersep panggilan nama bot atau sapaan santai
+    if lower_text in ["bor", "bro", "selobrow", "halo", "hai", "p", "oi", "hey", "halo bor", "halo selobrow", "selamat pagi", "selamat siang", "selamat malam"]:
+        welcome_greeting = (
+            f"Halo *{user_name}*! 👋\n"
+            "Ya bor, ada yang bisa Selobrow bantu?\n\n"
+            "• Ketik tipe untuk *Cek Harga Pricelist*\n"
+            "• Ketik nominal untuk *Catat Keuangan*\n"
+            "• Ketik _'ingatkan...'_ untuk *Setel Alarm / Pengingat*\n"
+            "• Ketik /kalender untuk *Cek Agenda & Acara*"
+        )
+        await message.answer(welcome_greeting, reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
+        return
+
     # Registrasi user agar terdaftar di sistem notifikasi
     db.register_or_update_user(user_id, user_name, message.chat.id)
 

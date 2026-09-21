@@ -123,13 +123,11 @@ RG-EW6000GX,"6000Mbps Dual band Wi-Fi 6 home router, 4x4 MU-MIMO, 2.5G WAN",1626
 RG-EW7200BE PRO,"BE7200 Dual-Band Wi-Fi 7 Router, 5x2.5GE Ports",2841600,2706180,2954820,3600000,3960000,3 Years Warranty,Ruijie
 RG-PON1200G,"Wi-Fi 5 AC1200 GPON Dualband ONU, 2*GE Port",460650,438450,471750,580000,638000,3 Years Warranty,Ruijie
 RG-PON3000GX,"Wi-Fi 6 AX3000 GPON Dualband ONU, 4*GE Port + USB",623820,593850,639360,770000,847000,3 Years Warranty,Ruijie
-DHI-HY-C102-4,,2086613,2086613,0,0,0,2 Years,Dahua
-DHI-HY-C102-8,,2469388,2469388,0,0,0,2 Years,Dahua
+DHI-HY-C102-4,,1607654,1607654,0,0,0,2 Years,Dahua
+DHI-HY-C102-8,,1990429,1990429,0,0,0,2 Years,Dahua
 DHI-HY-CFP2012B,,4323158,4323158,0,0,0,2 Years,Dahua
 DHI-HY-CFP2016B,,5211158,5211158,0,0,0,2 Years,Dahua
 DHI-HY-CFP2020B,,6075789,6075789,0,0,0,2 Years,Dahua
-DHI-HY-C102-4,,1607654,1607654,0,0,0,2 Years,Dahua
-DHI-HY-C102-8,,1990429,1990429,0,0,0,2 Years,Dahua
 DHI-HY-C131,,74779,74779,0,0,0,2 Years,Dahua
 DHI-HY-C132,,65432,65432,0,0,0,2 Years,Dahua
 DHI-HY-C135,,180872,180872,0,0,0,2 Years,Dahua
@@ -312,8 +310,8 @@ DH-XVR5104HS-4KL-I3/T,"• 4-ch Analog Video Input, Max. 4K@15fps/5MP@25fps Enco
 DH-XVR5108HS-4KL-I3/T,"• 8-ch Analog Video Input, Max. 4K@15fps/5MP@25fps Encoding Capability • Max. 16-ch IP Video Input (Up to 8MP) • 8-ch Two-way Talk • AI Functions: 8-ch AcuPick, 4-ch FR, 8-ch Perimeter Protection, 1-ch EPTZ, 1-ch Privacy Protection, 8-ch SMD, 8-ch AI Coding • 1 Bay. Up to 16TB for Each HDD Storage Capacity",4382317,4382317,0,0,0,3 years,Dahua
 DH-XVR5116H-4KL-I3/T,"• 16-ch Analog Video Input, Max. 4K@15fps/5MP@25fps Encoding Capability • Max. 32-ch IP Video Input (Up to 8MP) • 16-ch Two-way Talk • AI Functions: 8-ch AcuPick, 4-ch FR, 8-ch Perimeter Protection, 1-ch EPTZ, 1-ch Privacy Protection, 16-ch SMD, 16-ch AI Coding • 1 Bay. Up to 16TB for Each HDD Storage Capacity",6216684,6216684,0,0,0,3 years,Dahua
 DH-XVR5216AN-4KL-I3/T,"• 16-ch Analog Video Input, Max. 4K@15fps/5MP@25fps Encoding Capability • Max. 32-ch IP Video Input (Up to 8MP) • 16-ch Two-way Talk • AI Functions: 8-ch AcuPick, 4-ch FR, 8-ch Perimeter Protection, 1-ch EPTZ, 1-ch Privacy Protection, 16-ch SMD, 16-ch AI Coding • 2 Bays. Up to 16TB for Each HDD Storage Capacity",8761042,8761042,0,0,0,3 years,Dahua
-DH-PFM800-4K,"Resolution: 4K(Max) Transmission Distance: 4K/5MP/4MP: 200m 1080P:250m, 720P:400m",470000,470000,0,0,0,2 year,Dahua
-DH-PFM800-E,Resolution: 1080P(Max) Transmission Distance: 1080P:250m; 720P:400m,639000,639000,0,0,0,2 year,Dahua
+DH-PFM800-4K,"Video balun HDCVI 4K/4MP/200m, 1080P/250m, 720P/400m Also support AHD, TVI, CVBS CE/FCC",52470,52470,0,0,0,2 year,Dahua
+DH-PFM800-E,"HDCVI balun 1080P/250m Support AHD, TVI, CVBS, CE/FCC Transmits live video signals over UTP CAT5E/CAT6 cable. No additional power supply is required. Comes with female BNC connectors and pluggable screw terminal connections.",651794,651794,0,0,0,2 year,Dahua
 DH-CS4006-4ET-60,"1.Supports cloud managed via DoLynk care 2.Auto-generates network toplogy simplifying management 3.Complies with IEEE802.3af, IEEE802.3at & Hi-PoE, up to 60W for single port 4.Working in temperatures from-10°C to +55°C 5.Supports 250 m long distance PoE tansmission, PoE watchdog",604100,604100,0,0,0,3 year,Dahua
 DH-CS4010-8ET-60,"1.Supports cloud managed via DoLynk care 2.Auto-generates network toplogy simplifying management 3.Complies with IEEE802.3af, IEEE802.3at, Hi-PoE & IEEE802.3bt, up to 60W for single port 4.Working in temperatures from-10°C to +55°C 5.Supports 250 m long distance PoE tansmission, PoE watchdog",1104000,1104000,0,0,0,3 year,Dahua
 DH-CS4010-8ET-110,"1.Supports cloud managed via DoLynk care 2.Auto-generates network toplogy simplifying management 3.Complies with IEEE802.3af, IEEE802.3at, Hi-PoE & IEEE802.3bt, up to 90W for single port 4.Working in temperatures from-10°C to +55°C 5.Supports 250 m long distance PoE tansmission, PoE watchdog",1003926,1003926,0,0,0,3 year,Dahua
@@ -334,8 +332,6 @@ DH-SF1005L,Switching Capacity: 1Gbps Packet Forwarding Rate 0.744Mpps,81620,8162
 DH-SF1008L,Switching Capacity: 1.6 Gbps Packet Forwarding Rate 1.19Mpps,101442,101442,0,0,0,3 year,Dahua
 DH-PFS3005-5GT-L,"· Compact Design : Miniature size & light weight, make it easy to deploy. · Plug & Play : No configuration required. · Green Technology : Adpot high quality environmentally friendly plastic. · 7x24H : Stable performance for long term operation. · Ethernet Port : 5 Port. · Switching Capacity : 16 Gbps.",129426,129426,0,0,0,3 year,Dahua
 DH-PFS3008-8GT-L,"· Compact Design : Miniature size & light weight, make it easy to deploy. · Plug & Play : No configuration required. · Green Technology : Adpot high quality environmentally friendly plastic. · 7x24H : Stable performance for long term operation. · Ethernet Port : 8 Port. · Switching Capacity : 16 Gbps.",211046,211046,0,0,0,3 year,Dahua
-DH-PFM800-4K,"Video balun HDCVI 4K/4MP/200m, 1080P/250m, 720P/400m Also support AHD, TVI, CVBS CE/FCC",52470,52470,0,0,0,2 year,Dahua
-DH-PFM800-E,"HDCVI balun 1080P/250m Support AHD, TVI, CVBS, CE/FCC Transmits live video signals over UTP CAT5E/CAT6 cable. No additional power supply is required. Comes with female BNC connectors and pluggable screw terminal connections.",651794,651794,0,0,0,2 year,Dahua
 DHI-W-HDMI3-4K@60,Pure oxygen-free copper PVC Gold-plated connector 4K@60HZ,46881,46881,0,0,0,2 year,Dahua
 LR1002,"EoC Passive Converter > Supports IEEE802.3, IEEE802.3u standards > Port: 1*RJ45 10/100Mbps, 1*BNC > Supports RG59 coaxial cable: 400m/100Mbps, 1000m/10Mbps > Supports MDI/MDIX self-adaption > Supports long range power supply transmission via coaxial cable",145456,145456,0,0,0,1 year,Dahua
 DH-LR1002-1ET,"Single-Port Long Reach Ethernet over Coax Extender > Supports IEEE802.3, IEEE802.3u standards > Supports IEEE802.3af and IEEE802.3at power supply standards > Port: 1*RJ45 10/100Mbps, 1*BNC > Supports RG59 coaxial cable: 400m/100Mbps, 1000m/10Mbps > Supports MDI/MDIX self-adaption > Supports long range power supply transmission via coaxial cable",315155,315155,0,0,0,2 year,Dahua
@@ -351,8 +347,6 @@ DH-PFM3350-600,"Comes with a wide voltage input range of 170–280 VAC, and easi
 DH-PFM3350-1000,"Comes with a wide voltage input range of 170–280 VAC, and easily adapts to fluctuations and various grid environments. Operates quietly for a serene environment. Offers digital voltage stabilization. Fast charging in just 4 hours. Rapid switching of 4-8 milliseconds. Protects against overload, short circuit, overcharging, and over-discharge.",640000,640000,0,0,0,1 year,Dahua
 DH-PFM3350-1500,"Comes with a wide voltage input range of 170–280 VAC, and easily adapts to fluctuations and various grid environments. Operates quietly for a serene environment. Offers digital voltage stabilization and automatically adjusts the voltage. Fast charging in just 4 hours. Rapid switching of 4-8 milliseconds. Protects against overload, short circuit, overcharging, and over-discharge.",1445000,1445000,0,0,0,1 year,Dahua
 DH-PFM920I-6UN-CN,"305 m (1000 ft)/carton UTP CAT6, power over Ethernet, compatible with one cable · High-purity oxygen-free copper conductor · Customized PVC outer sheath; Have certain flame retardant properties · Meet ANSI TIA 568C.2 and CPR Eca standards",2035000,2035000,0,0,0,10 year,Dahua
-DH-PFM922I-6UN-C-O,(UTP CAT6 PVC CPR)-0.57mm-Orange-305m-DH-PFM922I-6UN-C,882372,882372,0,0,0,10 year,Dahua
-DH-PFM922I-6UN-C-B,(UTP CAT6 PVC CPR)-0.57mm-Orange-305m-DH-PFM922I-6UN-C,882372,882372,0,0,0,10 year,Dahua
 DH-PFM922I-6UN-C-O,(UTP CAT6 PVC CPR)-0.57mm-Orange-305m-DH-PFM922I-6UN-C,882372,882372,0,0,0,10 year,Dahua
 DH-PFM922I-6UN-C-B,(UTP CAT6 PVC CPR)-0.57mm-Orange-305m-DH-PFM922I-6UN-C,882372,882372,0,0,0,10 year,Dahua
 DH-PFM941I-RG59N/21-300,"300m RG59 with power cable, transmit both data and power, wooden spool in carton;",875000,875000,0,0,0,10 year,Dahua
@@ -387,7 +381,6 @@ DHI-ASF280L-V1,The bracket is used to install and secure the magnetic lock.,5400
 DHI-ASF280U-V1,The bracket is used to install and secure the magnetic lock.,54000,54000,0,0,0,1 year,Dahua
 DHI-ASF280ZL-V1,The bracket is used to install and secure the magnetic lock.,129000,129000,0,0,0,1 year,Dahua
 Plastic Exit Button,"Plastic Exit Button > Professional circuit design, no mechanical failure > Use fire fire retardant material , convenient installation > 500,000 times fatigue test and durability > Access control project designated accessory products",36500,36500,0,0,0,1 year,Dahua
-Steel Exit Button,"IR detection, Touch-Free exit Stainless steel and a robust metal casing Dual-color indicator light Successfully passed 500,000 aging tests Recognition Distance from 0 to 15 cm",97000,97000,0,0,0,1 year,Dahua
 Steel Exit Button,,97000,97000,0,0,0,1 year,Dahua
 Door Closer,"Suitable for any door with frame and open at 180 degree; Door wieght 40~60kg, door width 950mm",435000,435000,0,0,0,1 year,Dahua
 DHI-KTP02,"IP Villa Door Station > High definition camera; WDR > Operating temperature -30°C to 60°C > IP65(Silicone sealant is needed. For details, see the quick start guide.) > Supports auto IR illumination and D/N > Card/app remote/indoor monitor unlock > Supports two-way voice call; support calls between door stations and app > 10,000 cards > Tamper Alarm > Support standard PoE power supply > Control two locks IP Indoor Monitor > IPC surveillance > Alarm integration > High performance > Embeded 8GB SD card > Support standard PoE > Quick configuration without computers",3207783,3207783,0,0,0,2 year,Dahua
@@ -409,3 +402,812 @@ DH-PFB305W,For SD49 PTZ camera without adapter Safety rope protection,159354,159
 PFA110,For SD40/50/59,56912,56912,0,0,0,3 year,Dahua
 DH-PFB2203W,Basic water-proof Rapid installation For 3 screws to fix,113824,113824,0,0,0,3 year,Dahua
 DH-PFA138,Junction Box,182605,182605,0,0,0,3 year,Dahua
+HC-Video/1CH/1M,Video Surveillance Monthly Subscription Service  Package Prerequisite: N.A  Service Period: 1 Month Description:  —Video Surveillance: 1 Channel Video,34400,34400,0,0,68700,2 Years Warranty,Hikvision
+HC-Video/1CH/1Y,Video Surveillance Yearly Subscription Service  Package Prerequisite: N.A  Service Period: 1 Year Description:  —Video Surveillance: 1 Channel Video M,341500,341500,0,0,683000,2 Years Warranty,Hikvision
+HC-BasePackage/64 Video/1Y,Video Service Prerequisite: NA Warranty: NA Supported: —Validity Period: 12 Months —Video Surveillance: 64 Channel Video Management. —Others: Alarm ma,13659900,13659900,0,0,27319700,2 Years Warranty,Hikvision
+HC-BasePackage/128 Video/1Y,Video Service Prerequisite: NA Warranty: NA Supported: —Validity Period: 12 Months —Video Surveillance: 128 Channel Video Management. —Others: Alarm m,27319700,27319700,0,0,54639400,2 Years Warranty,Hikvision
+HC-EventRecording/3Day/1CH/1M,Eventbased Cloud Storage Monthly Subscription Service  Package Prerequisite: N.A  Service Period: 1 Month Description:  —cloud storage: a cloud storag,85400,85400,0,0,170800,2 Years Warranty,Hikvision
+HC-EventRecording/7Day/1CH/1M,Eventbased Cloud Storage Monthly Subscription Service  Package Prerequisite: N.A  Service Period: 1 Month Description:  —cloud storage: a cloud storag,109700,109700,0,0,219300,2 Years Warranty,Hikvision
+HC-ContinuousRecording/7Day/1CH/1M,Continuous Cloud Storage Monthly Subscription Service  Package Prerequisite: N.A  Service Period: 1 Month Description:  —cloud storage: a cloud storag,426900,426900,0,0,853800,2 Years Warranty,Hikvision
+HC-ContinuousRecording/30Day/1CH/1M,Continuous Cloud Storage Monthly Subscription Service  Package Prerequisite: N.A  Service Period: 1 Month Description:  —cloud storage: a cloud storag,837000,837000,0,0,1674000,2 Years Warranty,Hikvision
+HC-EventRecording/3Day/1CH/1Y,Eventbased Cloud Storage  Yearly Subscription Service  Package Prerequisite: N.A  Service Period: 1 Year Description:  —cloud storage: a cloud storage,853800,853800,0,0,1707500,2 Years Warranty,Hikvision
+HC-EventRecording/7Day/1CH/1Y,Eventbased Cloud Storage  Yearly Subscription Service  Package Prerequisite: N.A  Service Period: 1 Year Description:  —cloud storage: a cloud storage,1093200,1093200,0,0,2186300,2 Years Warranty,Hikvision
+HC-ContinuousRecording/7Day/1CH/1Y,Continuous Cloud Storage  Yearly Subscription Service  Package Prerequisite: N.A  Service Period: 1 Year Description:  —cloud storage: a cloud storage,4200500,4200500,0,0,8401000,2 Years Warranty,Hikvision
+HC-ContinuousRecording/30Day/1CH/1Y,Continuous Cloud Storage  Yearly Subscription Service  Package Prerequisite: N.A  Service Period: 1 Year Description:  —cloud storage: a cloud storage,8469200,8469200,0,0,16938400,2 Years Warranty,Hikvision
+HC-BI/1M,"BI Monthly Subscription Service  Package Prerequisite: N.A  Service Period: 1 Month Description:   — Support heat mapping reports, display heat mappin",341500,341500,0,0,683000,2 Years Warranty,Hikvision
+HC-BI/1Y,"BI Yearly Subscription Service  Package Prerequisite: N.A  Service Period: 1 Year Description:   — Support heat mapping reports, display heat mapping ",3415000,3415000,0,0,6830000,2 Years Warranty,Hikvision
+HC-Vehicle/1Device/1M,On-Board Monitoring Monthly Subscription Service  Package Prerequisite: N.A  Service Period: 1 Month Description:  —On-Board Monitoring: 1 Mobile Devi,82100,82100,0,0,164100,2 Years Warranty,Hikvision
+HC-Vehicle/1Device/1Y,On-Board Monitoring Yearly Subscription Service  Package Prerequisite: N.A  Service Period: 1 Year Description:  —On-Board Monitoring: 1 Mobile Device,888100,888100,0,0,1776200,2 Years Warranty,Hikvision
+HC-AC&TA/1Door/1Y,Access Control & Time Attendance Yearly Subscription Service  Package Prerequisite: N.A  Service Period: 1 Year Description:  —Access Control& Time At,683000,683000,0,0,1366000,2 Years Warranty,Hikvision
+HC-AC&TA/5Doors/1Y,Access Control & Time Attendance Yearly Subscription Service  Package Prerequisite: N.A  Service Period: 1 Year Description:  —Access Control& Time At,3073500,3073500,0,0,6147000,2 Years Warranty,Hikvision
+HC-AC&TA/10Doors/1Y,Access Control & Time Attendance Yearly Subscription Service  Package Prerequisite: N.A  Service Period: 1 Year Description:  —Access Control& Time At,5464000,5464000,0,0,10927900,2 Years Warranty,Hikvision
+HC-AC&TA/1Door/Lifetime,Access Control & Time Attendance Lifetime Subscription Service  Package Prerequisite: N.A  Service Period: Lifetime Description:  —Access Control& Tim,2049000,2049000,0,0,4098000,2 Years Warranty,Hikvision
+HC-AC&TA/5Doors/Lifetime,Access Control & Time Attendance Lifetime Subscription Service  Package Prerequisite: N.A  Service Period: Lifetime Description:  —Access Control& Tim,9220400,9220400,0,0,18440800,2 Years Warranty,Hikvision
+HC-AC&TA/10Doors/Lifetime,Access Control & Time Attendance Lifetime Subscription Service  Package Prerequisite: N.A  Service Period: Lifetime Description:  —Access Control& Tim,16391900,16391900,0,0,32783700,2 Years Warranty,Hikvision
+HC-Customization/1Day/R&D,Customization Service Supported: —Validity Period: will be kept in Cloud Baseline. —Service Description: Provide Customization Service in Cloud. Featu,34149600,34149600,0,0,68299200,2 Years Warranty,Hikvision
+DS-2CV1043G2-LIDWF(B),"1/3"" Progressive CMOS, ICR, 0lux with IR, 1920×1080: 15fps(P/N), H.265+/H.265/H.264+/H.264, DWDR, 3D DNR, Build-in microphone; Build-in 2.4G Wi-Fi 802",1188600,1188600,0,0,1886667,2 Years Warranty,Hikvision
+DS-2CV1F43G2-LIDWF(B),"1/3"" Progressive CMOS, ICR, 0lux with IR, 2560×1440: 15fps(P/N), H.265+/H.265/H.264+/H.264, DWDR, 3D DNR, Build-in microphone; Build-in 2.4G Wi-Fi 802",1262900,1262900,0,0,2004603,2 Years Warranty,Hikvision
+DS-2DE2C400MWG WIFI,"1/2.7″ Progressive Scan CMOS Color: 0.005 Lux @(F1.6，AGC ON), B/W: 0 Lux with IR 2.8 mm,horizontal FOV 91°, vertical FOV 49°, diagonal FOV 108° 4 mm, ",1370600,1370600,0,0,2175556,2 Years Warranty,Hikvision
+DS-2CD1043G2-LIDUF/4G/SL,"1/3"" Progressive CMOS, ICR,2560 × 1440: 15fps(P/N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 30m, Built-in microph",1514000,1514000,0,0,2403175,2 Years Warranty,Hikvision
+DS-2DE2C400MWG 4G,"1/2.7″ Progressive Scan CMOS Color: 0.005 Lux @(F1.6，AGC ON), B/W: 0 Lux with IR 2.8 mm, horizontal FOV 94°, vertical FOV 49°, diagonal FOV 114° 4 mm,",1596600,1596600,0,0,2534286,2 Years Warranty,Hikvision
+DS-7104NI-S1/W,"4-ch camera input,  Up to 512 GB Micro SD card storage capacity; Wireless Parameter：2.4 GHz,150 Mbps,IEEE 802.11b/g/n/ax,High gain antenna",563900,563900,0,0,895079,2 Years Warranty,Hikvision
+DS-2CFSP4/4G,"1/2.9"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.01 lux @(F1.6, AGC ON), 0 lux with LED on;  12.5fps/15fps(2560×1440, 1920×108",3423031,3423031,0,0,5433383,2 Years Warranty,Hikvision
+DS-2CD1021G0,"1/3"" Progressive CMOS, ICR,1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR range: up to 30m, DC12V & PoE -IU :Built-i",689100,689100,0,0,984429,2 Years Warranty,Hikvision
+DS-2CD1121G0,"1/3"" Progressive CMOS, ICR,1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR range: up to 30m, DC12V & PoE",729700,729700,0,0,1042429,2 Years Warranty,Hikvision
+DS-2CD1321G0,"1/3"" Progressive CMOS, ICR,1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR range: up to 30m, DC12V & PoE -IU :Built-i",689100,689100,0,0,984429,2 Years Warranty,Hikvision
+DS-2CD1021G2,"1/2.8"" Progressive CMOS, ICR, 1920ⅹ1080:25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, IP67, DWDR, 3D DNR, BLC, Built-in microphone & speaker, audio & ",1098100,1098100,0,0,1568715,2 Years Warranty,Hikvision
+DS-2CD1121G2,"1/2.8"" Progressive CMOS, ICR, 1920ⅹ1080:25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, IP67, DWDR, 3D DNR, BLC, Built-in Microphone, Support Human body",1039200,1039200,0,0,1484572,2 Years Warranty,Hikvision
+DS-2CD1321G2,"1/2.8"" Progressive CMOS, ICR, 1920ⅹ1080:25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, IP67, DWDR, 3D DNR, BLC, Built-in microphone & speaker, audio & ",1171800,1171800,0,0,1674000,2 Years Warranty,Hikvision
+DS-2CD1041G2,"1/2.8"" Progressive CMOS, ICR, 2560ⅹ1440:20fps(P)/(N), H.265+/H.265/H.264+&H.264, IP67, DWDR, 3D DNR, BLC, Built-in microphone & speaker, audio & strob",1553901,1553901,0,0,2219858,2 Years Warranty,Hikvision
+DS-2CD1141G2,"1/2.8"" Progressive CMOS, ICR, 2560ⅹ1440:20fps(P)/(N), H.265+/H.265/H.264+&H.264, IP67, DWDR, 3D DNR, BLC, Built-in Microphone, Support Human body dete",1446200,1446200,0,0,2066000,2 Years Warranty,Hikvision
+DS-2CD1341G2,"1/2.8"" Progressive CMOS, ICR, 2560ⅹ1440:20fps(P)/(N), H.265+/H.265/H.264+&H.264, IP67, DWDR, 3D DNR, BLC, Built-in microphone & speaker, audio & strob",1617200,1617200,0,0,2310286,2 Years Warranty,Hikvision
+DS-2CD1043G2,"1/3"" Progressive CMOS, ICR,2560x1440: 20fps(P)/(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 30m, Built-in microph",1498200,1498200,0,0,2140286,2 Years Warranty,Hikvision
+DS-2CD1023G2,"1/3"" Progressive CMOS, ICR,1920x1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 30m, Built-in mi",1013400,1013400,0,0,1447715,2 Years Warranty,Hikvision
+DS-2CD1143G2,"1/3"" Progressive CMOS, ICR,2560x1440: 20fps(P)/(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 30m, Built-in microph",1550300,1550300,0,0,2214715,2 Years Warranty,Hikvision
+DS-2CD1123G2,"1/3"" Progressive CMOS, ICR,1920x1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 30m, Built-in mi",1112800,1112800,0,0,1589715,2 Years Warranty,Hikvision
+DS-2CD1343G2,"1/3"" Progressive CMOS, ICR,2560 × 1440: 20fps(P)/(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 30m, Built-in micro",1550300,1550300,0,0,2214715,2 Years Warranty,Hikvision
+DS-2CD1323G2,"1/3"" Progressive CMOS, ICR,1920x1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 30m, Built-in mi",1112800,1112800,0,0,1589715,2 Years Warranty,Hikvision
+DS-2CD1T23G2,"1/3"" Progressive CMOS, ICR,1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 50m, Built-in ",1455500,1455500,0,0,2079286,2 Years Warranty,Hikvision
+DS-2CD1T43G2,"1/3"" Progressive CMOS, ICR,2560 × 1440: 20fps(P)/(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 50m, Built-in micro",2052100,2052100,0,0,2931572,2 Years Warranty,Hikvision
+DS-2CD1T63G2,"1/3"" Progressive CMOS, ICR,3200 × 1800: 20fps(P/N), H.265+/H.265/H.264+&H.264, WDR, 3D DNR, BLC, IR or white light range: up to 50m, Built-in micropho",2062600,2062600,0,0,2946572,2 Years Warranty,Hikvision
+DS-2CD1T83G2,"1/3"" Progressive CMOS, ICR, 3840 × 2160: 12.5fps(P)/15fps(N), H.265+/H.265/H.264+&H.264, WDR, 3D DNR, BLC, IR or white light range: up to 50m, Built-i",2373900,2373900,0,0,3391286,2 Years Warranty,Hikvision
+DS-2CD1623G2,"1/3"" Progressive CMOS, ICR,1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 50m, Built-in ",3404900,3404900,0,0,4864143,2 Years Warranty,Hikvision
+DS-2CD1723G2,"1/3"" Progressive CMOS, ICR,1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 30m, Built-in ",3533800,3533800,0,0,5048286,2 Years Warranty,Hikvision
+DS-2CD1027G3,"1/2.8"" Progressive CMOS, ICR, 1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+/H.264, WDR, 3D DNR, BLC，HLC, Smart hybrid light, IR or white light r",1455100,1455100,0,0,2238615,2 Years Warranty,Hikvision
+DS-2CD1127G3,"1/2.8"" Progressive CMOS, ICR, 1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+/H.264, WDR, 3D DNR, BLC，HLC, Smart hybrid light, IR or white light r",1601300,1601300,0,0,2463538,2 Years Warranty,Hikvision
+DS-2CD1327G3,"1/2.8"" Progressive CMOS, ICR, 1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+/H.264, WDR, 3D DNR, BLC，HLC, Smart hybrid light, IR or white light r",1455100,1455100,0,0,2238615,2 Years Warranty,Hikvision
+DS-2CD1T27G3,"1/2.8"" Progressive CMOS, ICR, 1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+/H.264, WDR, 3D DNR, BLC，HLC, Smart hybrid light, IR or white light r",1871400,1871400,0,0,2879077,2 Years Warranty,Hikvision
+DS-2CD1047G3,"1/3"" Progressive CMOS, ICR, 2560 × 1440: 25fps(P)/24fps(N), H.265+/H.265/H.264+/H.264, WDR, 3D DNR, BLC，HLC, Smart hybrid light, IR or white light ran",2334100,2334100,0,0,3590923,2 Years Warranty,Hikvision
+DS-2CD1147G3,"1/3"" Progressive CMOS, ICR, 2560 × 1440: 25fps(P)/24fps(N), H.265+/H.265/H.264+/H.264, WDR, 3D DNR, BLC，HLC, Smart hybrid light, IR or white light ran",2496700,2496700,0,0,3841077,2 Years Warranty,Hikvision
+DS-2CD1347G3,"1/3"" Progressive CMOS, ICR, 2560 × 1440: 25fps(P)/24fps(N), H.265+/H.265/H.264+/H.264, WDR, 3D DNR, BLC，HLC, Smart hybrid light, IR or white light ran",2334100,2334100,0,0,3590923,2 Years Warranty,Hikvision
+DS-2CD1T47G3,"1/3"" Progressive CMOS, ICR, 2560 × 1440: 25fps(P)/24fps(N), H.265+/H.265/H.264+/H.264, WDR, 3D DNR, BLC，HLC, Smart hybrid light, IR or white light ran",2719900,2719900,0,0,4184462,2 Years Warranty,Hikvision
+DS-2CD1T47G3-LIU(F)/LS(L)(RB),● SoundMax produces a louder alarm sound to deter trespassers ; ● HikAI-ISP for excellent noise reduction effect; ● Super clear 24/7 colorful imaging ,3037700,3037700,0,0,4673385,2 Years Warranty,Hikvision
+DS-2CD2955G0-ISU,"1/2.8"" Progressive Scan CMOS  H.265/H.264/MJPEG Powered by Darkfighter technology, Color: 0.009 lux @(F1.6, AGC ON), 0 lux with IR 50fps/60fps(1920×10",3938000,3938000,0,0,6058462,2 Years Warranty,Hikvision
+DS-2CD2126G2-IMS,"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(1920×1080); VCA functions",3435000,3435000,0,0,5284615,2 Years Warranty,Hikvision
+DS-2CD2387G2P,"2*1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 lux @(F1.0, AGC ON), 0 lux with LED on;  20fps(5120×1440),VCA function",5187400,5187400,0,0,8366774,2 Years Warranty,Hikvision
+DS-2CD2347G2P,"2*1/2.5"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 lux @(F1.0, AGC ON), 0 lux with LED on;  25/24fps(3040×1368),VCA funct",4344600,4344600,0,0,7007419,2 Years Warranty,Hikvision
+DS-2CD2T87G2P,"2*1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 lux @(F1.0, AGC ON), 0 lux with LED on;  20fps(5120×1440),VCA function",5926300,5926300,0,0,9558548,2 Years Warranty,Hikvision
+DS-2CD2T47G2P,"2*1/2.5"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 lux @(F1.0, AGC ON), 0 lux with LED on;  25/24fps(3040×1368),VCA funct",4995000,4995000,0,0,8056452,2 Years Warranty,Hikvision
+DS-2CD1363G2P-LIUF/SL,"2×1/2.5"" Progressive Scan CMOS stitched, up to 180° wide angle; 3632 × 1632: 20fps(P)/(N), 20:9; H.265+/H.265/H.264+/H.264, WDR, ICR, IR or white ligh",2994600,2994600,0,0,4607077,2 Years Warranty,Hikvision
+DS-2CD1T63G2P-LIUF/SL,"2×1/2.5"" Progressive Scan CMOS stitched, up to 180° wide angle; 3632 × 1632: 20fps(P)/(N), 20:9; H.265+/H.265/H.264+/H.264, WDR, ICR, IR or white ligh",3451700,3451700,0,0,5310308,2 Years Warranty,Hikvision
+DS-2CD23167G3P,,7715700,7715700,0,0,12444677,2 Years Warranty,Hikvision
+DS-2CD23127G3P,,7011500,7011500,0,0,11308871,2 Years Warranty,Hikvision
+DS-2CD2387G3P,,5841600,5841600,0,0,9421935,2 Years Warranty,Hikvision
+DS-2CD2T167G3P,,8808600,8808600,0,0,14207419,2 Years Warranty,Hikvision
+DS-2CD2T127G3P,,8008100,8008100,0,0,12916290,2 Years Warranty,Hikvision
+DS-2CD2T87G3P,,6676700,6676700,0,0,10768871,2 Years Warranty,Hikvision
+DS-2CD2023G2-LI(2U),"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(1920×1080); VCA functions",2530400,2530400,0,0,4081290,2 Years Warranty,Hikvision
+DS-2CD2043G2-LI(2U),"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(2688×1520, 1920×1080); VCA ",2730700,2730700,0,0,4404355,2 Years Warranty,Hikvision
+DS-2CD2063G2-LI(2U),"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;   Color: 0.005 lux@(F1.6, AGC ON), 0 lux with IR;  20fps(3200x1800), 25fps/30fps (2688×",2861700,2861700,0,0,4615645,2 Years Warranty,Hikvision
+DS-2CD2123G2-LI(S)(2U),"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(1920×1080); VCA functions",2530400,2530400,0,0,4081290,2 Years Warranty,Hikvision
+DS-2CD2143G2-LI(S)(2U),"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(2688×1520, 1920×1080); VCA ",2730700,2730700,0,0,4404355,2 Years Warranty,Hikvision
+DS-2CD2163G2-LI(S)(2U),"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;   Color: 0.005 lux@(F1.6, AGC ON), 0 lux with IR;  20fps(3200x1800), 25fps/30fps (2688×",2861700,2861700,0,0,4615645,2 Years Warranty,Hikvision
+DS-2CD2323G2-LI(2U),"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(1920×1080); VCA functions",2480300,2480300,0,0,4000484,2 Years Warranty,Hikvision
+DS-2CD2343G2-LI(2U),"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(2688×1520, 1920×1080); VCA ",2676700,2676700,0,0,4317258,2 Years Warranty,Hikvision
+DS-2CD2363G2-LI(2U),"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;   Color: 0.005 lux@(F1.6, AGC ON), 0 lux with IR;  20fps(3200x1800), 25fps/30fps (2688×",2811500,2811500,0,0,4534677,2 Years Warranty,Hikvision
+DS-2CD2T23G2-2LI(2U)/4LI(2U),"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(1920×1080); VCA functions",2919400,2919400,0,0,4708710,2 Years Warranty,Hikvision
+DS-2CD2T43G2-2LI(2U)/4LI(2U),"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(2688×1520, 1920×1080); VCA ",3115800,3115800,0,0,5025484,2 Years Warranty,Hikvision
+DS-2CD2T63G2-2LI(2U)/4LI(2U),"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;   Color: 0.005 lux@(F1.6, AGC ON), 0 lux with IR;  20fps(3200x1800), 25fps/30fps (2688×",3273800,3273800,0,0,5280323,2 Years Warranty,Hikvision
+DS-2CD2523G2-LI(S)(2U),"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(1920×1080); VCA functions",3008000,3008000,0,0,4851613,2 Years Warranty,Hikvision
+DS-2CD2543G2-LI(S)(2U),"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(2688×1520, 1920×1080); VCA ",3235300,3235300,0,0,5218226,2 Years Warranty,Hikvision
+DS-2CD2563G2-LI(S)(2U),"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 20fps(3200x1800),25fps/30fps(2688×1520,",3481700,3481700,0,0,5615645,2 Years Warranty,Hikvision
+DS-2CD2086G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/24fps(3840×2160);25fps/30 ",4444700,4444700,0,0,7168871,2 Years Warranty,Hikvision
+DS-2CD2046G2H,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",3296900,3296900,0,0,5317581,2 Years Warranty,Hikvision
+DS-2CD2186G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/24fps(3840×2160);25fps/30 ",4236600,4236600,0,0,6833226,2 Years Warranty,Hikvision
+DS-2CD2146G2H,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",3112000,3112000,0,0,5019355,2 Years Warranty,Hikvision
+DS-2CD2386G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/24fps(3840×2160);25fps/30 ",4444700,4444700,0,0,7168871,2 Years Warranty,Hikvision
+DS-2CD2346G2H,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",3296900,3296900,0,0,5317581,2 Years Warranty,Hikvision
+DS-2CD2T86G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/24fps(3840×2160);25fps/30 ",5045500,5045500,0,0,8137903,2 Years Warranty,Hikvision
+DS-2CD2T46G2H,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",3620400,3620400,0,0,5839355,2 Years Warranty,Hikvision
+DS-2CD2686G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",8303800,8303800,0,0,13393226,2 Years Warranty,Hikvision
+DS-2CD2646G2H,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",6547500,6547500,0,0,10560484,2 Years Warranty,Hikvision
+DS-2CD2786G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",7818500,7818500,0,0,12610484,2 Years Warranty,Hikvision
+DS-2CD2746G2H,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",6197000,6197000,0,0,9995161,2 Years Warranty,Hikvision
+DS-2CD2786G2H-PTRZ,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",9713400,9713400,0,0,15666774,2 Years Warranty,Hikvision
+DS-2CD2746G2H-PTRZ,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",7660600,7660600,0,0,12355806,2 Years Warranty,Hikvision
+DS-2CD2066G2H,"1/2.4"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Powered by Darkfighter technology, Color: 0.001lux@(F1.0, AGC ON), 0 lux with IR;   25",3470200,3470200,0,0,5597097,2 Years Warranty,Hikvision
+DS-2CD2366G2H,"1/2.4"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (3200x1800, 2688×1520",3470200,3470200,0,0,5597097,2 Years Warranty,Hikvision
+DS-2CD2T66G2H,"1/2.4"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (3200x1800, 2688×1520",3797500,3797500,0,0,6125000,2 Years Warranty,Hikvision
+DS-2CD2666G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.2, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × ",6871100,6871100,0,0,11082419,2 Years Warranty,Hikvision
+DS-2CD2766G2H-PTRZ,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.2, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × ",8041900,8041900,0,0,12970806,2 Years Warranty,Hikvision
+DS-2CD2087G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",4448400,4448400,0,0,7174839,2 Years Warranty,Hikvision
+DS-2CD2047G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",3277600,3277600,0,0,5286452,2 Years Warranty,Hikvision
+DS-2CD2187G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",4448400,4448400,0,0,7174839,2 Years Warranty,Hikvision
+DS-2CD2147G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",3666600,3666600,0,0,5913871,2 Years Warranty,Hikvision
+DS-2CD2387G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",4448400,4448400,0,0,7174839,2 Years Warranty,Hikvision
+DS-2CD2347G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",3689700,3689700,0,0,5951129,2 Years Warranty,Hikvision
+DS-2CD2T87G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",5303500,5303500,0,0,8554032,2 Years Warranty,Hikvision
+DS-2CD2T47G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",4363800,4363800,0,0,7038387,2 Years Warranty,Hikvision
+DS-2CD2687G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",8103500,8103500,0,0,13070161,2 Years Warranty,Hikvision
+DS-2CD2667G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/30fps (3200 × 1800, 2688 × 1",7398800,7398800,0,0,11933548,2 Years Warranty,Hikvision
+DS-2CD2647G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008Lux @ (F1.2, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 108",6963500,6963500,0,0,11231452,2 Years Warranty,Hikvision
+DS-2CD2787G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",8103500,8103500,0,0,13070161,2 Years Warranty,Hikvision
+DS-2CD2767G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/30fps (3200 × 1800, 2688 × 1",7398800,7398800,0,0,11933548,2 Years Warranty,Hikvision
+DS-2CD2747G2H,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",6963500,6963500,0,0,11231452,2 Years Warranty,Hikvision
+DS-2CD2787G2H-PTRZ,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",9956100,9956100,0,0,16058226,2 Years Warranty,Hikvision
+DS-2CD2767G2H-PTRZ,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/30fps (3200 × 1800, 2688 × 1",9089500,9089500,0,0,14660484,2 Years Warranty,Hikvision
+DS-2CD2747G2H-PTRZ,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",8554200,8554200,0,0,13797097,2 Years Warranty,Hikvision
+DS-2CD2087G3,● HikAI-ISP for excellent noise reduction effect; ● 24/7 colorful imaging via ColorVu technology; ● Scene-adaptive WDR; ● Focus on Person and Vehicle ,4614100,4614100,0,0,7442097,2 Years Warranty,Hikvision
+DS-2CD2047G3,● HikAI-ISP for excellent noise reduction effect; ● 24/7 colorful imaging via ColorVu technology; ● Scene-adaptive WDR; ● Focus on Person and Vehicle ,3508700,3508700,0,0,5659194,2 Years Warranty,Hikvision
+DS-2CD2187G3,● HikAI-ISP for excellent noise reduction effect; ● 24/7 colorful imaging via ColorVu technology; ● Focus on Person and Vehicle classification based o,4614100,4614100,0,0,7442097,2 Years Warranty,Hikvision
+DS-2CD2147G3,● HikAI-ISP for excellent noise reduction effect; ● 24/7 colorful imaging via ColorVu technology; ● Scene-adaptive WDR; ● Focus on Person and Vehicle ,3920800,3920800,0,0,6323871,2 Years Warranty,Hikvision
+DS-2CD2387G3,● HikAI-ISP for excellent noise reduction effect; ● 24/7 colorful imaging via ColorVu technology; ● Scene-adaptive WDR; ● Focus on Person and Vehicle ,4614100,4614100,0,0,7442097,2 Years Warranty,Hikvision
+DS-2CD2347G3,● HikAI-ISP for excellent noise reduction effect; ● 24/7 colorful imaging via ColorVu technology; ● Scene-adaptive WDR; ● Focus on Person and Vehicle ,3920800,3920800,0,0,6323871,2 Years Warranty,Hikvision
+DS-2CD2T87G3,● HikAI-ISP for excellent noise reduction effect; ● 24/7 colorful imaging via ColorVu technology; ● Scene-adaptive WDR; ● Focus on Person and Vehicle ,5492300,5492300,0,0,8858548,2 Years Warranty,Hikvision
+DS-2CD2T47G3,● HikAI-ISP for excellent noise reduction effect; ● 24/7 colorful imaging via ColorVu technology; ● Scene-adaptive WDR; ● Focus on Person and Vehicle ,4629400,4629400,0,0,7466774,2 Years Warranty,Hikvision
+DS-2CD2087G3(Two-Way Audio),"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",4825900,4825900,0,0,7783710,2 Years Warranty,Hikvision
+DS-2CD2047G3(Two-Way Audio),"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0001 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",3716600,3716600,0,0,5994516,2 Years Warranty,Hikvision
+DS-2CD2387G3(Two-Way Audio),"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",4922200,4922200,0,0,7939032,2 Years Warranty,Hikvision
+DS-2CD2347G3(Two-Way Audio),"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0001 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",4121100,4121100,0,0,6646935,2 Years Warranty,Hikvision
+DS-2CD2T87G3(Two-Way Audio),"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",5734900,5734900,0,0,9249839,2 Years Warranty,Hikvision
+DS-2CD2T47G3(Two-Way Audio),"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0001 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",4822100,4822100,0,0,7777581,2 Years Warranty,Hikvision
+DS-2CD2687G3(Two-Way Audio),"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 180",8827600,8827600,0,0,14238065,2 Years Warranty,Hikvision
+DS-2CD2647G3(Two-Way Audio),"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",7795400,7795400,0,0,12573226,2 Years Warranty,Hikvision
+DS-2CD2H87G3(Two-Way Audio),"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 180",8827600,8827600,0,0,14238065,2 Years Warranty,Hikvision
+DS-2CD2H47G3(Two-Way Audio),"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",7795400,7795400,0,0,12573226,2 Years Warranty,Hikvision
+DS-2CD2787G3-PTRZ,"· Motorized Pan, Tilt, Rotate, Zoom for easy installation and monitoring · 24/7 colorful imaging via ColorVu technology · HikAI-ISP for excellent nois",10395100,10395100,0,0,16766290,2 Years Warranty,Hikvision
+DS-2CD2747G3-PTRZ,"· Motorized Pan, Tilt, Rotate, Zoom for easy installation and monitoring · 24/7 colorful imaging via ColorVu technology · HikAI-ISP for excellent nois",9239700,9239700,0,0,14902742,2 Years Warranty,Hikvision
+DS-2DE3404,· High quality imaging with 4 MP resolution · Clear imaging against strong back lighting due to 120 dB WDR technology · Pan and tilt ability enables c,5377500,5377500,0,0,8273077,2 Years Warranty,Hikvision
+DS-2DE3204,"2MP, 1/2.8"" CMOS sensor, 3-inch bubble, 4X optial zoom, outdoor&indoor use, H.264 codec,  Color: 0.1lux/F2.0, B/W:0.01lux/F2.0, Angle of View: 80-33.5",4901700,4901700,0,0,7541077,2 Years Warranty,Hikvision
+DS-2DE2C200MWG dual-light,"1/2.7″ Progressive Scan CMOS Color: 0.01 Lux @(F1.2，AGC ON), B/W: 0 Lux with IR 2.8 mm, horizontal FOV 105°, vertical FOV 58°, diagonal FOV 123° 4 mm,",1412300,1412300,0,0,2172769,2 Years Warranty,Hikvision
+DS-2DE2C400MWG dual-light,"1/2.7″ Progressive Scan CMOS Color: 0.01 Lux @(F1.2，AGC ON), B/W: 0 Lux with IR 2.8 mm, horizontal FOV 94°, vertical FOV 49°, diagonal FOV 114° 4 mm, ",1525600,1525600,0,0,2347077,2 Years Warranty,Hikvision
+DS-2DE3A404IWG,· High quality imaging with 4 MP resolution ·  Focuses on human and vehicle targets classification based on deep learning · Excellent low-light perfor,4686400,4686400,0,0,7209846,2 Years Warranty,Hikvision
+DS-2DE3A400BW,"Accurate human and vehicle target classification and alarm, based on deep learning algorithm Support face capture. Up to 5 faces captured at the same ",4425800,4425800,0,0,6808923,2 Years Warranty,Hikvision
+DS-2DE2A404IW,"4MP, 1/3"" CMOS,H.265+/H.265/H.264+/H.264 codec，3D DNR, ICR,Color: 0.005lux/F1.6, B/W:0.001lux/F1.6, 4x optical zoom, Angle of View: 100° to 33° (Wide-",3666800,3666800,0,0,5641231,2 Years Warranty,Hikvision
+DS-2DE2A404IWG1-E,"Accurate human and vehicle target classification and alarm based on deep learning algorithm 4MP, 1/2.8"" CMOS,Color: 0.005lux/F1.6, B/W:0.001lux/F1.6, ",3817900,3817900,0,0,5873692,2 Years Warranty,Hikvision
+DS-2DE4425IW,"4MP, 1/2.5"" CMOS,H.265+/H.265/H.264+/H.264 codec, 3D DNR, True WDR,  Ultra-low light  Powerde By DarkFighter Color: 0.005lux/F1.6, B/W:0.001lux/F1.6, ",9455900,9455900,0,0,14547538,2 Years Warranty,Hikvision
+DS-2DE4225IW,"2MP, 1/2.8"" CMOS,H.265+/H.265/H.264+/H.264 codec, 3D DNR, True WDR,  Ultra-low light  Powerde By DarkFighter Color: 0.005lux/F1.6, B/W:0.001lux/F1.6, ",8549600,8549600,0,0,13153231,2 Years Warranty,Hikvision
+DS-2DE4215IW,"2MP, 1/3"" CMOS sensor, H.265+/H.265/H.264+/H.264 codec, Color: 0.02lux/F1.5, B/W:0.02lux/F1.5, Optical Zoom:15x, Focus:5-75.0mm, Digital Zoom:16X, Pan",6827600,6827600,0,0,10504000,2 Years Warranty,Hikvision
+DS-2DE4430IW,"4MP, 1/2.5"" CMOS,H.265+/H.265/H.264+/H.264 codec, 3D DNR, True WDR,  Ultra-low light  Powerde By DarkFighter Color: 0.005lux/F1.6, B/W:0.001lux/F1.6, ",7477200,7477200,0,0,11503385,2 Years Warranty,Hikvision
+DS-2DE4230IW,"2MP, 1/2.8"" CMOS,H.265+/H.265/H.264+/H.264 codec, 3D DNR, True WDR,  Ultra-low light  Powerde By DarkFighter Color: 0.005lux/F1.6, B/W:0.001lux/F1.6, ",6759600,6759600,0,0,10399385,2 Years Warranty,Hikvision
+DS-2DE4A225IWG,· High quality imaging with 2 MP resolution · Excellent low-light performance via powered-by-DarkFighter technology · Clear imaging against strong bac,9863900,9863900,0,0,15175231,2 Years Warranty,Hikvision
+DS-2DE4A425IWG,· High quality imaging with 4 MP resolution · Excellent low-light performance via powered-by-DarkFighter technology · Clear imaging against strong bac,11219500,11219500,0,0,17260769,2 Years Warranty,Hikvision
+DS-2DE5225W,"● 1/2.8"" Progressive Scan CMOS ● High quality imaging with 2 MP resolution ● Excellent low-light performance with powered-by-DarkFighter technology ● ",10199900,10199900,0,0,15692154,2 Years Warranty,Hikvision
+DS-2SE4C215MWG,Captures a large area and great details at the same time High quality imaging with 2 MP resolution Excellent low-light performance with powered-by-Dar,8538400,8538400,0,0,13136000,2 Years Warranty,Hikvision
+DS-2SE4C225MWG,Captures a large area and great details at the same time High quality imaging with 2 MP resolution Excellent low-light performance with powered-by-Dar,10513400,10513400,0,0,16174462,2 Years Warranty,Hikvision
+DS-2SE4C415MWG,Captures a large area and great details at the same time High quality imaging with 4 MP resolution Excellent low-light performance with powered-by-Dar,10056500,10056500,0,0,15471538,2 Years Warranty,Hikvision
+DS-2SE4C425MWG,Captures a large area and great details at the same time High quality imaging with 4 MP resolution Excellent low-light performance with powered-by-Dar,10966500,10966500,0,0,16871538,2 Years Warranty,Hikvision
+DS-2SE3C204MWG-E/12,"Captures a large area and great details at the same time 2MP 1/2.8"" progressive scan CMOS,H.265+/H.265; [PTZ channel]: IR Distance: up to 40 m;4x opti",4743200,4743200,0,0,7297231,2 Years Warranty,Hikvision
+DS-2SE3C404MWG-E/14,"Captures a large area and great details at the same time 4MP 1/2.8"" progressive scan CMOS,H.265+/H.265; [PTZ channel]: IR Distance: up to 40 m;4x opti",5222700,5222700,0,0,8034923,2 Years Warranty,Hikvision
+DS-2SE4C225MWG-E/12 with bracket,"Bullet lens: Accurate human and vehicle target classification, alarm,based on deep learning algorithm 1/3"" Progressive Scan CMOS Up to 1920 × 1080@30f",10513400,10513400,0,0,16174462,2 Years Warranty,Hikvision
+DS-2SE4C425MWG-E/14 with bracket,"Bullet lens: Accurate human and vehicle target classification, alarm,based on deep learning algorithm 1/3"" Progressive Scan CMOS Up to 2560 × 1440@30f",11476300,11476300,0,0,17655846,2 Years Warranty,Hikvision
+DS-2DE5425WG1 with bracket,"AI-ISP/AI -FOCUS/VR image Accurate human and vehicle target classification, alarm, and  tracking based on deep learning algorithm Support face capture",9539100,9539100,0,0,14675538,2 Years Warranty,Hikvision
+DS-2DE5432WG1 with bracket,"AI-ISP/AI -FOCUS/VR image Accurate human and vehicle target classification, alarm, and  tracking based on deep learning algorithm Support face capture",12813100,12813100,0,0,19712462,2 Years Warranty,Hikvision
+DS-2DE4225IWG1-E with bracket,"AI-ISP/AI -FOCUS/VR image Accurate human and vehicle target classification, alarm, and  tracking based on deep learning algorithm Support face capture",8919700,8919700,0,0,13722615,2 Years Warranty,Hikvision
+DS-2DE4425IWG1-E with bracket,"AI-ISP/AI -FOCUS/VR image Accurate human and vehicle target classification, alarm, and  tracking based on deep learning algorithm Support face capture",9829900,9829900,0,0,15122923,2 Years Warranty,Hikvision
+DS-2DE4A225IWG1-E,"AI-ISP/AI -FOCUS/VR image Accurate human and vehicle target classification, alarm, and  tracking based on deep learning algorithm Support face capture",10203600,10203600,0,0,15697846,2 Years Warranty,Hikvision
+DS-2DE4A425IWG1-E,"AI-ISP/AI -FOCUS/VR image Accurate human and vehicle target classification, alarm, and  tracking based on deep learning algorithm Support face capture",11616000,11616000,0,0,17870769,2 Years Warranty,Hikvision
+DS-7604NXI-K1/Vpro,Up to 4-ch AcuSeek and AcuSearch function Adopt Hikvision AcuSense technology to minimize manual effort and security costs Accurate perimeter protecti,3785400,3785400,0,0,6105484,2 Years Warranty,Hikvision
+DS-7604NXI-K1/4P/Vpro,Up to 4-ch AcuSeek and AcuSearch function  Adopt Hikvision AcuSense technology to minimize manual effort and security costs  Accurate perimeter protec,5236500,5236500,0,0,8445968,2 Years Warranty,Hikvision
+DS-7608NXI-K1/Vpro,Up to 8-ch AcuSeek and AcuSearch function  Adopt Hikvision AcuSense technology to minimize manual effort and security costs  Accurate perimeter protec,4286300,4286300,0,0,6913387,2 Years Warranty,Hikvision
+DS-7608NXI-K1/8P/Vpro,Up to 8-ch AcuSeek and AcuSearch function  Adopt Hikvision AcuSense technology to minimize manual effort and security costs  Accurate perimeter protec,7054300,7054300,0,0,11377903,2 Years Warranty,Hikvision
+DS-7616NXI-K1/Vpro,Up to 16-ch AcuSeek and AcuSearch function  Adopt Hikvision AcuSense technology to minimize manual effort and security costs  Accurate perimeter prote,5039400,5039400,0,0,8128065,2 Years Warranty,Hikvision
+DS-7608NXI-K2/Vpro,Up to 8-ch AcuSeek and AcuSearch function  Adopt Hikvision AcuSense technology to minimize manual effort and security costs  Accurate perimeter protec,5417900,5417900,0,0,8738548,2 Years Warranty,Hikvision
+DS-7608NXI-K2/8P/Vpro,Up to 8-ch AcuSeek and AcuSearch function  Adopt Hikvision AcuSense technology to minimize manual effort and security costs  Accurate perimeter protec,9136300,9136300,0,0,14735968,2 Years Warranty,Hikvision
+DS-7616NXI-K2/Vpro,Up to 16-ch AcuSeek and AcuSearch function  Adopt Hikvision AcuSense technology to minimize manual effort and security costs  Accurate perimeter prote,6616700,6616700,0,0,10672097,2 Years Warranty,Hikvision
+DS-7616NXI-K2/16P/Vpro,Up to 16-ch AcuSeek and AcuSearch function  Adopt Hikvision Acusense technology to minimize manual effort and security costs  Accurate perimeter prote,12286900,12286900,0,0,19817581,2 Years Warranty,Hikvision
+DS-7632NXI-K2/VPro,Up to 32-ch AcuSeek and AcuSearch function  Adopt Hikvision AcuSense technology to minimize manual effort and security costs  Accurate perimeter prote,9014100,9014100,0,0,14538871,2 Years Warranty,Hikvision
+DS-7632NXI-K2/16P/Vpro,Up to 32-ch AcuSeek and AcuSearch function  Accurate perimeter protection effectively reduces false alarms  Adopt Hikvision Acusense technology to min,14487100,14487100,0,0,23366290,2 Years Warranty,Hikvision
+DS-7716NXI-K4/Vpro,Up to 16-ch AcuSeek and AcuSearch function  Adopt Hikvision AcuSense technology to minimize manual effort and security costs  Accurate perimeter prote,11344500,11344500,0,0,18297581,2 Years Warranty,Hikvision
+DS-7716NXI-K4/16P/Vpro,Up to 16-ch AcuSeek and AcuSearch function  Adopt Hikvision AcuSense technology to minimize manual effort and security costs  Accurate perimeter prote,17002900,17002900,0,0,27424032,2 Years Warranty,Hikvision
+DS-7732NXI-K4/VPro,Up to 32-ch AcuSeek and AcuSearch function  Adopt Hikvision AcuSense technology to minimize manual effort and security costs  Accurate perimeter prote,13229300,13229300,0,0,21337581,2 Years Warranty,Hikvision
+DS-7732NXI-K4/16P/VPro,Up to 32-ch AcuSeek and AcuSearch function  Adopt Hikvision AcuSense technology to minimize manual effort and security costs  Accurate perimeter prote,19522500,19522500,0,0,31487903,2 Years Warranty,Hikvision
+DS-7104NI-Q1/M,"40Mbps Bit Rate Input Max (up to 4-ch IP video), 1 SATA interface, mini 1U case(Metal)",1187100,1187100,0,0,1695857,2 Years Warranty,Hikvision
+DS-7104NI-Q1/4P/M,"40Mbps Bit Rate Input Max (up to 4-ch IP video) 1 SATA interface, 4 independent PoE network interfaces, mini 1U case(Metal)",1968500,1968500,0,0,2812143,2 Years Warranty,Hikvision
+DS-7108NI-Q1/M,"60Mbps Bit Rate Input Max (up to 8-ch IP video), 1 SATA interface, mini 1U case(Metal)",1448900,1448900,0,0,2069857,2 Years Warranty,Hikvision
+DS-7108NI-Q1/8P/M,"60Mbps Bit Rate Input Max (up to 8-ch IP video) 1 SATA interface, 8 independent PoE network interfaces, mini 1U case(Metal)",2764900,2764900,0,0,3949857,2 Years Warranty,Hikvision
+DS-7604NI-Q1(E),"HDD direct insertion design for easy installation 4-channels Motion Detection 2.0 40Mbps Bit Rate Input Max (up to 4-ch IP video), 1 SATA interfaces, ",1912300,1912300,0,0,2731857,2 Years Warranty,Hikvision
+DS-7604NI-Q1/4P(E),"HDD direct insertion design for easy installation 4-channels Motion Detection 2.0 40Mbps Bit Rate Input Max (up to 4-ch IP video), 1 SATA interfaces, ",2906700,2906700,0,0,4152429,2 Years Warranty,Hikvision
+DS-7608NI-Q1(E),"HDD direct insertion design for easy installation 4-channels Motion Detection 2.0 80Mbps Bit Rate Input Max (up to 8-ch IP video), 1 SATA interfaces, ",2175200,2175200,0,0,3346462,2 Years Warranty,Hikvision
+DS-7608NI-Q1/8P(E),"HDD direct insertion design for easy installation 4-channels Motion Detection 2.0 80Mbps Bit Rate Input Max (up to 8-ch IP video), 1 SATA interfaces, ",4045700,4045700,0,0,6224154,2 Years Warranty,Hikvision
+DS-7616NI-Q1(E),"HDD direct insertion design for easy installation 4-channels Motion Detection 2.0 160Mbps Bit Rate Input Max (up to 16-ch IP video), 1 SATA interfaces",2480000,2480000,0,0,3815385,2 Years Warranty,Hikvision
+DS-7608NI-Q2(E),"HDD direct insertion design for easy installation 4-channels Motion Detection 2.0 80Mbps Input, Max (up to 8-ch IP video) 2 SATA interfaces 380 1U min",2628600,2628600,0,0,4044000,2 Years Warranty,Hikvision
+DS-7608NI-Q2/8P(E),"HDD direct insertion design for easy installation 4-channels Motion Detection 2.0 80Mbps Input, Max (up to 8-ch IP video) 2 SATA interfaces 380 1U min",4335200,4335200,0,0,6669538,2 Years Warranty,Hikvision
+DS-7616NI-Q2(E),"HDD direct insertion design for easy installation 4-channels Motion Detection 2.0 160Mbps Input, Max (up to 16-ch IP video) 2 SATA interfaces 380 1U m",2956200,2956200,0,0,4548000,2 Years Warranty,Hikvision
+DS-7616NI-Q2/16P(E),"HDD direct insertion design for easy installation 4-channels Motion Detection 2.0 160Mbps Input, Max (up to 16-ch IP video) 2 SATA interfaces 380 1U m",5897100,5897100,0,0,9072462,2 Years Warranty,Hikvision
+DS-7604NXI-K1(E),All-channels AcuSearch&Smart Search**. All-channels Motion Detection 2.0. Up to 2 channels video stream (4MP) Perimeter Protection. Facial Recognition,2601700,2601700,0,0,4196290,2 Years Warranty,Hikvision
+DS-7604NXI-K1/4P(E),All-channels AcuSearch&Smart Search**. All-channels Motion Detection 2.0. Up to 2 channels video stream (4MP) Perimeter Protection. Facial Recognition,3816000,3816000,0,0,6154839,2 Years Warranty,Hikvision
+DS-7608NXI-K1(E),All-channels AcuSearch&Smart Search**. All-channels Motion Detection 2.0. Up to 2 channels video stream (4MP) Perimeter Protection. Facial Recognition,2901400,2901400,0,0,4679677,2 Years Warranty,Hikvision
+DS-7608NXI-K1/8P(E),All-channels AcuSearch&Smart Search**. All-channels Motion Detection 2.0. Up to 2 channels video stream (4MP) Perimeter Protection. Facial Recognition,5107200,5107200,0,0,8237419,2 Years Warranty,Hikvision
+DS-7616NXI-K1(E),All-channels AcuSearch&Smart Search**. All-channels Motion Detection 2.0. Up to 2 channels video stream (4MP) Perimeter Protection. Facial Recognition,3397100,3397100,0,0,5479194,2 Years Warranty,Hikvision
+DS-7608NXI-K2(E),All-channels AcuSearch&Smart Search**. All-channels Motion Detection 2.0. Up to 2 channels video stream (4MP) Perimeter Protection. Facial Recognition,3708400,3708400,0,0,5981290,2 Years Warranty,Hikvision
+DS-7608NXI-K2/8P(E),All-channels AcuSearch&Smart Search**. All-channels Motion Detection 2.0. Up to 2 channels video stream (4MP) Perimeter Protection. Facial Recognition,6294600,6294600,0,0,10152581,2 Years Warranty,Hikvision
+DS-7616NXI-K2(E),All-channels AcuSearch&Smart Search**. All-channels Motion Detection 2.0. Up to 2 channels video stream (4MP) Perimeter Protection. Facial Recognition,4523100,4523100,0,0,7295323,2 Years Warranty,Hikvision
+DS-7616NXI-K2/16P(E),All-channels AcuSearch&Smart Search**. All-channels Motion Detection 2.0. Up to 2 channels video stream (4MP) Perimeter Protection. Facial Recognition,8527400,8527400,0,0,13753871,2 Years Warranty,Hikvision
+DS-7632NXI-K2(E),All-channels AcuSearch&Smart Search**. All-channels Motion Detection 2.0. Up to 2 channels video stream (4MP) Perimeter Protection. Facial Recognition,7071000,7071000,0,0,11404839,2 Years Warranty,Hikvision
+DS-7632NXI-K2/16P(E),All-channels AcuSearch&Smart Search**. All-channels Motion Detection 2.0. Up to 2 channels video stream (4MP) Perimeter Protection. Facial Recognition,11006100,11006100,0,0,17751774,2 Years Warranty,Hikvision
+DS-7716NXI-K4(E),All-channels AcuSearch&Smart Search**. All-channels Motion Detection 2.0. Up to 2 channels video stream (4MP) Perimeter Protection. Facial Recognition,8093200,8093200,0,0,13053548,2 Years Warranty,Hikvision
+DS-7716NXI-K4/16P(E),All-channels AcuSearch&Smart Search**. All-channels Motion Detection 2.0. Up to 2 channels video stream (4MP) Perimeter Protection. Facial Recognition,11838600,11838600,0,0,19094516,2 Years Warranty,Hikvision
+DS-7732NXI-K4(E),All-channels AcuSearch&Smart Search**. All-channels Motion Detection 2.0. Up to 2 channels video stream (4MP) Perimeter Protection. Facial Recognition,10532800,10532800,0,0,16988387,2 Years Warranty,Hikvision
+DS-7732NXI-K4/16P(E),All-channels AcuSearch&Smart Search**. All-channels Motion Detection 2.0. Up to 2 channels video stream (4MP) Perimeter Protection. Facial Recognition,14106300,14106300,0,0,22752097,2 Years Warranty,Hikvision
+DS-7608NI-M2,"128Mbps Bit Rate Input Max(up to 8-ch IP video),8x8MP decoding capability,HDMI up to 8K, 2 SATA Interfaces, alarm I/O: 4/1, 380 1U case",5849000,5849000,0,0,9433871,2 Years Warranty,Hikvision
+DS-7608NI-M2/8P,"128Mbps Bit Rate Input Max(up to 8-ch IP video),8x8MP decoding capability,HDMI up to 8K, 2 SATA Interfaces, 8 independent PoE network interfaces, alar",8022800,8022800,0,0,12940000,2 Years Warranty,Hikvision
+DS-7616NI-M2,"256Mbps Bit Rate Input Max(up to 16-ch IP video),16x4MP decoding capability,HDMI up to 8K, 2 SATA Interfaces, alarm I/O: 4/1, 380 1U case",6873300,6873300,0,0,11085968,2 Years Warranty,Hikvision
+DS-7616NI-M2/16P,"256Mbps Bit Rate Input Max(up to 16-ch IP video),16x4MP decoding capability,HDMI up to 8K, 2 SATA Interfaces, 16 independent PoE network interfaces, a",10888600,10888600,0,0,17562258,2 Years Warranty,Hikvision
+DS-7716NI-M4,"256Mbps Bit Rate Input Max(up to 16-ch IP video),16x4MP decoding capability, 4 SATA Interfaces,2 HDMI ouputs(up to 8K),1 eSATA, alarm I/O: 16/9, 1.5U ",11494600,11494600,0,0,18539677,2 Years Warranty,Hikvision
+DS-7716NI-M4/16P,"256Mbps Bit Rate Input Max(up to 16-ch IP video),16x4MP decoding capability, 4 SATA Interfaces,2 HDMI ouputs(up to 8K),1 eSATA,16 independent PoE netw",14974400,14974400,0,0,24152258,2 Years Warranty,Hikvision
+DS-7732NI-M4,"320Mbps Bit Rate Input Max(up to 32-ch IP video), 32x2MP decoding capability, 4 SATA Interfaces, 2 HDMI ouputs(up to 8K),1 eSATA,alarm I/O: 16/9, 1.5U",13152400,13152400,0,0,21213548,2 Years Warranty,Hikvision
+DS-7732NI-M4/16P,"320Mbps Bit Rate Input Max(up to 32-ch IP video), 32x2MP decoding capability, 4 SATA Interfaces, 2 HDMI ouputs(up to 8K),1 eSATA,16 independent PoE ne",18074700,18074700,0,0,29152742,2 Years Warranty,Hikvision
+DS-7716NXI-I4/S,False alarm reduction for up to 4-ch 1080P; Facial Recognition for up to 4 channels picture stream or 1 channels video stream; * Facial recognition an,11971600,11971600,0,0,19309032,2 Years Warranty,Hikvision
+DS-7716NXI-I4/16P/S,False alarm reduction for up to 4-ch 1080P; Facial Recognition for up to 4 channels picture stream or 1 channels video stream; * Facial recognition an,15029000,15029000,0,0,24240323,2 Years Warranty,Hikvision
+DS-7732NXI-I4/S,False alarm reduction for up to 4-ch 1080P; Facial Recognition for up to 4 channels picture stream or 1 channels video stream; * Facial recognition an,13539400,13539400,0,0,21837742,2 Years Warranty,Hikvision
+DS-7732NXI-I4/16P/S,False alarm reduction for up to 4-ch 1080P; Facial Recognition for up to 4 channels picture stream or 1 channels video stream; * Facial recognition an,17644600,17644600,0,0,28459032,2 Years Warranty,Hikvision
+DS-2CE16D0T-LPTS,"2MP CMOS Sensor, 1080P@25fps(P)(Default)/30fps(N),EXIR, 30m IR+20m White Light, Outdoor Smart-hybrid-light Bullet, ICR, 0.01 Lux/F1.2, 12 VDC, Smart I",501700,501700,0,0,771846,2 Years Warranty,Hikvision
+DS-2CE78D0T-LPTS,"2MP CMOS Sensor, 1080P@25fps(P)(Default)/30fps(N),EXIR, 30m IR+20m White Light, Outdoor Smart-hybrid-light Turret, ICR, 0.01 Lux/F1.2, 12 VDC, Smart I",516200,516200,0,0,794154,2 Years Warranty,Hikvision
+DS-2CE78D0T-LTS,"2MP CMOS Sensor, 1080P@25fps(P)(Default)/30fps(N),EXIR, 30m IR+20m White Light, Outdoor Smart-hybrid-light Turret, ICR, 0.01 Lux/F1.2, 12 VDC, Smart I",675000,675000,0,0,1038462,2 Years Warranty,Hikvision
+DS-2CE70D0T-PTLTS,"2MP CMOS Sensor, 1080P@25fps(P)(Default)/30fps(N),EXIR, 30m IR+20m White Light, Outdoor Smart-hybrid-light PT Turret, ICR, 0.01 Lux/F1.2, 12 VDC, Smar",721900,721900,0,0,1110615,2 Years Warranty,Hikvision
+DS-2CE16G0T-LPTS,"● High quality imaging with 2K, 2304 × 1296 resolution ● Smart-Hybrid Light, optimize your security with flexible lighting options ● 3D DNR technology",559800,559800,0,0,861231,2 Years Warranty,Hikvision
+DS-2CE78G0T-LPTS,"● High quality imaging with 2K, 2304 × 1296 resolution ● Smart-Hybrid Light, optimize your security with flexible lighting options ● 3D DNR technology",559800,559800,0,0,861231,2 Years Warranty,Hikvision
+DS-2CE16K0T-LPTS,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default),EXIR, 25m IR+20m White Light, Outdoor Smart-hybrid-light Bullet, ICR, 0.01 Lux/F2.0, 12 VDC, Smart IR, D",641100,641100,0,0,986308,2 Years Warranty,Hikvision
+DS-2CE78K0T-LPTS,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default),EXIR, 40m IR+40m White Light, Outdoor Smart-hybrid-light Turret, ICR, 0.01 Lux/F2.0, 12 VDC, Smart IR, D",641100,641100,0,0,986308,2 Years Warranty,Hikvision
+DS-2CE78K0T-LTS,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default),EXIR, 40m IR+40m White Light, Outdoor Smart-hybrid-light Turret, ICR, 0.01 Lux/F2.0, 12 VDC, Smart IR, D",757600,757600,0,0,1165538,2 Years Warranty,Hikvision
+DS-2CE70K0T-PTLTS,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default),EXIR, 25m IR+20m White Light,Indoor Smart-hybrid-light PT Turret, ICR, 0.01 Lux/F2.0, 12 VDC, Smart IR, ",808600,808600,0,0,1244000,2 Years Warranty,Hikvision
+DS-2CE16U0T-LPTS,"4K BSI CMOS Sensor,EXIR, 25m IR+20m White Light, Outdoor Smart-hybrid-light Bullet, ICR, 0.01 Lux/F2.0, 12 VDC, Smart IR, DNR,Smart Lighting（With Acus",1038300,1038300,0,0,1597385,2 Years Warranty,Hikvision
+DS-2CE78U0T-LPTS,"4K BSI CMOS Sensor,EXIR, 40m IR+40m White Light, Outdoor Smart-hybrid-light Turret, ICR, 0.01 Lux/F2.0, 12 VDC, Smart IR, DNR,Smart Lighting（With Acus",1038300,1038300,0,0,1597385,2 Years Warranty,Hikvision
+DS-2CE10DF0T-LPTS,"2M BSI CMOS Sensor,Outdoor smart hybird light with ColorVu mini Bullet,0.001 Lux Lux/F1.0, 25m IR+20m White Light,3D DNR,DC 12V,OSD Menu(Up the Coax),",634300,634300,0,0,975846,2 Years Warranty,Hikvision
+DS-2CE72DF0T-LPTS,"2M BSI CMOS Sensor,Outdoor smart hybird light with ColorVu Turret,0.001 Lux Lux/F1.0, 40m IR+40m White Light,3D DNR,DC 12V,OSD Menu(Up the Coax), DWDR",634300,634300,0,0,975846,2 Years Warranty,Hikvision
+DS-2CE10GF0T-LPTS,"● High quality imaging with 2K, 2304 × 1296 resolution ● 24/7 color imaging with F1.0 aperture ● Smart-Hybrid Light, optimize your security with flexi",682300,682300,0,0,1049692,2 Years Warranty,Hikvision
+DS-2CE72GF0T-LPTS,"● High quality imaging with 2K, 2304 × 1296 resolution ● 24/7 color imaging with F1.0 aperture ● Smart-Hybrid Light, optimize your security with flexi",682300,682300,0,0,1049692,2 Years Warranty,Hikvision
+DS-2CE10KF0T-LPTS,"3K BSI CMOS Sensor,Outdoor smart hybird light with ColorVu mini Bullet,0.001 Lux Lux/F1.0, 25m IR+20m White Light,3D DNR,DC 12V,OSD Menu(Up the Coax),",1124900,1124900,0,0,1730615,2 Years Warranty,Hikvision
+DS-2CE72KF0T-LPTS,"3K BSI CMOS Sensor,Outdoor smart hybird light with ColorVu Turret,0.001 Lux Lux/F1.0, 40m IR+40m White Light,3D DNR,DC 12V,OSD Menu(Up the Coax), DWDR",1124900,1124900,0,0,1730615,2 Years Warranty,Hikvision
+iDS-7204HQHI-M1/XT,"Support TVI Two-way Audio, 1-ch facial recognition or 2-ch advanced model perimeter protection , 4 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces ",1482100,1482100,0,0,2280154,2 Years Warranty,Hikvision
+iDS-7208HQHI-M1/XT,"Support TVI Two-way Audio, 2-ch facial recognition or 4-ch advanced model perimeter protection ,  8 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces",2406500,2406500,0,0,3702308,2 Years Warranty,Hikvision
+iDS-7216HQHI-M1/XT,"Support TVI Two-way Audio,4-ch facial recognition or 8-ch advanced model perimeter protection , 16 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces ",4528700,4528700,0,0,6967231,2 Years Warranty,Hikvision
+iDS-7208HQHI-M2/XT,"Support TVI Two-way Audio,4-ch facial recognition or 8-ch advanced model perimeter protection , 16 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces ",2938000,2938000,0,0,4520000,2 Years Warranty,Hikvision
+iDS-7216HQHI-M2/XT,"Support TVI Two-way Audio,4-ch facial recognition or 8-ch advanced model perimeter protection , 1-ch face recognition or 4-ch perimeter protection , 1",4992800,4992800,0,0,7681231,2 Years Warranty,Hikvision
+iDS-7232HQHI-M2/XT,"Support TVI Two-way Audio,4-ch facial recognition or 8-ch advanced model perimeter protection , 32 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces ",8604400,8604400,0,0,13237538,2 Years Warranty,Hikvision
+iDS-7204HTHI-M1/XT,"Support TVI Two-way Audio,2-ch facial recognition or 4-ch advanced model false alarm filter,  4-ch HDTVI  coaxial video&audio input, 4-ch IP video inp",4191700,4191700,0,0,6448769,2 Years Warranty,Hikvision
+iDS-7204HTHI-M2/XT,"Support TVI Two-way Audio,2-ch facial recognition or 4-ch advanced model false alarm filter,  4-ch HDTVI  coaxial video&audio input, 4-ch IP video inp",4701600,4701600,0,0,7233231,2 Years Warranty,Hikvision
+iDS-7208HTHI-M2/XT,"Support TVI Two-way Audio,4-ch facial recognition or 8-ch advanced model false alarm filter,8-ch HDTVI  coaxial video&audio input, 8-ch IP video input",8063200,8063200,0,0,12404923,2 Years Warranty,Hikvision
+DS-7216HGHI-M1/T,"Support HDTVI Two-way Audio technology,full-channel motion detection 2.0 ,16 Turbo HD/AHD/Analog interface input,16-ch HDTVI  coaxial video&audio inpu",2402800,2402800,0,0,3291507,2 Years Warranty,Hikvision
+iDS-7204HUHI-M1/T,"Support TVI Two-way Audio,4-ch false alarm filter,4 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces input, 4-ch HDTVI  coaxial video&audio input, 1",2462700,2462700,0,0,3788769,2 Years Warranty,Hikvision
+iDS-7208HUHI-M1/T,"Support TVI Two-way Audio,4-ch false alarm filter, 8 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces input,8-ch HDTVI  coaxial video&audio input, 1",4259200,4259200,0,0,6552615,2 Years Warranty,Hikvision
+iDS-7216HUHI-M1/T,"Support TVI Two-way Audio,4-ch false alarm filter, 8 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces input,8-ch HDTVI  coaxial video&audio input, 1",8192600,8192600,0,0,12604000,2 Years Warranty,Hikvision
+iDS-7204HUHI-M1/XT,"Support TVI Two-way Audio,2-ch facial recognition or 4-ch advanced model false alarm filter,  4 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces inp",2919200,2919200,0,0,4491077,2 Years Warranty,Hikvision
+iDS-7208HUHI-M1/XT,"Support TVI Two-way Audio,4-ch facial recognition or 8-ch advanced model false alarm filter,   8 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces in",5149900,5149900,0,0,7922923,2 Years Warranty,Hikvision
+iDS-7216HUHI-M2/XT,"Support TVI Two-way Audio,4-ch facial recognition or 8-ch advanced model false alarm filter, 16 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces inp",10292300,10292300,0,0,15834308,2 Years Warranty,Hikvision
+DS-2CE16D0T-LPFS,"2MP CMOS Sensor, 1080P@25fps(P)(Default)/30fps(N),EXIR, 25m IR+20m White Light, Outdoor Dual-light Bullet, ICR, 0.01 Lux/F1.2, 12 VDC, Smart IR, DNR, ",441600,441600,0,0,604932,2 Years Warranty,Hikvision
+DS-2CE76D0T-LPFS,"2MP CMOS Sensor, 1080P@25fps(P)(Default)/30fps(N),EXIR, 20m IR+20m White Light, indoor Dual-light Turret, ICR, 0.01 Lux/F1.2, 12 VDC, Smart IR, DNR, B",412900,412900,0,0,565616,2 Years Warranty,Hikvision
+DS-2CE16D0T-LFS,"2MP CMOS Sensor, 1080P@25fps(P)(Default)/30fps(N), EXIR, 30m IR+20m White Light, Outdoor Dual-light Bullet, ICR, 0.01 Lux/F1.2, 12 VDC, Smart IR, DNR,",473900,473900,0,0,649178,2 Years Warranty,Hikvision
+DS-2CE76D0T-LMFS,"2MP CMOS Sensor, 1080P@25fps(P)(Default)/30fps(N),EXIR, 30m IR+20m White Light, Outdoor Dual-light Turret, ICR, 0.01 Lux/F1.2, 12 VDC, Smart IR, DNR, ",473900,473900,0,0,649178,2 Years Warranty,Hikvision
+DS-2CE16D0T-EXLPF,"2MP CMOS Sensor, 1080P@25fps(P)(Default)/30fps(N),EXIR, 20m IR+20m White Light, Outdoor Dual-light Bullet, ICR, 0.02 Lux/F1.2, 12 VDC, Smart IR, DNR, ",366200,366200,0,0,501644,2 Years Warranty,Hikvision
+DS-2CE76D0T-EXLPF,"● High quality imaging with 2 MP, 1920 × 1080 resolution ● Fixed focal lens, 2.8 and 3.6 mm optional ● Up to 20 m IR distance for bright night imaging",333800,333800,0,0,457260,2 Years Warranty,Hikvision
+DS-2CE16D0T-EXLF,"2MP CMOS Sensor, 1080P@25fps(P)(Default)/30fps(N), EXIR, 20m IR+20m White Light, Outdoor Dual-light Bullet, ICR, 0.02 Lux/F1.2, 12 VDC, Smart IR, DNR,",387800,387800,0,0,531233,2 Years Warranty,Hikvision
+DS-2CE76D0T-EXLMF,"● High quality imaging with 2 MP, 1920 × 1080 resolution ● Fixed focal lens, 2.8 and 3.6 mm optional ● Up to 20 m IR distance for bright night imaging",369800,369800,0,0,506575,2 Years Warranty,Hikvision
+DS-2CE16D0T-LPF,"2MP CMOS Sensor, 1080P@25fps(P)(Default)/30fps(N),EXIR, 25m IR+20m White Light, Outdoor Dual-light Bullet, ICR, 0.01 Lux/F1.2, 12 VDC, Smart IR, DNR,S",387800,387800,0,0,531233,2 Years Warranty,Hikvision
+DS-2CE76D0T-LPF,"2MP CMOS Sensor, 1080P@25fps(P)(Default)/30fps(N),EXIR, 20m IR+20m White Light, indoor Dual-light Turret, ICR, 0.01 Lux/F1.2, 12 VDC, Smart IR, DNR,Sm",351900,351900,0,0,482055,2 Years Warranty,Hikvision
+DS-2CE10DF0T-LPFS,"2M CMOS Sensor, Outdoor smart hybird light Bullet,0.001Lux/F1.0,20m IR+20m White Light,3D DNR,12 VDC,Built-in Mic,Audio up Coaxial(Only TVI),OSD Menu(",494200,494200,0,0,760308,2 Years Warranty,Hikvision
+DS-2CE10DF0T-LFS,"2M CMOS Sensor, Outdoor smart hybird light Bullet,0.001Lux/F1.0,20m IR+20m White Light,3D DNR,12 VDC,Built-in Mic,Audio up Coaxial(Only TVI),OSD Menu(",520000,520000,0,0,800000,2 Years Warranty,Hikvision
+DS-2CE12DF0T-LFS,"2M CMOS Sensor, Outdoor smart hybird light Bullet,0.001Lux/F1.0,40m IR+40m White Light,3D DNR,12 VDC,Built-in Mic,Audio up Coaxial(Only TVI),OSD Menu(",645500,645500,0,0,993077,2 Years Warranty,Hikvision
+DS-2CE70DF0T-LPFS,"2M CMOS Sensor, Indoor smart hybird light Turret,0.001Lux/F1.0,20m IR+20m White Light,3D DNR,12 VDC,Built-in Mic,Audio up Coaxial(Only TVI),OSD Menu(U",468400,468400,0,0,720615,2 Years Warranty,Hikvision
+DS-2CE70DF0T-LMFS,"2M CMOS Sensor, Outdoor smart hybird light Turret,0.001Lux/F1.0,20m IR+20m White Light,3D DNR,12 VDC,Built-in Mic,Audio up Coaxial(Only TVI),OSD Menu(",520000,520000,0,0,800000,2 Years Warranty,Hikvision
+DS-2CE72DF0T-LFS,"2M CMOS Sensor, Outdoor smart hybird light Turret,0.001Lux/F1.0,40m IR+40m White Light,3D DNR,12 VDC,Built-in Mic,Audio up Coaxial(Only TVI),OSD Menu(",582700,582700,0,0,896462,2 Years Warranty,Hikvision
+DS-2CE10DF3T-LPFS,"2M BSI CMOS Sensor,Outdoor smart hybird light mini Bullet,0.0005Lux/F1.0, 20m IR+20m White Light,3D DNR,DC 12V,Built-in Mic,Audio up Coaxial(Only TVI)",711800,711800,0,0,1095077,2 Years Warranty,Hikvision
+DS-2CE10DF3T-LFS,"2M BSI CMOS Sensor,Outdoor smart hybird light mini Bullet,0.0005Lux/F1.0, 20m IR+20m White Light,3D DNR,DC 12V,Built-in Mic,Audio up Coaxial(Only TVI)",741300,741300,0,0,1140462,2 Years Warranty,Hikvision
+DS-2CE12DF3T-LFS,"2M BSI CMOS Sensor,Outdoor smart hybird light  Bullet,0.0005Lux/F1.0, 40m IR+40m White Light,3D DNR,DC 12V,Built-in Mic,Audio up Coaxial(Only TVI),OSD",859400,859400,0,0,1322154,2 Years Warranty,Hikvision
+DS-2CE70DF3T-LPFS,"2M BSI CMOS Sensor,Indoor smart hybird light  Turret,0.0005Lux/F1.0, 20m IR+20m White Light,3D DNR,DC 12V,Built-in Mic,Audio up Coaxial(Only TVI),OSD ",678700,678700,0,0,1044154,2 Years Warranty,Hikvision
+DS-2CE70DF3T-LMFS,"2M BSI CMOS Sensor,Outdoor smart hybird light Turret,0.0005Lux/F1.0, 20m IR+20m White Light,3D DNR,DC 12V,Built-in Mic,Audio up Coaxial(Only TVI),OSD ",741300,741300,0,0,1140462,2 Years Warranty,Hikvision
+DS-2CE72DF3T-LFS,"2M BSI CMOS Sensor,Outdoor smart hybird light Turret,0.0005Lux/F1.0, 40m IR+40m White Light,3D DNR,DC 12V,Built-in Mic,Audio up Coaxial(Only TVI),OSD ",770800,770800,0,0,1185846,2 Years Warranty,Hikvision
+DS-2CE18D0T-LFS,"2MP CMOS Sensor, 1080P@25fps(P)(Default)/30fps(N), EXIR, Lamp looking,40m IR+60m White Light, Outdoor Lamp Cam, ICR, 0.01 Lux/F1.2, 12 VDC, Smart IR, ",623300,623300,0,0,958923,2 Years Warranty,Hikvision
+DS-2CE70DF3T-PTS,"2M BSI CMOS Sensor,Indoor PT Turret,0.0005Lux/F1.0, 0 Lux with Friendly Lighting,20M,3D DNR,DC 12V,Built-in Mic,Audio Over Coaxial(Only TVI)OSD Menu(U",874100,874100,0,0,1344769,2 Years Warranty,Hikvision
+DS-2CE16K0T-LPFS,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default),EXIR, 25m IR+20m White Light, Outdoor Dual-light Bullet, ICR, 0.01 Lux/F1.2, 12 VDC, Smart IR, DNR, Buil",590000,590000,0,0,907692,2 Years Warranty,Hikvision
+DS-2CE76K0T-LPFS,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default),EXIR, 20m IR+20m White Light, indoor Dual-light Turret, ICR, 0.01 Lux/F1.2, 12 VDC, Smart IR, DNR, Built",561000,561000,0,0,863077,2 Years Warranty,Hikvision
+DS-2CE16K0T-LFS,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default), EXIR, 30m IR+20m White Light, Outdoor Dual-light Bullet, ICR, 0.01 Lux/F1.2, 12 VDC, Smart IR, DNR, Bui",618900,618900,0,0,952154,2 Years Warranty,Hikvision
+DS-2CE76K0T-LMFS,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default),EXIR, 30m IR+20m White Light, Outdoor Dual-light Turret, ICR, 0.01 Lux/F1.2, 12 VDC, Smart IR, DNR, Buil",590000,590000,0,0,907692,2 Years Warranty,Hikvision
+DS-2CE16K0T-EXLPF,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default),EXIR, 20m IR+20m White Light, Outdoor Dual-light Bullet, ICR, 0.02 Lux/F1.2, 12 VDC, Smart IR, DNR, Smar",564700,564700,0,0,868769,2 Years Warranty,Hikvision
+DS-2CE16K0T-EXLF,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default), EXIR, 20m IR+20m White Light, Outdoor Dual-light Bullet, ICR, 0.02 Lux/F1.2, 12 VDC, Smart IR, DNR, Sma",571800,571800,0,0,879692,2 Years Warranty,Hikvision
+DS-2CE76K0T-EXLPF,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default),EXIR, 20m IR+20m White Light, indoor Dual-light Turret, ICR, 0.02 Lux/F1.2, 12 VDC, Smart IR, DNR, Smart",524900,524900,0,0,807538,2 Years Warranty,Hikvision
+DS-2CE76K0T-EXLMF,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default),EXIR, 20m IR+20m White Light, Outdoor Dual-light Turret, ICR, 0.02 Lux/F1.2, 12 VDC, Smart IR, DNR, Smar",586400,586400,0,0,902154,2 Years Warranty,Hikvision
+DS-2CE10KF0T-LPFS,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default),Outdoor smart hybird light mini Bullet,0.001Lux/F1.0,20m IR+20m White Light,2D DNR,Built-in Mic,Audio up",1110200,1110200,0,0,1708000,2 Years Warranty,Hikvision
+DS-2CE10KF0T-LFS,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default),Outdoor smart hybird light mini Bullet,0.001Lux/F1.0,20m IR+20m White Light,2D DNR,Built-in Mic,Audio up",1136000,1136000,0,0,1747692,2 Years Warranty,Hikvision
+DS-2CE12KF0T-LFS,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default),Outdoor smart hybird light  Bullet,0.001Lux/F1.0,40m IR+40m White Light,2D DNR,Built-in Mic,Audio up Coa",1301900,1301900,0,0,2002923,2 Years Warranty,Hikvision
+DS-2CE70KF0T-LPFS,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default),Indoor smart hybird light Turret,0.001Lux/F1.0,20m IR+20m White Light,2D DNR,Built-in Mic,Audio up Coaxi",1076900,1076900,0,0,1656769,2 Years Warranty,Hikvision
+DS-2CE70KF0T-LMFS,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default),Outdoor smart hybird light  Turret,0.001Lux/F1.0,40m IR+40m White Light,2D DNR,Built-in Mic,Audio up Coa",1136000,1136000,0,0,1747692,2 Years Warranty,Hikvision
+DS-2CE72KF0T-LFS,"3K （5MP 16:9）CMOS Sensor,3K @ 20 fps(Default),Outdoor smart hybird light  Turret,0.001Lux/F1.0,40m IR+40m White Light,2D DNR,Built-in Mic,Audio up Coa",1198600,1198600,0,0,1844000,2 Years Warranty,Hikvision
+DS-2CE16U1T-ITPF,"8.3MP @12.5fps(Default),5MP@20fps,4MP@25fps(P)/30fps(N),2MP@25fps(P)/30fps(N), EXIR,30m IR, Outdoor EXIR Bullet , ICR, 0.01 Lux/F1.2, 12VDC, Smart IR,",977500,977500,0,0,1503846,2 Years Warranty,Hikvision
+DS-2CE76U1T-ITPF,"8.3MP @12.5fps(Default),5MP@20fps,4MP@25fps(P)/30fps(N),2MP@25fps(P)/30fps(N), EXIR, 30m IR, Indoor EXIR Turret,ICR, 0.01 Lux/F1.2, 12VDC, Smart IR,DN",943300,943300,0,0,1451231,2 Years Warranty,Hikvision
+iDS-7204HUHI-M1/E,"full-channel motion detection 2.0 or 4-ch false alarm filter,4 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces input, 4-ch HDTVI  coaxial video&aud",1759100,1759100,0,0,2706308,2 Years Warranty,Hikvision
+iDS-7208HUHI-M1/E,"full-channel motion detection 2.0 or 4-ch false alarm filter, 8 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces input,8-ch HDTVI  coaxial video&aud",2982900,2982900,0,0,4589077,2 Years Warranty,Hikvision
+iDS-7204HUHI-M1/S,"4-ch false alarm filter,  4 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces input, 4-ch video&1-ch audio input, 1 SATA interface,  H.265/H.265+ com",1994800,1994800,0,0,3068923,2 Years Warranty,Hikvision
+iDS-7208HUHI-M1/S,"4-ch false alarm filter,  8 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces input, 8-ch video&1-ch audio input, 1 SATA interface, H.265/H.265+ comp",3387200,3387200,0,0,5211077,2 Years Warranty,Hikvision
+iDS-7204HUHI-M2/S,"4-ch false alarm filter,  4 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces input, 4-ch video&1-ch audio input, 2 SATA interfaces, H.265/H.265+ com",2328000,2328000,0,0,3581538,2 Years Warranty,Hikvision
+iDS-7208HUHI-M2/S,"4-ch false alarm filter,  8 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces input, 8-ch video&1-ch audio input, 2 SATA interfaces, H.265/H.265+ com",3746500,3746500,0,0,5763846,2 Years Warranty,Hikvision
+iDS-7216HUHI-M2/S,"16-ch Motion Detection 2.0 or 4-ch false alarm filter, 16 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces input, 2 SATA interfaces, H.265/H.265+ co",6800400,6800400,0,0,10462154,2 Years Warranty,Hikvision
+iDS-7316HQHI-M4/S,"16 Turbo HD/CVI / AHD / CVBS interface input, 16-ch video&4-ch audio input, 4-ch IP video input(up to 20-ch IP), 2 RJ45 10M/100M/1000M self-adaptive E",11366000,11366000,0,0,17486154,2 Years Warranty,Hikvision
+iDS-7316HUHI-M4/S,"16 Turbo HD/CVI / AHD / CVBS self-adaptive interfaces input, 16-ch video&4-ch audio input,18-ch IP video input(up to 34-ch IP),H.264/H.264+/H.265+/H.2",15821700,15821700,0,0,24341077,2 Years Warranty,Hikvision
+iDS-7332HQHI-M4/S,"32 Turbo HD/CVI / AHD / CVBS interface input, 32-ch video&4-ch audio input, 16-ch IP video input(up to 48-ch IP), H.264/H.264+/H.265+/H.265 video comp",18102500,18102500,0,0,27850000,2 Years Warranty,Hikvision
+iDS-7332HUHI-M4/S,"32Turbo HD/CVI / AHD / CVBS self-adaptive interfaces input, 32-ch video&4-ch audio input,32-ch IP video input(up to 64-ch IP),H.264/H.264+/H.265+/H.26",23105800,23105800,0,0,35547385,2 Years Warranty,Hikvision
+iDS-9032HQHI-M8/S,"32 Turbo HD/CVI / AHD / CVBS interface input, 32-ch video&16-ch audio input, 16-ch IP video input(up to 48-ch IP), H.264/H.264+/H.265+/H.265 video com",32021100,32021100,0,0,49263231,2 Years Warranty,Hikvision
+iDS-9032HUHI-M8/S,"32 Turbo HD/CVI / AHD / CVBS interfaces input, 32-ch video&16-ch audio input, 32-ch IP video input(up to 64-ch IP), H.264/H.264+/H.265+/H.265 video co",35404400,35404400,0,0,54468308,2 Years Warranty,Hikvision
+DS-3E0505D-O,"L2, Unmanaged, 5 Gigabit RJ45 ports, desktop plastic switch",173100,173100,0,0,278200,2 Years Warranty,Hikvision
+DS-3E0508D-O,"L2, Unmanaged, 8 Gigabit RJ45 ports, desktop plastic switch",277100,277100,0,0,445300,2 Years Warranty,Hikvision
+DS-3E0105D-O,"L2, Unmanaged, 5 10/100M RJ45 ports, desktop plastic switch",90100,90100,0,0,144800,2 Years Warranty,Hikvision
+DS-3E0108D-O,"L2, Unmanaged, 8 10/100M RJ45 ports, desktop plastic switch",117700,117700,0,0,189200,2 Years Warranty,Hikvision
+DS-3E0105-O,"5 10/100M RJ45 ports, Desktop Steel Case Unmanaged Switch",187000,187000,0,0,300600,2 Years Warranty,Hikvision
+DS-3E0108-O,"8 10/100M RJ45 ports, Desktop Steel Case Unmanaged Switch",270200,270200,0,0,434200,2 Years Warranty,Hikvision
+DS-3E0116R-O,"16 10/100M RJ45 ports, 19-inch Rack-mountable Steel Case Unmanaged Switch",588700,588700,0,0,946200,2 Years Warranty,Hikvision
+DS-3E0516-E,"16  Gigabit RJ45 ports, 19-inch Rack-mountable Steel Case Unmanaged Switch",820700,820700,0,0,1319100,2 Years Warranty,Hikvision
+DS-3E0524-E,"24  Gigabit RJ45 ports, 19-inch Rack-mountable Steel Case Unmanaged Switch",1108200,1108200,0,0,1781100,2 Years Warranty,Hikvision
+DS-3E0505-O,"5  Gigabit RJ45 ports, Desktop Steel Case Unmanaged Switch",225200,225200,0,0,361900,2 Years Warranty,Hikvision
+DS-3E0508-O,"8  Gigabit RJ45 ports, Desktop Steel Case Unmanaged Switch",346300,346300,0,0,556500,2 Years Warranty,Hikvision
+DS-3E0508P-O,"4 Gigabit POE ports, 4 Gigabit RJ45, 802.3af/at, PoE power budget 60w",744600,744600,0,0,1196800,2 Years Warranty,Hikvision
+DS-3E0516P-O,"8 Gigabit POE ports, 8 Gigabit RJ45, 802.3af/at, PoE power budget 110w",1419900,1419900,0,0,2282000,2 Years Warranty,Hikvision
+DS-3E0105P-E/M,"L2, Unmanaged, 4 10/100M RJ45 PoE ports, 1 10/100M RJ45 uplink port, 802.3af/at, PoE power budget 35W, max. 250m long distance transmission, 6KV surgy",471000,471000,0,0,756900,2 Years Warranty,Hikvision
+DS-3E0106P-E/M,"L2, Unmanaged, 4 10/100M RJ45 PoE ports, 2 10/100M RJ45 uplink port, 802.3af/at, PoE power budget 35W, max. 300m long distance transmission, 6KV surge",523000,523000,0,0,840600,2 Years Warranty,Hikvision
+DS-3E0109P-E/M,"L2, Unmanaged, 8 10/100M RJ45 PoE ports, 1 10/100M RJ45 uplink port, 802.3af/at, PoE power budget 60W, max. 250m long distance transmission, 6KV surgy",831200,831200,0,0,1335900,2 Years Warranty,Hikvision
+DS-3E0310P-E/M,"L2, Unmanaged, 8 10/100M RJ45 PoE ports, 2 Gigabit RJ45 uplink ports, 802.3af/at, PoE power budget 60W, max. 300m long distance transmission, 6KV surg",921300,921300,0,0,1480600,2 Years Warranty,Hikvision
+DS-3E0318P-E/M,"L2, Unmanaged, 16 10/100M RJ45 PoE ports, 1 Gigabit RJ45 uplink port, 1 Gigabit SFP uplink port, 802.3af/at, PoE power budget 130W, ""Extend"" Mode: por",2400000,2400000,0,0,3857200,2 Years Warranty,Hikvision
+DS-3E0326P-E/M,"L2, Unmanaged, 24 10/100M RJ45 PoE ports, 1 Gigabit RJ45 uplink port, 1 Gigabit SFP uplink port, 802.3af/at, PoE power budget 230W, ""Extend"" Mode: por",3186100,3186100,0,0,5120600,2 Years Warranty,Hikvision
+DS-3E1105P-EI/M,"L2, Smart Managed, 4 10/100M RJ45 PoE ports, 1 10/100M RJ45 port, 802.3af/at, PoE budget  45W, Max. 300 meter PoE transmission, Supports Hik-Central/i",516300,516300,0,0,829900,2 Years Warranty,Hikvision
+DS-3E1106P-EI/M,"L2, Smart Managed, 4 10/100M RJ45 PoE ports, 2 10/100M RJ45 port, 802.3af/at, PoE power budget  45W, HPP Cloud managed, VLAN, STP/RSTP loop prefention",568000,568000,0,0,912900,2 Years Warranty,Hikvision
+DS-3E1309P-EI/M,"L2, Smart Managed, 8 10/100M RJ45 PoE ports, 1 Gigabit RJ45 port, 802.3af/at, PoE power budget  60W, Max. 300 meter PoE transmission, Supports Hik-Cen",914300,914300,0,0,1469500,2 Years Warranty,Hikvision
+DS-3E1310P-EI/M,"L2, Smart Managed, 8 10/100M RJ45 PoE ports, 2 Gigabit RJ45 port, 802.3af/at, PoE power budget  60W, HPP Cloud managed, VLAN, STP/RSTP loop prefention",955900,955900,0,0,1536300,2 Years Warranty,Hikvision
+DS-3E1318P-EI/M,"L2, Smart Managed, 16 10/100M RJ45 PoE ports, 1 Gigabit RJ45 port, 1 Gigabit combo port, 802.3af/at, PoE power budget  130W, Max. 300 meter PoE transm",2494600,2494600,0,0,4009200,2 Years Warranty,Hikvision
+DS-3E1326P-EI/M,"L2, Smart Managed, 24 10/100M RJ45 PoE ports, 1 Gigabit RJ45 port, 1 Gigabit combo port, 802.3af/at, PoE power budget  230W, Max. 300 meter PoE transm",3370900,3370900,0,0,5417500,2 Years Warranty,Hikvision
+DS-3E0105P-E,"L2, Unmanaged, 4 10/100M RJ45 PoE ports, 1 10/100M RJ45 uplink port, 802.3af/at, PoE power budget 60W, max. 250m long distance transmission, 6KV surgy",588700,588700,0,0,946200,2 Years Warranty,Hikvision
+DS-3E0109P-E,"L2, Unmanaged, 8 10/100M RJ45 PoE ports, 1 10/100M RJ45 uplink port, 802.3af/at, PoE power budget 115W, max. 250m long distance transmission, 6KV surg",1038900,1038900,0,0,1669700,2 Years Warranty,Hikvision
+DS-3E0318P-E,"L2, Unmanaged, 16 10/100M RJ45 PoE ports, 2 Gigabit combo ports, 802.3af/at, PoE power budget 230W, ""Extend"" Mode: ports 9-16 support up to 250meter, ",2796400,2796400,0,0,4494300,2 Years Warranty,Hikvision
+DS-3E0326P-E,"L2, Unmanaged, 24 10/100M RJ45 PoE ports, 2 Gigabit combo ports, 802.3af/at, PoE power budget 370W, ""Extend"" Mode: ports 17-24 support up to 250meter,",3592800,3592800,0,0,5774100,2 Years Warranty,Hikvision
+DS-3E0505HP-E,"L2, Unmanaged, 4 Gigabit RJ45 PoE ports, 1 Gigabit RJ45 uplink port, 802.3af/at/bt, port 1 support Hi-PoE 60w, PoE power budget 60W, ports 3-4 support",1000100,1000100,0,0,1607300,2 Years Warranty,Hikvision
+DS-3E0510HP-E,"L2, Unmanaged, 8 Gigabit RJ45 PoE ports, 1 Gigabit RJ45, 1 Gigabit SFP uplink port, 802.3af/at/bt, port 1-2 support Hi-PoE 90w, PoE power budget 110W,",2018200,2018200,0,0,3243500,2 Years Warranty,Hikvision
+DS-3E0520HP-E,"L2, Unmanaged, 16 Gigabit RJ45 PoE ports, 2 Gigabit RJ45, 2 Gigabit SFP uplink ports, 802.3af/at/bt, port 1-4 support Hi-PoE 90w, PoE power budget 225",4654600,4654600,0,0,7480600,2 Years Warranty,Hikvision
+DS-3E0528HP-E,"L2, Unmanaged, 24 Gigabit RJ45 PoE ports, 2 Gigabit RJ45, 2 Gigabit SFP uplink ports, 802.3af/at/bt, port 1-4 support Hi-PoE 90w, PoE power budget 370",6181800,6181800,0,0,9935000,2 Years Warranty,Hikvision
+DS-3E1105P-EI,"L2, Smart Managed, 4 10/100M RJ45 PoE ports, 1 10/100M RJ45 port, 802.3af/at, PoE budget  60W, Max. 300 meter PoE transmission, Supports Hik-Central/i",616500,616500,0,0,990800,2 Years Warranty,Hikvision
+DS-3E1106P-EI,"L2, Smart Managed, 4 10/100M RJ45 PoE ports, 2 10/100M RJ45 port, 802.3af/at, PoE power budget 60W, HPP Cloud managed, VLAN, STP/RSTP loop prefention,",651200,651200,0,0,1046500,2 Years Warranty,Hikvision
+DS-3E1106HP-EI,"L2, Smart Managed, 4 10/100M RJ45 PoE ports, 2 10/100M RJ45 port, 802.3af/at/bt, PoE power budget 60W, Max. 300 meter long distance PoE transmission, ",780200,780200,0,0,1253900,2 Years Warranty,Hikvision
+DS-3E1309P-EI,"L2, Smart Managed, 8 10/100M RJ45 PoE ports, 1 Gigabit RJ45 port, 802.3af/at, PoE power budget  110W, Max. 300 meter PoE transmission, Supports Hik-Ce",1091000,1091000,0,0,1753400,2 Years Warranty,Hikvision
+DS-3E1310HP-EI,"L2, Smart Managed, 8 10/100M RJ45 PoE ports, 2 Gigabit RJ45 port, 802.3af/at/bt, PoE power budget 60W, Max. 300 meter long distance PoE transmission, ",1636300,1636300,0,0,2629900,2 Years Warranty,Hikvision
+DS-3E1318P-EI,"L2, Smart Managed, 16 10/100M RJ45 PoE ports, 2 Gigabit combo ports, 802.3af/at, PoE power budget  230W, Max. 300 meter long distance PoE transmission",2927300,2927300,0,0,4704600,2 Years Warranty,Hikvision
+DS-3E1326P-EI,"L2, Smart Managed, 24 10/100M RJ45 PoE ports,  2 Gigabit combo ports, 802.3af/at, PoE power budget  370W, Max. 300 meter long distance PoE transmissio",3781800,3781800,0,0,6078000,2 Years Warranty,Hikvision
+DS-3E1508-EI,"L2, Smart Managed, 8 Gigabit RJ45 ports, Supports Hik-Central/iVMS 4200/Hik-Partner Pro Unified Topology Management, cloud management, health monitor",621800,621800,0,0,999300,2 Years Warranty,Hikvision
+DS-3E1516-EI,"L2, Smart Managed, 16 Gigabit RJ45 ports, Supports Hik-Central/iVMS 4200/Hik-Partner Pro Unified Topology Management, cloud management, health monitor",1178200,1178200,0,0,1893500,2 Years Warranty,Hikvision
+DS-3E1524-EI,"L2, Smart Managed, 24 Gigabit RJ45 ports, Supports Hik-Central/iVMS 4200/Hik-Partner Pro Unified Topology Management, cloud management, health monitor",1680000,1680000,0,0,2700000,2 Years Warranty,Hikvision
+DS-3E1510P-SI,"L2, Smart Managed, 8 Gigabit PoE ports, 2 Gigabit SFP ports,  802.3af/at, PoE power budget 110W, max. 300 meter long distance PoE transmission, PoE wa",2568700,2568700,0,0,4128400,2 Years Warranty,Hikvision
+DS-3E1518P-SI,"L2, Smart Managed, 16 Gigabit PoE ports, 2 Gigabit SFP ports,  802.3af/at, PoE power budget 225W, max. 300 meter long distance PoE transmission, PoE w",4804500,4804500,0,0,7721600,2 Years Warranty,Hikvision
+DS-3E1526P-SI,"L2, Smart Managed, 24 Gigabit PoE ports, 2 Gigabit SFP ports,  802.3af/at, PoE power budget 370W, max. 300 meter long distance PoE transmission, PoE w",6345700,6345700,0,0,10198500,2 Years Warranty,Hikvision
+DS-3E1510P-SI-8P2F,"L2, Smart Managed, 8 Gigabit PoE ports, 2 Gigabit SFP ports,  802.3af/at, PoE power budget 110W, HPP Cloud managed, VLAN, STP/RSTP/ERPS loop preventio",2568700,2568700,0,0,4128400,2 Years Warranty,Hikvision
+DS-3E1518P-SI-16P2F,"L2, Smart Managed, 16 Gigabit PoE ports, 2 Gigabit SFP ports,  802.3af/at, PoE power budget 230W, HPP Cloud managed, VLAN, STP/RSTP/ERPS loop preventi",4804500,4804500,0,0,7721600,2 Years Warranty,Hikvision
+DS-3E1526P-SI-24P2F,"L2, Smart Managed, 24 Gigabit PoE ports, 2 Gigabit SFP ports,  802.3af/at, PoE power budget 370W, HPP Cloud managed, VLAN, STP/RSTP/ERPS loop preventi",6345700,6345700,0,0,10198500,2 Years Warranty,Hikvision
+DS-3E0106HP-E,"L2, Unmanaged, 4 10/100M RJ45 PoE ports, 2 10/100M RJ45 uplink ports, 802.3af/at/bt, port 1 support HiPoE 60w, PoE power budget 60W, max. 250m long di",719200,719200,0,0,1155900,2 Years Warranty,Hikvision
+DS-3E0310HP-E,"L2, Unmanaged, 8 10/100M RJ45 PoE ports, 2 Gigabit RJ45 uplink ports, 802.3af/at/bt, port 1 support HiPoE 60w, PoE power budget 110W, max. 250m long d",1315200,1315200,0,0,2113700,2 Years Warranty,Hikvision
+DS-3E1505P-EI/M,"L2, Smart Managed, 4 Gigabit RJ45 PoE ports, 1 Gigabit RJ45 port, 802.3af/at, PoE power budget  45W, HPP Cloud managed, VLAN, STP/RSTP loop prefention",543700,543700,0,0,873900,2 Years Warranty,Hikvision
+DS-3E1506P-EI/M,"L2, Smart Managed, 4 Gigabit RJ45 PoE ports, 2 Gigabit RJ45 port, 802.3af/at, PoE power budget  45W, HPP Cloud managed, VLAN, STP/RSTP loop prefention",588700,588700,0,0,946200,2 Years Warranty,Hikvision
+DS-3E1506P-EI/M-4P1T1F,"L2, Smart Managed, 4 Gigabit RJ45 PoE ports, 1 Gigabit RJ45 port, 1 Gigabit SFP, 802.3af/at, PoE power budget  45W, HPP Cloud managed, VLAN, STP/RSTP ",675300,675300,0,0,1085400,2 Years Warranty,Hikvision
+DS-3E1510P-EI/M,"L2, Smart Managed, 8 Gigabit RJ45 PoE ports, 2 Gigabit RJ45 port, 802.3af/at, PoE power budget  60W, HPP Cloud managed, VLAN, STP/RSTP loop prefention",1056300,1056300,0,0,1697700,2 Years Warranty,Hikvision
+DS-3E1510P-EI/M-8P2F,"L2, Smart Managed, 8 Gigabit RJ45 PoE ports, 2 Gigabit SFP port, 802.3af/at, PoE power budget  80W, HPP Cloud managed, VLAN, STP/RSTP loop prevention,",1038900,1038900,0,0,1669700,2 Years Warranty,Hikvision
+DS-3E1518P-EI/M,"L2, Smart Managed, 16 Gigabit RJ45 PoE ports, 1 Gigabit RJ45 port, 1 Gigabit SFP port, 802.3af/at, PoE power budget  130W, HPP Cloud managed, VLAN, ST",2927300,2927300,0,0,4704600,2 Years Warranty,Hikvision
+DS-3E1520P-EI/M,"L2, Smart Managed, 16 Gigabit RJ45 PoE ports, 2 Gigabit RJ45 port, 2 Gigabit SFP port, 802.3af/at, PoE power budget  125W, HPP Cloud managed, VLAN, ST",2978300,2978300,0,0,4786600,2 Years Warranty,Hikvision
+DS-3E1526P-EI/M,"L2, Smart Managed, 24 Gigabit RJ45 PoE ports, 1 Gigabit RJ45 port, 1 Gigabit SFP port, 802.3af/at, PoE power budget  230W, HPP Cloud managed, VLAN, ST",3963600,3963600,0,0,6370200,2 Years Warranty,Hikvision
+DS-3E1528P-EI/M,"L2, Smart Managed, 24 Gigabit RJ45 PoE ports, 2 Gigabit RJ45 port, 2 Gigabit SFP port, 802.3af/at, PoE power budget  230W, HPP Cloud managed, VLAN, ST",4086600,4086600,0,0,6567800,2 Years Warranty,Hikvision
+DS-3E1505P-EI,"L2, Smart Managed, 4 Gigabit RJ45 PoE ports, 1 Gigabit RJ45 port, 802.3af/at, PoE power budget 60W, HPP Cloud managed, VLAN, STP/RSTP loop prefention,",690900,690900,0,0,1110300,2 Years Warranty,Hikvision
+DS-3E1506P-EI,"L2, Smart Managed, 4 Gigabit RJ45 PoE ports, 2 Gigabit RJ45 port, 802.3af/at, PoE power budget 60W, HPP Cloud managed, VLAN, STP/RSTP loop prefention,",745500,745500,0,0,1198200,2 Years Warranty,Hikvision
+DS-3E1510P-EI,"L2, Smart Managed, 8 Gigabit RJ45 PoE ports, 2 Gigabit RJ45 port, 802.3af/at, PoE power budget 110W, HPP Cloud managed, VLAN, STP/RSTP loop prefention",1392800,1392800,0,0,2238400,2 Years Warranty,Hikvision
+DS-3E1518P-EI,"L2, Smart Managed, 16 Gigabit RJ45 PoE ports, 1 Gigabit RJ45 port, 1 Gigabit SFP port, 802.3af/at, PoE power budget  230W, HPP Cloud managed, VLAN, ST",3327200,3327200,0,0,5347400,2 Years Warranty,Hikvision
+DS-3E1520P-EI,"L2, Smart Managed, 16 Gigabit RJ45 PoE ports, 2 Gigabit RJ45 port, 2 Gigabit SFP port, 802.3af/at, PoE power budget  230W, HPP Cloud managed, VLAN, ST",3394000,3394000,0,0,5454600,2 Years Warranty,Hikvision
+DS-3E1526P-EI,"L2, Smart Managed, 24 Gigabit RJ45 PoE ports, 1 Gigabit RJ45 port, 1 Gigabit SFP port, 802.3af/at, PoE power budget  370W, HPP Cloud managed, VLAN, ST",4909100,4909100,0,0,7889700,2 Years Warranty,Hikvision
+DS-3E1528P-EI,"L2, Smart Managed, 24 Gigabit RJ45 PoE ports, 2 Gigabit RJ45 port, 2 Gigabit SFP port, 802.3af/at, PoE power budget  370W, HPP Cloud managed, VLAN, ST",4952400,4952400,0,0,7959200,2 Years Warranty,Hikvision
+DS-3E1552P-SI,"L2, Smart Managed, 48 Gigabit PoE ports, 2 Gigabit RJ45, 2 Gigabit SFP uplink ports, 802.3af/at, PoE power budget 470W, max. 300 meter long distance P",8421800,8421800,0,0,13535000,2 Years Warranty,Hikvision
+DS-3T0306HP,"L2, Unmanaged, 4 10/100M PoE ports, 1 Gigabit RJ45, 1 Gigabit SFP Uplink,  802.3af/at/bt, port 1 support Hi-PoE 60w, power budget≤110w ( based on powe",709100,709100,0,0,1139700,2 Years Warranty,Hikvision
+DS-3T0310HP,"L2, Unmanaged, 8 10/100M PoE ports, 1 Gigabit RJ45, 1 Gigabit SFP Uplink,  802.3af/at/bt, port 1-2 support Hi-PoE 60w, power budget≤110w ( based on po",1236400,1236400,0,0,1987000,2 Years Warranty,Hikvision
+DS-3T0506HP,"L2, Unmanaged, 4 Gigabit PoE ports, 2 Gigabit SFP Uplink,  802.3af/at/bt, port 1 support Hi-PoE 60w, power budget≤110w ( based on power supply, power ",872800,872800,0,0,1402700,2 Years Warranty,Hikvision
+DS-3T0510HP,"L2, Unmanaged, 8 Gigabit PoE ports, 2 Gigabit SFP Uplink,  802.3af/at/bt, port 1-2 support Hi-PoE 60w, power budget≤110w ( based on power supply, powe",1545400,1545400,0,0,2483800,2 Years Warranty,Hikvision
+DRL-48V240W1EN,"240W industrial power supply, output48V, 5.0A, working temp. -30~70°C, DIN rail",1125500,1125500,0,0,1808900,2 Years Warranty,Hikvision
+DRL-48V75W1AZ,"75W industrial power supply, output48V, 1.57A, working temp. -20~70°C, DIN rail",439900,439900,0,0,707000,2 Years Warranty,Hikvision
+NDR-480-48,"480W industrial power supply, output48V",2251000,2251000,0,0,3617800,2 Years Warranty,Hikvision
+HK-SFP-1.25G-20-1310,"TX1310nm/1.25G, RX1550nm/1.25G, LC, single mode and single fiber, 20km, 0～70℃, SFP, should work with HK-SFP-1.25G-20-1550 as a pair",290300,290300,0,0,466500,2 Years Warranty,Hikvision
+HK-SFP-1.25G-20-1550,"TX1550nm/1.25G, RX1310nm/1.25G, LC, single mode and single fiber, 20km, 0～70℃, SFP, should work with HK-SFP-1.25G-20-1310 as a pair",387800,387800,0,0,623300,2 Years Warranty,Hikvision
+HK-SFP-1.25G-1310-DF-MM,"TX1310nm/1.25G, RX1310nm/1.25G, LC, Multi mode and duplex fiber, 1km, 0～70℃, SFP",217900,217900,0,0,350200,2 Years Warranty,Hikvision
+HK-SFP-1.25G-20-1310-DF,"TX1310nm/1.25G, RX1310nm/1.25G, LC, Single mode and duplex fiber, 20km, 0～70℃, SFP",193600,193600,0,0,311100,2 Years Warranty,Hikvision
+HK-SFP-1.25G-850-DF-MM,"TX850nm/1.25G, RX850nm/1.25G, LC, Multi mode and duplex fiber, 500m, 0～70℃, SFP",194000,194000,0,0,311700,2 Years Warranty,Hikvision
+HK-SFP+-10G-20-1310-DF,"TX1310nm/10G, RX1310nm/10G, LC, Single mode and duplex fiber, 20km, 0～70℃, SFP",761900,761900,0,0,1224500,2 Years Warranty,Hikvision
+HK-SFP+-10G-20-1270,"Tx1270nm/10G, Rx1330nm/10G, LC, single mode and single fiber, 20km, 0～70℃, SFP+, should work with HK-SFP+-10G-20-1330 as a pair",1572300,1572300,0,0,2527000,2 Years Warranty,Hikvision
+HK-SFP+-10G-20-1330,"Tx1330nm/10G, Rx1270nm/10G, LC, single mode and single fiber, 20km, 0～70℃, SFP+, should work with HK-SFP+-10G-20-1270 as a pair",1572300,1572300,0,0,2527000,2 Years Warranty,Hikvision
+DS-3WF0BC-2NT,"Elevator 2.4GHz wireless bridge, Max.distance 200m, 72Mbps thoughput, IEEE 802.11n, Angle H: 50° V: 50°,1 10/100M RJ45, support 12 VDC/1 A, support pa",513000,513000,0,0,824500,2 Years Warranty,Hikvision
+DS-3WF0FC-2N/O,"Outdoor 2.4GHz wireless bridge CPE, Max.distance 1km, 2×2 MIMO antenna with 300Mbps thoughput, 7dBi gain, 802.11n, Angle H: 35°, 2 100Mbps RJ45 ports,",498300,498300,0,0,800900,2 Years Warranty,Hikvision
+DS-3WF1000-EI-2N,"Outdoor 2.4GHz wireless bridge Kit, Max.distance 1km, 2×2 MIMO antenna with 300Mbps thoughput, 7dBi gain, 802.11n, Angle H: 60°, 2 100Mbps RJ45 ports,",798700,798700,0,0,1283600,2 Years Warranty,Hikvision
+DS-3WF02-5AC/D,"Outdoor 5GHz wireless bridge CPE, Max.distance 5km, 2×2 MIMO antenna with 867Mbps thoughput, 9dBi gain, output power 22dBm, 802.11a/n/ac, Angle H: 35°",1524600,1524600,0,0,2450300,2 Years Warranty,Hikvision
+DS-KV8113-WME1,"CMOS 2MP HD Colorful Camera，Aluminum alloy, 1-ch Indoor station access, Wi-Fi 802.11b/g/n,  Standard PoE/ 12 VDC, Mifare card reading module; 10M/100M",2164500,2164500,0,0,3301700,2 Years Warranty,Hikvision
+DS-KH6320-WTE1,"7“ Touch-Screen Indoor Station,  7-inch Colorful TFT LCD, display resolution: 1024 * 600; 10/100Mbps Ethernet, Wi-Fi 802.11b/g/n; standard PoE/ 12 VDC",1731600,1731600,0,0,2641400,2 Years Warranty,Hikvision
+DS-KIS604-P,"IP video intercom kit for villa or house, only one call button. DS-KV8113-WME1  x1; DS-KH6320-WTE1  x1; 4 port standard PoE switch x1;(for KIS604-S) P",3532500,3532500,0,0,5388500,2 Years Warranty,Hikvision
+DS-KIS606-P,Network video intercom kit for villa One-press call button for easier calls Convenient Hik-Connect APP mobile control Device included: DS-KV6113-PE1(C,2545400,2545400,0,0,3882900,2 Years Warranty,Hikvision
+DS-KD8003Y-IME2,"Two-wire version: CMOS 2MP HD Colorful Camera, Fish eye (Horizontal: 180°, Vertical:96° ), 1 Call Button, 2-ch Indoor station access IR Supplement , 1",1537700,1537700,0,0,2345600,2 Years Warranty,Hikvision
+DS-KH6320Y-WTE2,"7“ Touch-Screen Indoor Station,  7-inch Colorful TFT LCD, display resolution: 1024 * 600; 10/100Mbps Ethernet, Wi-Fi 802.11b/g/n; standard PoE/ 12 VDC",1558400,1558400,0,0,2377200,2 Years Warranty,Hikvision
+DS-KIS702Y,"IP video intercom kit for villa or house, only one call button. DS-KD8003-IME2/Surface  x 1; DS-KH6320-WTE2  x 1; DS-KAD704  x 1; DS-KAW30-2N x 1; 16G",4336000,4336000,0,0,6614200,2 Years Warranty,Hikvision
+DS-KAD706Y,"1 RJ-45 Interface, 6 Two-Wire Interface to connect DS-KD8003Y-IME2 or DS-KH6320Y-WTE2, 1 in interface to connect DS-KAD706Y & DS-KAD706Y-S, 1 out inte",1230700,1230700,0,0,1877400,2 Years Warranty,Hikvision
+DS-KH2220,"7“ Screen LCD Indoor Station, Video Intercom Communication, Supports Three Indoor Stations Cascading in Intercom System; Remote Unlocking, Monitoring ",867100,867100,0,0,1322700,2 Years Warranty,Hikvision
+DS-KIS202T,"Analog Kit ● For villa or house, only one call button ● Kit including DS-KB2411T-IM and DS-KH2220, 5-meter 4-wire cable, and other accessories",1502400,1502400,0,0,2291800,2 Years Warranty,Hikvision
+DS-KIS203T,Water Proof  Analog Kit                                                                                                                               ,1694200,1694200,0,0,2584400,2 Years Warranty,Hikvision
+DS-KB8113-IM,"1. 2MP HD camera 2. Call Hik-Connect directly 3. Mechanical Doorbell mode 4. Web 2.0: Indoor station linkage, Configuration in WEB 5. 19 Multiple lang",1600000,1600000,0,0,2440600,2 Years Warranty,Hikvision
+DS-K1T8003MF,"2.4-inch LCD Display  Fingerprint Access Control Terminal, Built-in Mifare card reading module, Communication: TCP/IP，EHome;   1000 users, 1000 finger",976000,976000,0,0,1488900,2 Years Warranty,Hikvision
+DS-K1A8503MF,"2.4-inch LCD Display  Fingerprint Time Attandence Terminal, Built-in Mifare card reading module, Communication: TCP/IP，ISUP5.0 1000 users, 1000 finger",840000,840000,0,0,1281300,2 Years Warranty,Hikvision
+DS-K1A8503EF,"2.4-inch LCD Display  Fingerprint Time Attandence Terminal, Built-in EM card reading module Communication: TCP/IP，ISUP5.0 1000 users, 1000 fingerprint",840000,840000,0,0,1281300,2 Years Warranty,Hikvision
+DS-K1T804AEF,"• Integrated management of access control and the attendance • Supports multiple languages: English, Vietnamese, Brazilian Portuguese, Spanish, French",1228000,1228000,0,0,1873200,2 Years Warranty,Hikvision
+DS-K1T804AMF,"2.4 inch LCD Display Standalone Access Control Terminal, Built-in Mifare card reading module,   Storage with 3,000 cards, 3,000 fingerprints and 100,0",1228000,1228000,0,0,1873200,2 Years Warranty,Hikvision
+DS-K1T805MBFWX,"Access Control Terminal,  Built-in Mifare card reading module and Bluetooth module; IP65、IK08，increased stability with aluminum alloy materials Storag",1848000,1848000,0,0,2819000,2 Years Warranty,Hikvision
+DS-K1T344MFX-E1,"Supports 4.5-inch LCD touch screen, 2 Mega pixel wide-angle lens, and built-in M1 card reading module Max.3000 faces capacity, Max.3000 fingerprints c",3965400,3965400,0,0,6048900,2 Years Warranty,Hikvision
+DS-K1T344MBFWX-E1,"Supports 4.5-inch LCD touch screen, 2 Mega pixel wide-angle lens, and built-in M1 card reading module Max.3000 faces capacity, Max.3000 fingerprints c",4107300,4107300,0,0,6265400,2 Years Warranty,Hikvision
+DS-K1T343MFX,"Face Recognition Terminal, 4.3-inch LCD touch screen,2 Mega pixel wide-angle lens,Built-in Mifare card reading module; Max.1,500 faces capacity  Max.3",2310000,2310000,0,0,3523700,2 Years Warranty,Hikvision
+DS-K1T342MFX,"Face Recognition Terminal, 4.3-inch LCD touch screen,2 Mega pixel wide-angle lens,Built-in Mifare card reading module; Max.1,500 faces capacity ，Max.3",2827700,2827700,0,0,4313500,2 Years Warranty,Hikvision
+DS-K1T342MFWX,"Face Recognition Terminal, 4.3-inch LCD touch screen,2 Mega pixel wide-angle lens,Built-in Mifare card reading module; Max.1,500 faces capacity ，Max.3",3110500,3110500,0,0,4744900,2 Years Warranty,Hikvision
+DS-K1T323MBFWX-E1,"Supports  2.4-inch display screen, 2 Mega pixel wide-angle lens, and built-in M1 card reading module  Max.1000 users capacity, Max.1000 faces capacity",2268400,2268400,0,0,3460300,2 Years Warranty,Hikvision
+DS-K1T320MFX,"Face Recognition Terminal, 2.4-inch LCD screen,2 Mega pixel wide-angle lens,Built-M:Mifare card reading module E: EM card reading module Max.500 faces",1454500,1454500,0,0,2218800,2 Years Warranty,Hikvision
+DS-K1T320EFX,,1454500,1454500,0,0,2218800,2 Years Warranty,Hikvision
+DS-K1T320MFWX,"Face Recognition Terminal, 2.4-inch LCD screen,2 Mega pixel wide-angle lens,Built-in Mifare card reading module; Max.500 faces capacity  Max.1,000 fin",1593000,1593000,0,0,2430100,2 Years Warranty,Hikvision
+DS-K1T321MFX,"Face Recognition Terminal, 2.4-inch LCD screen,2 Mega pixel wide-angle lens,Built-in Mifare card reading module E: EM card reading module Max.500 face",1662400,1662400,0,0,2535800,2 Years Warranty,Hikvision
+DS-K1T321EFX,,1662400,1662400,0,0,2535800,2 Years Warranty,Hikvision
+DS-K1T321MFWX,"Face Recognition Terminal, 2.4-inch LCD screen,2 Mega pixel wide-angle lens,Built-in Mifare card reading module; Max.500 faces capacity  Max.3,000 fin",1800900,1800900,0,0,2747100,2 Years Warranty,Hikvision
+DS-K1T320MFWX-B,"DS-K1T320MFWX with battery, 2500mAh",1904700,1904700,0,0,2905500,2 Years Warranty,Hikvision
+DS-K4H255-U,U-bracket for DS-K4H255S Suitable for lower edge frameless glass door,55500,55500,0,0,84600,2 Years Warranty,Hikvision
+DS-K4H255S,"● Magnetic lock supports up to 272 kg (600 Lbs) of thrust ● Power supply can be 12 VDC or 24 VDC, (default voltage is 12 VDC) ● Suitable for wooden do",256200,256200,0,0,390900,2 Years Warranty,Hikvision
+DS-K4H255-LZ,"● Bracket for DS-K4H255S ● L bracket is used for fixed lock body ● Z bracket is used for suction plate fixed, is equipped with antiskid and structure ",128100,128100,0,0,195400,2 Years Warranty,Hikvision
+DS-K7P03,"new version of DS-K7P03, there is ""/T"" in the label. Stainless steel panel, Led Indicator; Dimension(L×W×H): 86×86×25.7mm(3.39×3.39×1.01"").",311700,311700,0,0,475600,2 Years Warranty,Hikvision
+DS-K7P06,"Structure: stainless steel panel, metal button, metal bottom case; Dimension(L×W×H): 88×88×54mm(3.46×3.46×2.13"").",242400,242400,0,0,369800,2 Years Warranty,Hikvision
+DS-KAS-7M01,The Kit includes： Power supply:DS-K7M-AW24 x1 Single-door Magnetic Lock: DS-K4H255S x1 Single-door Magnetic Lock bracket: DS-K4H255-LZ x1 Push button:,1004400,1004400,0,0,1532100,2 Years Warranty,Hikvision
+DS-K7P07,"· Touchless exit button · Stainless steel panel · LED indicator status: Green/blue LED indicates working/standby · Dimension(L×W×H): 115×70×16mm（4.53""",155800,155800,0,0,237800,2 Years Warranty,Hikvision
+DS-K7P08,"· Touchless exit button · Stainless steel panel · LED indicator status: Green/blue LED indicates working/standby · Dimension(L×W×H): 86×86×16mm（3.39""×",155800,155800,0,0,237800,2 Years Warranty,Hikvision
+DS-FOGX-B6A1-L0(O-STD) 1C 1km,"Self-support FTTH (Fiber to the Home) drop cable: GJYXFCH, G.657A1  single-mode, LSZH sheath, black, 1 core, 1 KM",1545800,1545800,0,0,2358000,2 Years Warranty,Hikvision
+DS-FOGX-B6A1-L0(O-STD) 1C 2km,"Self-support FTTH (Fiber to the Home) drop cable: GJYXFCH, G.657A1  single-mode, LSZH sheath, black, 1core, 2 KM",3091500,3091500,0,0,4715900,2 Years Warranty,Hikvision
+DS-FOGX-B6A1-L0(O-STD) 2C 1km,"Self-support FTTH (Fiber to the Home) drop cable: GJYXFCH, G.657A1  single-mode, LSZH sheath, Black, 2 cores, 1 KM",2107800,2107800,0,0,3215400,2 Years Warranty,Hikvision
+DS-FOGX-B6A1-L0(O-STD) 2C 2km,"Self-support FTTH (Fiber to the Home) drop cable: GJYXFCH, G.657A1  single-mode, LSZH sheath, black, 2 cores, 2 KM",4145600,4145600,0,0,6323800,2 Years Warranty,Hikvision
+DS-1LN5E-E/E,"Cat5e，U/UTP，25AWG 0.45mm，PVC，UL CMX, CPR Eca，grey，305 m",1746100,1746100,0,0,2663600,2 Years Warranty,Hikvision
+DS-1LN6-UU,"Cat6，U/UTP，23AWG 0.565mm，PVC，UL CM, CPR Eca，orange，305 m",2873700,2873700,0,0,4383700,2 Years Warranty,Hikvision
+DS-1LN6U-G,Cat6，U/UTP，23AWG 0.55mm，PVC，grey，305 m,2557600,2557600,0,0,3901500,2 Years Warranty,Hikvision
+DS-1LN6UTC0,"UTP CAT 6,  305 meters,Core diameter: 0.51mm, Solid-Bare Copper, Grey",2084200,2084200,0,0,3179300,2 Years Warranty,Hikvision
+DS-1LN6UU/CCA,Cat6，U/UTP，23AWG，0.57mm，CCA，PVC，grey，305 m,966100,966100,0,0,1473800,2 Years Warranty,Hikvision
+DS-1LN6-UE-W,"UTP CAT 6, 305 meters,Core diameter: 0.53mm,Solid Copper, CM,white",2536500,2536500,0,0,3869300,2 Years Warranty,Hikvision
+DS-1LN6U-W/CCA,Cat6，U/UTP，23AWG 0.585mm，PVC，white，305 m,1039900,1039900,0,0,1586300,2 Years Warranty,Hikvision
+DS-1LN6UZC0,Cat6，U/UTP，24AWG，0.50mm，PVC，grey，305 m,2206300,2206300,0,0,3365500,2 Years Warranty,Hikvision
+DS-1LN6UEC0,"CAT6 U/UTP Network Cable (Solid Copper, 0.53mm)",2410000,2410000,0,0,3676300,2 Years Warranty,Hikvision
+DS-1LN6OUSPE(O-STD) black 305m,Cat6，U/UTP，23AWG，0.55mm，PE，black，305 m,2768400,2768400,0,0,4223000,2 Years Warranty,Hikvision
+DS-1LN6OPSPE(O-STD)/Black 305m,Cat6，F/UTP，23AWG 0.565mm，PE，black，305 m,3558900,3558900,0,0,5428800,2 Years Warranty,Hikvision
+DS-1M5EUA-30U(O-STD)/100,"CAT5E，unsheilded, 30U，one piece ，100 units per bottle，ROHS 2.0",158100,158100,0,0,241100,2 Years Warranty,Hikvision
+DS-1M6UA-30U(O-STD)/100,"CAT6，unsheilded, 30U，one piece ，100 units per bottle, ROHS 2.0",235400,235400,0,0,359100,2 Years Warranty,Hikvision
+DS-1M5EUA-15U(O-STD)/100PCS,"CAT5E，unsheilded, 15U，one piece ，100 units per bottle, ROHS 2.0",115300,115300,0,0,175900,2 Years Warranty,Hikvision
+DS-1M6UA-15U(O-STD)/100PCS,"CAT6，unsheilded, 15U，one piece ，100 units per bottle, ROHS 2.0",195300,195300,0,0,298000,2 Years Warranty,Hikvision
+DS-1NP6UEC0(O-STD) blue 0.5m,"Patch cord, CAT6，U/UTP，24AWG，CU，PVC sheath，30U， blue，0.5 m",17600,17600,0,0,26900,2 Years Warranty,Hikvision
+DS-1NP6UEC0(O-STD) white 0.5m,"Patch cord, CAT6，U/UTP，24AWG，CU，PVC sheath，30U， white，0.5 m",17600,17600,0,0,26900,2 Years Warranty,Hikvision
+DS-D5019S0-1P0,"18.5"" 1366*768, HDMI/VGA input, view angle:178°/178°, plastic casing, ERP level A,VESA, base bracket included, 7*24h",1095300,1095300,0,0,1670800,2 Years Warranty,Hikvision
+DS-D5022F2-1V2,"21.5'', VA, HDMI/VGA input, Audio Output, 100Hz, Brightness 250nits, Contrast ratio 1000:1, Response time 6.5ms.",1169600,1169600,0,0,1784200,2 Years Warranty,Hikvision
+DS-D5022F2-1P2,"21.5'', IPS,HDMI/VGA input, Audio output, 100Hz, Brightness 250nits, Contrast ratio 1000:1, Response time 6.5ms.",1310700,1310700,0,0,1999500,2 Years Warranty,Hikvision
+DS-D5022F2-1V2S,"21.5'', VA,HDMI/VGA input, Audio Input, 100Hz, Speaker included, Brightness 250nits, Contrast ratio 1000:1, Response time 6.5ms.",1206800,1206800,0,0,1840900,2 Years Warranty,Hikvision
+DS-D5024F2-AV2(EU),"23.8"" 1080P, HDMI/VGA input,VA technology, view angle:178°/178°, 7ms Response Time, 100Hz refresh rate, 12V DC,7*16h",1429500,1429500,0,0,2180600,2 Years Warranty,Hikvision
+DS-D5024F2-BV2S(EU),"23.8"" 1080P, HDMI/VGA input,build in speaker,VA technology, view angle:178°/178°, 7ms Response Time, 100Hz refresh rate, 12V DC,7*24h",1555700,1555700,0,0,2373100,2 Years Warranty,Hikvision
+DS-2FA1225-C4,,165000,165000,0,0,259800,2 Years Warranty,Hikvision
+DS-2FA1205-C8,,201700,201700,0,0,317500,2 Years Warranty,Hikvision
+DS-UPS600,,586700,586700,0,0,997400,2 Years Warranty,Hikvision
+DS-UPS1000,,733300,733300,0,0,1246700,2 Years Warranty,Hikvision
+DS-UPS2000,,2108400,2108400,0,0,3584400,2 Years Warranty,Hikvision
+DS-UPS3000,,3391800,3391800,0,0,5766200,2 Years Warranty,Hikvision
+DS-UPS600-R(O-STD)/EU/Uni,,660100,660100,0,0,1122200,2 Years Warranty,Hikvision
+DS-UPS1000-R(O-STD)/EU/Uni,,843400,843400,0,0,1433800,2 Years Warranty,Hikvision
+DS-UPS1200-R(O-STD)/EU/Uni,,1356800,1356800,0,0,2306500,2 Years Warranty,Hikvision
+DS-UPS2000-R(O-STD)/EU/Uni,,2236800,2236800,0,0,3802600,2 Years Warranty,Hikvision
+DS-UPS3000-R(O-STD)/EU/Uni,,3593600,3593600,0,0,6109200,2 Years Warranty,Hikvision
+DS-UPS600-R(O-STD)/EU,,678400,678400,0,0,1153200,2 Years Warranty,Hikvision
+DS-UPS1000-R(O-STD)/EU,,880100,880100,0,0,1496200,2 Years Warranty,Hikvision
+DS-UPS1200-R(O-STD)/EU,,1411700,1411700,0,0,2400000,2 Years Warranty,Hikvision
+DS-UPS2000-R(O-STD)/EU,,2310200,2310200,0,0,3927400,2 Years Warranty,Hikvision
+DS-UPS3000-R(O-STD)/EU,,3703600,3703600,0,0,6296100,2 Years Warranty,Hikvision
+DS-UPS01K24-R/TJS,,5528250,5528250,0,0,11056500,2 Years Warranty,Hikvision
+DS-UPS02K48-R/TJS,,8201250,8201250,0,0,16402500,2 Years Warranty,Hikvision
+DS-UPS03K72-R/TJS,,10100700,10100700,0,0,20201400,2 Years Warranty,Hikvision
+DS-UPS06K-R/TJL,,20318850,20318850,0,0,40637700,2 Years Warranty,Hikvision
+DS-UPS10K-R/TJL,,24709050,24709050,0,0,49418100,2 Years Warranty,Hikvision
+DS-UPSB09192A-R/TJ,,19885500,19885500,0,0,39771000,2 Years Warranty,Hikvision
+DS-UPSB09240A-R/TJ,,23542650,23542650,0,0,47085300,2 Years Warranty,Hikvision
+R Series UPS Rack Slide 4-post,,1053000,1053000,0,0,2106000,2 Years Warranty,Hikvision
+R Series UPS SNMP Card,,1782000,1782000,0,0,3564000,2 Years Warranty,Hikvision
+R Series UPS MAS4 Card,,810000,810000,0,0,1620000,2 Years Warranty,Hikvision
+DS-3WAP522-SI,"1200 Mbps Dual-band Wi-Fi 5 Gigabit ceiling mount indoor AP, 2x2 MIMO, 1 Gigabit port with PoE in, Max/Recommend user access is 256/80, HPP/HC unified",918925,918925,0,0,1010817,2 Years Warranty,Hikvision
+DS-3WAP622G-SI,"1800 Mbps Dual-band Wi-Fi 6 Gigabit ceiling mount indoor AP, 2x2 MIMO, 1 Gigabit port with PoE in, Max/Recommend user access is 256/100, HPP/HC unifie",1403784,1403784,0,0,1544162,2 Years Warranty,Hikvision
+DS-3WAP622E-SI,"3000 Mbps Dual-band Wi-Fi 6 Gigabit ceiling mount indoor AP, 2x2 MIMO, 1 2.5G Multi-Giga port with PoE in, Max/Recommend user access is 256/100, HPP/H",2538703,2538703,0,0,4569666,2 Years Warranty,Hikvision
+DS-3WAP521-SI,"1200 Mbps Dual-band Wi-Fi 5 Gigabit in-Wall indoor AP, 2x2 MIMO, 2 Gigabit port with 1 PoE in, Max/Recommend user access is 128/50, HPP/HC unified clo",787667,787667,0,0,866434,2 Years Warranty,Hikvision
+DS-3WAP621E-SI,"3000 Mbps Dual-band Wi-Fi 6 Gigabit in-Wall indoor AP, 2x2 MIMO, 2 Gigabit port with 1 PoE in, Max/Recommend user access is 256/70, HPP/HC unified clo",1207813,1207813,0,0,2174064,2 Years Warranty,Hikvision
+DS-3WAP623E-SI,"3000 Mbps Dual-band Wi-Fi 6 Gigabit outdoor AP, 2x2 MIMO, 1 Gigabit port with PoE in, IP68, Max/Recommend user access is 256/100, HPP/HC unified cloud",2858977,2858977,0,0,5146159,2 Years Warranty,Hikvision
+DS-3WG105G-SI,"Concurrent Users 100, Up to 4 WAN Loadbalancing, 2 Gigabit WAN Ports with 1 WAN/LAN Switchable, 3 Gigabit LAN Ports with 2 LAN/WAN Switchable, 32 APs,",1048717,1048717,0,0,1153589,2 Years Warranty,Hikvision
+DS-3WG105GP-SI,"Concurrent Users 100, Up to 2 WAN Loadbalancing,  1 Gigabit WAN Port, 4 Gigabit PoE LAN Ports with 1 LAN/WAN Switchable, 32 APs, 58w, IPSec throughput",1369174,1369174,0,0,2464513,2 Years Warranty,Hikvision
+DS-3WG210GP-SI,"Concurrent Users 200, Up to 4 WAN Loadbalancing, 2 Gigabit WAN Ports with 1 WAN/LAN Switchable, 8 Gigabit PoE LAN Ports with 2 LAN/WAN Switchable, 200",1966576,1966576,0,0,3539837,2 Years Warranty,Hikvision
+DS-3WG507G-SI,"Concurrent Users 500, Up to 6 WAN Loadbalancing, 1 Gigabit RJ45/SFP Optional Combo WAN Port, 1 Gigabit RJ45 WAN Port WAN/LAN Switchable, 1 Gigabit SFP",2728519,2728519,0,0,4911334,2 Years Warranty,Hikvision
+DS-3WR3N,"11n 300M WiFi4 wireless router, 2.4GHz 300Mbps, 3 × 100 Mbps LAN ports, 1 × 100 Mbps WAN port, 2 × 5-dBi antennas, Hik-Connect App",228900,228900,0,0,274600,2 Years Warranty,Hikvision
+DS-3WR12C,"AC1200M Dual-band WiFi5 wireless router, 5GHz: 867Mbps + 2.4GHz 300Mbps, 3 × 100 Mbps LAN ports, 1 × 100 Mbps WAN port, 4 × 5-dBi antennas, Hik-Connec",355900,355900,0,0,427100,2 Years Warranty,Hikvision
+DS-3WR12GC,"AC1200M Dual-band WiFi5 wireless router, 5GHz: 867Mbps + 2.4GHz 300Mbps, 3 × Gigabit LAN ports, 1 × Gigabit WAN port, 4 × 5-dBi antennas, Hik-Connect ",457500,457500,0,0,549000,2 Years Warranty,Hikvision
+DS-3WR4G12C,"4G LTE Wi-Fi Router, Max 4G speed: DL:150Mbps; UL:50Mbps Wi-Fi speed: 2.4GHz:300Mbps ; 5GHz:867Mbps 4G Cartgory LTE CAT.4 Support FDD LTE,TDD-LTE,WCDM",900400,900400,0,0,1080500,2 Years Warranty,Hikvision
+DS-3WR15X,"AX1500M Dual-band WiFi 6 wireless router, 5GHz: 1201Mbps + 2.4GHz 300Mbps, 3 × 1000 Mbps LAN ports, 1 × 1000 Mbps WAN port, 4 × high gain antennas, Hi",689800,689800,0,0,827700,2 Years Warranty,Hikvision
+DS-3WR4G3N,"4G LTE Wi-Fi Router, Max 4G speed: DL:150Mbps; UL:50Mbps Wi-Fi speed: 2.4GHz:300Mbps 4G Cartgory LTE CAT.4 Support FDD LTE,TDD-LTE,WCDMA",671600,671600,0,0,806000,2 Years Warranty,Hikvision
+DS-3WR12C-H,"AC1200M Dual-band WiFi5 wireless router, 5GHz: 867Mbps + 2.4GHz 300Mbps, 3 × 100 Mbps LAN ports, 1 × 100 Mbps WAN port, 4 × 5-dBi antennas，Hik-Connect",572700,572700,0,0,687300,2 Years Warranty,Hikvision
+DS-3WR12GC-H,"AC1200M Dual-band WiFi5 wireless router, 5GHz: 867Mbps + 2.4GHz 300Mbps, 3 × Gigabit LAN ports, 1 × Gigabit WAN port, 4 × 5-dBi antennas，Hik-Connect, ",627200,627200,0,0,752700,2 Years Warranty,Hikvision
+DS-QAE0203G1-V,"3W speakers，100V, Max SPL:95 dB, Frequency Response:90 Hz~20 kHz",148500,148500,0,0,225000,2 Years Warranty,Hikvision
+DS-QAE0203G1E-V,"Entry level 3W speakers，Max SPL:95 dB, Frequency Response:90 Hz~20 kHz",137200,137200,0,0,207879,2 Years Warranty,Hikvision
+DS-QAE0206G1-V,"6W speakers，Max SPL:98 dB, Frequency Response:90 Hz~20 kHz",160000,160000,0,0,242424,2 Years Warranty,Hikvision
+DS-QAE0206G1E-V,"Entry level 6W speakers，Max SPL:98 dB, Frequency Response:90 Hz~20 kHz",156200,156200,0,0,236667,2 Years Warranty,Hikvision
+DS-QAE0420G1-V,"20W speakers, Max SPL:96 dB, Frequency Response:100 Hz~20 kHz",853700,853700,0,0,1293485,2 Years Warranty,Hikvision
+DS-QAE0120G1R,"Rated Power: 70 V:  5 W/10 W/1 5W/20 W , 100 V:  5 W/10 W/15 W/20 W;Max SPL:103 dB;Frequency Response:130 Hz to 17.5 kHz;Support horizontal and vertic",689800,689800,0,0,1045152,2 Years Warranty,Hikvision
+DS-QAE0120G1R/BLACK,"Rated Power: 70 V:  5 W/10 W/1 5W/20 W , 100 V:  5 W/10 W/15 W/20 W;Max SPL:103 dB;Frequency Response:130 Hz to 17.5 kHz;Support horizontal and vertic",689800,689800,0,0,1045152,2 Years Warranty,Hikvision
+DS-QAE0330G1T-V,"Analog Passive Horn Speaker 30W, Max SPL: 120 dB, Frequency Response: 250 Hz-8 kHz; Multiple power levels are optional;  IP65",419000,419000,0,0,634848,2 Years Warranty,Hikvision
+DS-QAZ0610G1,1* 1.0-inch tweeter and 1* 6.5-inch woofer ;  89dB Nominal Sensitivity;  98dB@1m Rated Maximum SPL;  120Hz~20kHz(-10dB)  bandwidth;,775900,775900,0,0,1175606,2 Years Warranty,Hikvision
+DS-QAZ0610G1/BLACK,1* 1.0-inch tweeter and 1* 6.5-inch woofer ;  89dB Nominal Sensitivity;  98dB@1m Rated Maximum SPL;  120Hz~20kHz(-10dB)  bandwidth;,775900,775900,0,0,1175606,2 Years Warranty,Hikvision
+DS-QAZ0630G1,1* 1.0-inch tweeter and 1* 6.5-inch woofer ;  92dB Nominal Sensitivity;  104dB@1m Rated Maximum SPL;  80Hz~20kHz(-10dB)  bandwidth;,1165800,1165800,0,0,1766364,2 Years Warranty,Hikvision
+DS-QAZ0630G1/BLACK,1* 1.0-inch tweeter and 1* 6.5-inch woofer ;  92dB Nominal Sensitivity;  104dB@1m Rated Maximum SPL;  80Hz~20kHz(-10dB)  bandwidth;,1165800,1165800,0,0,1766364,2 Years Warranty,Hikvision
+DS-QAZ0510G1,1* 1.0-inch tweeter and 1* 6.5-inch woofer ;_x000D_  89dB Nominal Sensitivity;_x000D_  98dB@1m Rated Maximum SPL;_x000D_  120Hz~20kHz(-10dB)  bandwidt,826900,826900,0,0,1252879,2 Years Warranty,Hikvision
+DS-QAZ0510G1/BLACK,1* 1.0-inch tweeter and 1* 6.5-inch woofer ;_x000D_  89dB Nominal Sensitivity;_x000D_  98dB@1m Rated Maximum SPL;_x000D_  120Hz~20kHz(-10dB)  bandwidt,826900,826900,0,0,1252879,2 Years Warranty,Hikvision
+DS-QAZ0530G1,1* 1.0-inch tweeter and 1* 6.5-inch woofer ;_x000D_  92dB Nominal Sensitivity;_x000D_  104dB@1m Rated Maximum SPL;_x000D_  80Hz~20kHz(-10dB)  bandwidt,1249500,1249500,0,0,1893182,2 Years Warranty,Hikvision
+DS-QAZ0530G1/BLACK,1* 1.0-inch tweeter and 1* 6.5-inch woofer ;_x000D_  92dB Nominal Sensitivity;_x000D_  104dB@1m Rated Maximum SPL;_x000D_  80Hz~20kHz(-10dB)  bandwidt,1249500,1249500,0,0,1893182,2 Years Warranty,Hikvision
+DS-QAE0A60G1-VB,"60W constant resistance/constant voltage amplifier; Support four types of audio input: Bluetooth, USB flash drive, microphone, and RCA; Support indepe",1756000,1756000,0,0,2660606,2 Years Warranty,Hikvision
+DS-QAE1A80G1-VB,"80W constant resistance/constant voltage Network amplifier; Support four types of audio input: Bluetooth, USB flash drive, microphone, and RCA; Suppor",2009400,2009400,0,0,3044545,2 Years Warranty,Hikvision
+DS-QAZ1A500G1-VB2/EU,"500W 2-zones IP amplifier · Supports real-time and scheduled tasks, resume play, and audio material library management · Support alarm input, arming s",7397900,7397900,0,0,11208939,2 Years Warranty,Hikvision
+DS-QAZ1A1000G1-VB4/EU,"1000W 4-zones IP amplifier · Supports real-time and scheduled tasks, resume play, and audio material library management · Support alarm input, arming ",10879200,10879200,0,0,16483636,2 Years Warranty,Hikvision
+DS-QAE0A120G1-VB6/EU,"120W, 6-zones Analog Amplifier;2-AUX in, 2-MIC in, 1-EMC in, 1-RCA out",2627200,2627200,0,0,3980606,2 Years Warranty,Hikvision
+DS-QAE0A240G1-VB6/EU,"240W, 6-zones Analog Amplifier;2-AUX in, 2-MIC in, 1-EMC in, 1-RCA out",3675300,3675300,0,0,5568636,2 Years Warranty,Hikvision
+DS-QAZ1MP7G1/EU,"7-inch color IPS touch screen, resolution: 1024 × 600 Support real-time broadcasting, speaking, or playing media library files on specified partitions",3060000,3060000,0,0,4636364,2 Years Warranty,Hikvision
+DS-TMG320-ML/B(Barrier Body),"Leftward, with barrier body indicator Built-in 1*octagonal chuck, 1*spring, 2*remote controllers and other accessories",6945750,6945750,0,0,10685769,2 Years Warranty,Hikvision
+DS-TMG320-MR/B(Barrier Body),"Rightward, with barrier body indicator Built-in 1*octagonal chuck, 1*spring, 2*remote controllers and other accessories",6945750,6945750,0,0,10685769,2 Years Warranty,Hikvision
+DS-TMG001-3D(3m octagonal),3m octagonal straight pole,884520,884520,0,0,1360800,2 Years Warranty,Hikvision
+DS-TMG102,"Anti-collision octagonal boom pole chuck adapter for 32X series barrier gate, 1PCS fit for straight/telescopic/light boom pole no more than 4m length ",571590,571590,0,0,879369,2 Years Warranty,Hikvision
+DS-TMG001-3D(2.6-4m),Octagonal telescopic pole (2.6-4m),1190700,1190700,0,0,1831846,2 Years Warranty,Hikvision
+DS-TMG001-3D(3.6-6m),Octagonal telescopic pole (3.6-6m),1496880,1496880,0,0,2302892,2 Years Warranty,Hikvision
+Integrated gate 4-Spring components 2,Φ5 spring Dimension:  475 × 34 × 34 mm,152685,152685,0,0,234900,2 Years Warranty,Hikvision
+EEBracket-L800-950(barrier),"Bracket for barrier gate tail end, suitable for 5m/6m barrier.",524610,524610,0,0,807092,2 Years Warranty,Hikvision
+DS-TMG001-6L(3m)(1.4mm),3m light pole with 1.4mm reinforced wall thickness,1718010,1718010,0,0,2643092,2 Years Warranty,Hikvision
+DS-TMG001-6L(4m)(1.4mm),4m light pole with 1.4mm reinforced wall thickness,2102625,2102625,0,0,3234808,2 Years Warranty,Hikvision
+DS-TMG002-6(2+2m)(1.4mm),2m+2m folding light pole with 1.4mm reinforced wall thickness,2929500,2929500,0,0,4506923,2 Years Warranty,Hikvision
+DS-TMG002-6L(1.5+1.5m)(1.4mm),1.5m+1.5m folding light pole with 1.4mm reinforced wall thickness,2551500,2551500,0,0,3925385,2 Years Warranty,Hikvision
+DS-TMG002-6L(2+2m)(1.4mm),2m+2m folding light pole with 1.4mm reinforced wall thickness,2929500,2929500,0,0,4506923,2 Years Warranty,Hikvision
+DS-TMG012-A1,"Remote control for barrier gate(batteries) Battery specification: 23A,12V  Dimension: 80 x 40 x 16 mm Weight: 0.03kg",137025,137025,0,0,210808,2 Years Warranty,Hikvision
+TMG080-3,Manual control box for barrier gate,375840,375840,0,0,578215,2 Years Warranty,Hikvision
+DS-TMG040,"Adaptable battery specifications: Only the control board is included in the barrier gare battery box, customers need to buy the battery separately.  1",724275,724275,0,0,1114269,2 Years Warranty,Hikvision
+DS-TVL221-1-6D,Red light/green light switchable mode to show the status of barrier gate,2932335,2932335,0,0,4511285,2 Years Warranty,Hikvision
+DS-TMG100-32,"Octagonal boom pole chuck for 32X series barrier gate, 1PCS",505035,505035,0,0,776977,2 Years Warranty,Hikvision
+DS-TMG131-32,10PCS spring of 32X series barrier gate (material code 190616532),1526850,1526850,0,0,2349000,2 Years Warranty,Hikvision
+DS-TMG060-32,Emergency barrier-lifting module for 32 series barrier,587250,587250,0,0,903462,2 Years Warranty,Hikvision
+DS-TMG300,"Motor: DC brushless motor Barrier Boom: 3m light pole, left direction Rising Speed: 3 S Falling Speed: 3 S MCBF: 2,500,000 Power Supply: 24 VDC Protec",9123124,9123124,0,0,14035576,2 Years Warranty,Hikvision
+DS-TMG022,"Including 2 inputs of inductive loops Recognizes vehicles of more than two wheels Fastest Response Time: 3.5ms Output Port: 2 relay output, VDRM 70 V,",1045958,1045958,0,0,1821409,2 Years Warranty,Hikvision
+DS-TMG023,"50m,FVN49/0.26 Working Temperature: -60 °C to 105 °C Length: 50 m",534398,534398,0,0,930589,2 Years Warranty,Hikvision
+DS-TMG035,"Transmitting frequency: 79GHz Working mode: Trigger Radar Beam width: Vertical 10°, Horizontal 38°, relay output Trigger distance: 0.3 to 6m (adjustab",3120059,3120059,0,0,5433207,2 Years Warranty,Hikvision
+L1500-X800-R125(TCGX06),Pole for LPR camera unit TCGX06 Color: Platinum brown Length: 1.5m Diameter: 60mm Material: Carbon Steel Q235,1640189,1640189,0,0,2856192,2 Years Warranty,Hikvision
+DS-TCG406-E,"ANPR Camera: 4MP, 2688 × 1520, CMOS,1/1.8"", 25fps, 2.8-12mm and 8-32mm motorized lens Supplement Light: Embedded 2 LED lights(integrated white light a",9508165,9508165,0,0,16557321,2 Years Warranty,Hikvision
+DS-TMC200,"ANPR kit, including ANPR camera, LED display and external supplement light default white light mode, (I): IR model Capture and display are integrated:",10962000,10962000,0,0,19089000,2 Years Warranty,Hikvision
+TMG001-3(3m octagonal),3m octagonal boom pole,1131435,1131435,0,0,1740669,2 Years Warranty,Hikvision
+DS-TMG001-3(4m octagonal),4m octagonal boom pole,1522935,1522935,0,0,2342977,2 Years Warranty,Hikvision
+DS-TMG001-3(6m octagonal),6m octagonal boom pole,1914435,1914435,0,0,2945285,2 Years Warranty,Hikvision
+TMG011-3(octagonal chuck),Octagonal pole chuck,387585,387585,0,0,596285,2 Years Warranty,Hikvision
+TMG021-3(octagonal bag),"Pole handle cover, Pole handle gasket, 2 M3*8 Cross recessed countersunk head screw (SUS304), 4 M8*65 Hexagon socket head screw (stainless steel 304),",270135,270135,0,0,415592,2 Years Warranty,Hikvision
+TMG001-3(2.5-4.5m),Octagonal telescopic pole (2.5-4.5m),1522935,1522935,0,0,2342977,2 Years Warranty,Hikvision
+TMG001-3(3.4-6m),Octagonal telescopic pole (3.4-6m),1914435,1914435,0,0,2945285,2 Years Warranty,Hikvision
+TMG021-3(octagonal telescopic bag),"Pole handle cover, 2 M8*65 external hexagon head screw (stainless steel 304), 2 M8 Anti-loosening nut, 2 Φ8 Flat washer (SUS304)",270135,270135,0,0,415592,2 Years Warranty,Hikvision
+DS-TMG001-3(3m/24V light),3m boom pole with strip light,2200230,2200230,0,0,3384969,2 Years Warranty,Hikvision
+DS-TMG001-3(4m/24V light),4m boom pole with strip light,2579985,2579985,0,0,3969208,2 Years Warranty,Hikvision
+DS-TMG001-3(6m/24V light),6m boom pole with strip light,3284685,3284685,0,0,5053362,2 Years Warranty,Hikvision
+TMG011-3(strip light pole chuck),Strip light pole chuck,387585,387585,0,0,596285,2 Years Warranty,Hikvision
+TMG021-3(strip light pole bag),"Rod Handle Protective Shield Cap, Pole handle cover (light pole), Pole handle gasket, 2 M8*70 external hexagon head screw(stainless steel 304), 2 M3*8",270135,270135,0,0,415592,2 Years Warranty,Hikvision
+TMG002-3(1.5+1.5m),1.5+1.5 m folding boom pole,1663875,1663875,0,0,2559808,2 Years Warranty,Hikvision
+TMG002-3(2+2m),2+2 m folding boom pole,1820475,1820475,0,0,2800731,2 Years Warranty,Hikvision
+TMG002-3(2.5+2.5m),2.5+2.5 m folding boom pole,1992735,1992735,0,0,3065746,2 Years Warranty,Hikvision
+TMG001-3(2.5-4.5m anti-octagonal),Anti-collision octagonal telescopic pole (2.5-4.5m),1522935,1522935,0,0,2342977,2 Years Warranty,Hikvision
+TMG021-3(anti-octagonal telescopic bag),"Anti-Collision pole handle, 2 M8*30 internal hexagon flat head screw (SUS304), 2 M8 Anti-loosening nut, Anti-Collision clamp sleeve, Upper shaft sleev",348435,348435,0,0,536054,2 Years Warranty,Hikvision
+TMG001-3(4m round),4m round pole,2188485,2188485,0,0,3366900,2 Years Warranty,Hikvision
+TMG001-3(6m round),6m round pole,2658285,2658285,0,0,4089669,2 Years Warranty,Hikvision
+TMG011-3(round chuck),Round pole chuck,387585,387585,0,0,596285,2 Years Warranty,Hikvision
+TMG021-3(round bag),"4 Anti-Collision shaft sleeve, 2 M10*85 internal hexagon cylindrical head screw (SUS304), 2 M10 Anti-loosening nut, 4 Φ10 Flat washer (SUS304)",105705,105705,0,0,162623,2 Years Warranty,Hikvision
+TMG001-3(3m anti-round),3m anti-collision round pole,1914435,1914435,0,0,2945285,2 Years Warranty,Hikvision
+TMG001-3(4m anti-round),4m anti-collision round pole,2188485,2188485,0,0,3366900,2 Years Warranty,Hikvision
+TMG021-3(anti-round bag),"2 Anti-Collision shaft sleeve, 2 Anti-Collision shaft clamping sleeve, 4 M5*12 internal hexagon countersunk head screw (SUS304), 4 M5 Hexagon nut(SUS3",191835,191835,0,0,295131,2 Years Warranty,Hikvision
+TMG000-3/TMG30X-A(φ5.0),Φ5.0 spring,152685,152685,0,0,234900,2 Years Warranty,Hikvision
+TMG000-3/TMG30X-A(φ6.5),Φ6.5 spring,152685,152685,0,0,234900,2 Years Warranty,Hikvision
+Leftward DC motor of 30 barrier gate,Motor（left） for TMG300,4099005,4099005,0,0,6306162,2 Years Warranty,Hikvision
+Rightward DC motor of 30 barrier gate,Motor（right） for TMG300,4099005,4099005,0,0,6306162,2 Years Warranty,Hikvision
+TMG090-30(control box),control box for TMG300,1648215,1648215,0,0,2535715,2 Years Warranty,Hikvision
+DS-TMG012-4W,"Remote controller for barrier gate(without batteries),Battery specification 23A,12V",230985,230985,0,0,355362,2 Years Warranty,Hikvision
+Antenna of barrier gate,Antenna of barrier gate,348435,348435,0,0,536054,2 Years Warranty,Hikvision
+"IPS,A-200GD-24,AC176~264V,24V8.3A",Industrial switching power supply,3128085,3128085,0,0,4812438,2 Years Warranty,Hikvision
+"Circuit Breaker,NXB-63-C10-2P",Air break switch,191835,191835,0,0,295131,2 Years Warranty,Hikvision
+Housing of 30 barrier gate,Housing of TMG300,3073275,3073275,0,0,4728115,2 Years Warranty,Hikvision
+Housing door of 30 barrier gate,Door of the housing for TMG300,587250,587250,0,0,903462,2 Years Warranty,Hikvision
+DS-2DE2C400MWG/W,"1/2.7″ Progressive Scan CMOS Color: 0.005 Lux @(F1.6，AGC ON), B/W: 0 Lux with IR 2.8 mm,horizontal FOV 91°, vertical FOV 49°, diagonal FOV 108° 4 mm, ",1370600,1370600,0,0,2175556,2 Years Warranty,Hikvision
+DS-2DE2C400MWG-4G,"1/2.7″ Progressive Scan CMOS Color: 0.005 Lux @(F1.6，AGC ON), B/W: 0 Lux with IR 2.8 mm, horizontal FOV 94°, vertical FOV 49°, diagonal FOV 114° 4 mm,",1596600,1596600,0,0,2534286,2 Years Warranty,Hikvision
+DS-2CFSP4/4G/EU,"1/2.9"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.01 lux @(F1.6, AGC ON), 0 lux with LED on;  12.5fps/15fps(2560×1440, 1920×108",3423031,3423031,0,0,5433383,2 Years Warranty,Hikvision
+DS-2CD1021G0-I,"1/3"" Progressive CMOS, ICR,1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR range: up to 30m, DC12V & PoE -IU :Built-i",689100,689100,0,0,984429,2 Years Warranty,Hikvision
+DS-2CD1021G0-IU,,866000,866000,0,0,1237143,2 Years Warranty,Hikvision
+DS-2CD1121G0-I,"1/3"" Progressive CMOS, ICR,1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR range: up to 30m, DC12V & PoE",729700,729700,0,0,1042429,2 Years Warranty,Hikvision
+DS-2CD1321G0-I,"1/3"" Progressive CMOS, ICR,1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR range: up to 30m, DC12V & PoE -IU :Built-i",689100,689100,0,0,984429,2 Years Warranty,Hikvision
+DS-2CD1321G0-IU,,866000,866000,0,0,1237143,2 Years Warranty,Hikvision
+DS-2CD1021G2-LIU,"1/2.8"" Progressive CMOS, ICR, 1920ⅹ1080:25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, IP67, DWDR, 3D DNR, BLC, Built-in Microphone, Support Human body",943400,943400,0,0,1347715,2 Years Warranty,Hikvision
+DS-2CD1021G2-LIUF,,1053800,1053800,0,0,1505429,2 Years Warranty,Hikvision
+DS-2CD1121G2-LIU,"1/2.8"" Progressive CMOS, ICR, 1920ⅹ1080:25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, IP67, DWDR, 3D DNR, BLC, Built-in Microphone, Support Human body",1039200,1039200,0,0,1484572,2 Years Warranty,Hikvision
+DS-2CD1121G2-LIUF,,1127601,1127601,0,0,1610858,2 Years Warranty,Hikvision
+DS-2CD1321G2-LIU,"1/2.8"" Progressive CMOS, ICR, 1920ⅹ1080:25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, IP67, DWDR, 3D DNR, BLC, Built-in Microphone, Support Human body",1039200,1039200,0,0,1484572,2 Years Warranty,Hikvision
+DS-2CD1321G2-LIUF,,1127601,1127601,0,0,1610858,2 Years Warranty,Hikvision
+DS-2CD1021G2-LIUF/SL,"1/2.8"" Progressive CMOS, ICR, 1920ⅹ1080:25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, IP67, DWDR, 3D DNR, BLC, Built-in microphone & speaker, audio & ",1098100,1098100,0,0,1568715,2 Years Warranty,Hikvision
+DS-2CD1321G2-LIUF/SL,"1/2.8"" Progressive CMOS, ICR, 1920ⅹ1080:25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, IP67, DWDR, 3D DNR, BLC, Built-in microphone & speaker, audio & ",1171800,1171800,0,0,1674000,2 Years Warranty,Hikvision
+DS-2CD1041G2-LIU,"1/2.8"" Progressive CMOS, ICR, 2560ⅹ1440:20fps(P)/(N), H.265+/H.265/H.264+&H.264, IP67, DWDR, 3D DNR, BLC, Built-in Microphone, Support Human body dete",1390300,1390300,0,0,1986143,2 Years Warranty,Hikvision
+DS-2CD1041G2-LIUF,,1516801,1516801,0,0,2166858,2 Years Warranty,Hikvision
+DS-2CD1141G2-LIU,"1/2.8"" Progressive CMOS, ICR, 2560ⅹ1440:20fps(P)/(N), H.265+/H.265/H.264+&H.264, IP67, DWDR, 3D DNR, BLC, Built-in Microphone, Support Human body dete",1446200,1446200,0,0,2066000,2 Years Warranty,Hikvision
+DS-2CD1141G2-LIUF,,1576301,1576301,0,0,2251858,2 Years Warranty,Hikvision
+DS-2CD1341G2-LIU,"1/2.8"" Progressive CMOS, ICR, 2560ⅹ1440:20fps(P)/(N), H.265+/H.265/H.264+&H.264, IP67, DWDR, 3D DNR, BLC, Built-in Microphone, Support Human body dete",1446200,1446200,0,0,2066000,2 Years Warranty,Hikvision
+DS-2CD1341G2-LIUF,,1576301,1576301,0,0,2251858,2 Years Warranty,Hikvision
+DS-2CD1041G2-LIUF/SL,"1/2.8"" Progressive CMOS, ICR, 2560ⅹ1440:20fps(P)/(N), H.265+/H.265/H.264+&H.264, IP67, DWDR, 3D DNR, BLC, Built-in microphone & speaker, audio & strob",1553901,1553901,0,0,2219858,2 Years Warranty,Hikvision
+DS-2CD1341G2-LIUF/SL,"1/2.8"" Progressive CMOS, ICR, 2560ⅹ1440:20fps(P)/(N), H.265+/H.265/H.264+&H.264, IP67, DWDR, 3D DNR, BLC, Built-in microphone & speaker, audio & strob",1617200,1617200,0,0,2310286,2 Years Warranty,Hikvision
+DS-2CD1043G2-LIU,"1/3"" Progressive CMOS, ICR,2560x1440: 20fps(P)/(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 30m, Built-in microph",1498200,1498200,0,0,2140286,2 Years Warranty,Hikvision
+DS-2CD1043G2-LIUF,,1624500,1624500,0,0,2320715,2 Years Warranty,Hikvision
+DS-2CD1023G2-LIU,"1/3"" Progressive CMOS, ICR,1920x1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 30m, Built-in mi",1013400,1013400,0,0,1447715,2 Years Warranty,Hikvision
+DS-2CD1023G2-LIUF,,1131300,1131300,0,0,1616143,2 Years Warranty,Hikvision
+DS-2CD1143G2-LIU,"1/3"" Progressive CMOS, ICR,2560x1440: 20fps(P)/(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 30m, Built-in microph",1550300,1550300,0,0,2214715,2 Years Warranty,Hikvision
+DS-2CD1143G2-LIUF,,1687800,1687800,0,0,2411143,2 Years Warranty,Hikvision
+DS-2CD1123G2-LIU,"1/3"" Progressive CMOS, ICR,1920x1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 30m, Built-in mi",1112800,1112800,0,0,1589715,2 Years Warranty,Hikvision
+DS-2CD1123G2-LIUF,,1208700,1208700,0,0,1726715,2 Years Warranty,Hikvision
+DS-2CD1343G2-LIU,"1/3"" Progressive CMOS, ICR,2560 × 1440: 20fps(P)/(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 30m, Built-in micro",1550300,1550300,0,0,2214715,2 Years Warranty,Hikvision
+DS-2CD1343G2-LIUF,,1687800,1687800,0,0,2411143,2 Years Warranty,Hikvision
+DS-2CD1323G2-LIU,"1/3"" Progressive CMOS, ICR,1920x1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 30m, Built-in mi",1112800,1112800,0,0,1589715,2 Years Warranty,Hikvision
+DS-2CD1323G2-LIUF,,1208700,1208700,0,0,1726715,2 Years Warranty,Hikvision
+DS-2CD1T23G2-LIUF,"1/3"" Progressive CMOS, ICR,1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 50m, Built-in ",1455500,1455500,0,0,2079286,2 Years Warranty,Hikvision
+DS-2CD1T43G2-LIUF,"1/3"" Progressive CMOS, ICR,2560 × 1440: 20fps(P)/(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 50m, Built-in micro",2052100,2052100,0,0,2931572,2 Years Warranty,Hikvision
+DS-2CD1T63G2-LIUF,"1/3"" Progressive CMOS, ICR,3200 × 1800: 20fps(P/N), H.265+/H.265/H.264+&H.264, WDR, 3D DNR, BLC, IR or white light range: up to 50m, Built-in micropho",2062600,2062600,0,0,2946572,2 Years Warranty,Hikvision
+DS-2CD1T83G2-LIUF,"1/3"" Progressive CMOS, ICR, 3840 × 2160: 12.5fps(P)/15fps(N), H.265+/H.265/H.264+&H.264, WDR, 3D DNR, BLC, IR or white light range: up to 50m, Built-i",2373900,2373900,0,0,3391286,2 Years Warranty,Hikvision
+DS-2CD1623G2-LIZSU,"1/3"" Progressive CMOS, ICR,1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 50m, Built-in ",3404900,3404900,0,0,4864143,2 Years Warranty,Hikvision
+DS-2CD1723G2-LIZSU,"1/3"" Progressive CMOS, ICR,1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+&H.264, DWDR, 3D DNR, BLC, IR or white light range: up to 30m, Built-in ",3533800,3533800,0,0,5048286,2 Years Warranty,Hikvision
+DS-2CD1027G3-LIUF,"1/2.8"" Progressive CMOS, ICR, 1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+/H.264, WDR, 3D DNR, BLC，HLC, Smart hybrid light, IR or white light r",1455100,1455100,0,0,2238615,2 Years Warranty,Hikvision
+DS-2CD1027G3-LIU,,1305100,1305100,0,0,2007846,2 Years Warranty,Hikvision
+DS-2CD1127G3-LIUF,"1/2.8"" Progressive CMOS, ICR, 1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+/H.264, WDR, 3D DNR, BLC，HLC, Smart hybrid light, IR or white light r",1601300,1601300,0,0,2463538,2 Years Warranty,Hikvision
+DS-2CD1127G3-LIU,,1455100,1455100,0,0,2238615,2 Years Warranty,Hikvision
+DS-2CD1327G3-LIUF,"1/2.8"" Progressive CMOS, ICR, 1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+/H.264, WDR, 3D DNR, BLC，HLC, Smart hybrid light, IR or white light r",1455100,1455100,0,0,2238615,2 Years Warranty,Hikvision
+DS-2CD1327G3-LIU,,1305100,1305100,0,0,2007846,2 Years Warranty,Hikvision
+DS-2CD1T27G3-LIUF,"1/2.8"" Progressive CMOS, ICR, 1920 × 1080: 25fps(P)/30fps(N), H.265+/H.265/H.264+/H.264, WDR, 3D DNR, BLC，HLC, Smart hybrid light, IR or white light r",1871400,1871400,0,0,2879077,2 Years Warranty,Hikvision
+DS-2CD1T27G3-LIU,,1702600,1702600,0,0,2619385,2 Years Warranty,Hikvision
+DS-2CD1047G3-LIUF,"1/3"" Progressive CMOS, ICR, 2560 × 1440: 25fps(P)/24fps(N), H.265+/H.265/H.264+/H.264, WDR, 3D DNR, BLC，HLC, Smart hybrid light, IR or white light ran",2334100,2334100,0,0,3590923,2 Years Warranty,Hikvision
+DS-2CD1047G3-LIU,,2178900,2178900,0,0,3352154,2 Years Warranty,Hikvision
+DS-2CD1147G3-LIUF,"1/3"" Progressive CMOS, ICR, 2560 × 1440: 25fps(P)/24fps(N), H.265+/H.265/H.264+/H.264, WDR, 3D DNR, BLC，HLC, Smart hybrid light, IR or white light ran",2496700,2496700,0,0,3841077,2 Years Warranty,Hikvision
+DS-2CD1147G3-LIU,,2334100,2334100,0,0,3590923,2 Years Warranty,Hikvision
+DS-2CD1347G3-LIUF,"1/3"" Progressive CMOS, ICR, 2560 × 1440: 25fps(P)/24fps(N), H.265+/H.265/H.264+/H.264, WDR, 3D DNR, BLC，HLC, Smart hybrid light, IR or white light ran",2334100,2334100,0,0,3590923,2 Years Warranty,Hikvision
+DS-2CD1347G3-LIU,,2178900,2178900,0,0,3352154,2 Years Warranty,Hikvision
+DS-2CD1T47G3-LIUF,"1/3"" Progressive CMOS, ICR, 2560 × 1440: 25fps(P)/24fps(N), H.265+/H.265/H.264+/H.264, WDR, 3D DNR, BLC，HLC, Smart hybrid light, IR or white light ran",2719900,2719900,0,0,4184462,2 Years Warranty,Hikvision
+DS-2CD1T47G3-LIU,,2538300,2538300,0,0,3905077,2 Years Warranty,Hikvision
+DS-2CD1T47G3-LIUF/LSL,● SoundMax produces a louder alarm sound to deter trespassers ; ● HikAI-ISP for excellent noise reduction effect; ● Super clear 24/7 colorful imaging ,3037700,3037700,0,0,4673385,2 Years Warranty,Hikvision
+DS-2CD1T47G3-LIU/LSL,,2912900,2912900,0,0,4481385,2 Years Warranty,Hikvision
+DS-2CD2387G2P-LSU/SL (C),"2*1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 lux @(F1.0, AGC ON), 0 lux with LED on;  20fps(5120×1440),VCA function",5187400,5187400,0,0,8366774,2 Years Warranty,Hikvision
+DS-2CD2347G2P-LSU/SL (C),"2*1/2.5"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 lux @(F1.0, AGC ON), 0 lux with LED on;  25/24fps(3040×1368),VCA funct",4344600,4344600,0,0,7007419,2 Years Warranty,Hikvision
+DS-2CD2T87G2P-LSU/SL (C),"2*1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 lux @(F1.0, AGC ON), 0 lux with LED on;  20fps(5120×1440),VCA function",5926300,5926300,0,0,9558548,2 Years Warranty,Hikvision
+DS-2CD2T47G2P-LSU/SL (C),"2*1/2.5"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 lux @(F1.0, AGC ON), 0 lux with LED on;  25/24fps(3040×1368),VCA funct",4995000,4995000,0,0,8056452,2 Years Warranty,Hikvision
+DS-2CD23167G3P-LIS2UY/SL,,7715700,7715700,0,0,12444677,2 Years Warranty,Hikvision
+DS-2CD23127G3P-LIS2UY/SL,,7011500,7011500,0,0,11308871,2 Years Warranty,Hikvision
+DS-2CD2387G3P-LIS2UY/SL,,5841600,5841600,0,0,9421935,2 Years Warranty,Hikvision
+DS-2CD2T167G3P-LIS2UY/SL,,8808600,8808600,0,0,14207419,2 Years Warranty,Hikvision
+DS-2CD2T127G3P-LIS2UY/SL,,8008100,8008100,0,0,12916290,2 Years Warranty,Hikvision
+DS-2CD2T87G3P-LIS2UY/SL,,6676700,6676700,0,0,10768871,2 Years Warranty,Hikvision
+DS-2CD2023G2-LI,"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(1920×1080); VCA functions",2530400,2530400,0,0,4081290,2 Years Warranty,Hikvision
+DS-2CD2023G2-LI2U,,2622800,2622800,0,0,4230323,2 Years Warranty,Hikvision
+DS-2CD2043G2-LI,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(2688×1520, 1920×1080); VCA ",2730700,2730700,0,0,4404355,2 Years Warranty,Hikvision
+DS-2CD2043G2-LI2U,,2819300,2819300,0,0,4547258,2 Years Warranty,Hikvision
+DS-2CD2063G2-LI,"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;   Color: 0.005 lux@(F1.6, AGC ON), 0 lux with IR;  20fps(3200x1800), 25fps/30fps (2688×",2861700,2861700,0,0,4615645,2 Years Warranty,Hikvision
+DS-2CD2063G2-LI2U,,2950300,2950300,0,0,4758548,2 Years Warranty,Hikvision
+DS-2CD2123G2-LI,"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(1920×1080); VCA functions",2530400,2530400,0,0,4081290,2 Years Warranty,Hikvision
+DS-2CD2123G2-LIS2U,,2769300,2769300,0,0,4466613,2 Years Warranty,Hikvision
+DS-2CD2143G2-LI,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(2688×1520, 1920×1080); VCA ",2730700,2730700,0,0,4404355,2 Years Warranty,Hikvision
+DS-2CD2143G2-LIS2U,,2973300,2973300,0,0,4795645,2 Years Warranty,Hikvision
+DS-2CD2163G2-LI,"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;   Color: 0.005 lux@(F1.6, AGC ON), 0 lux with IR;  20fps(3200x1800), 25fps/30fps (2688×",2861700,2861700,0,0,4615645,2 Years Warranty,Hikvision
+DS-2CD2163G2-LIS2U,,3115800,3115800,0,0,5025484,2 Years Warranty,Hikvision
+DS-2CD2323G2-LI,"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(1920×1080); VCA functions",2480300,2480300,0,0,4000484,2 Years Warranty,Hikvision
+DS-2CD2323G2-LI2U,,2568900,2568900,0,0,4143387,2 Years Warranty,Hikvision
+DS-2CD2343G2-LI,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(2688×1520, 1920×1080); VCA ",2676700,2676700,0,0,4317258,2 Years Warranty,Hikvision
+DS-2CD2343G2-LI2U,,2765300,2765300,0,0,4460161,2 Years Warranty,Hikvision
+DS-2CD2363G2-LI,"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;   Color: 0.005 lux@(F1.6, AGC ON), 0 lux with IR;  20fps(3200x1800), 25fps/30fps (2688×",2811500,2811500,0,0,4534677,2 Years Warranty,Hikvision
+DS-2CD2363G2-LI2U,,2900100,2900100,0,0,4677581,2 Years Warranty,Hikvision
+DS-2CD2T23G2-2LI2U,"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(1920×1080); VCA functions",2919400,2919400,0,0,4708710,2 Years Warranty,Hikvision
+DS-2CD2T23G2-4LI2U,,3065800,3065800,0,0,4944839,2 Years Warranty,Hikvision
+DS-2CD2T43G2-2LI2U,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(2688×1520, 1920×1080); VCA ",3115800,3115800,0,0,5025484,2 Years Warranty,Hikvision
+DS-2CD2T43G2-4LI2U,,3273800,3273800,0,0,5280323,2 Years Warranty,Hikvision
+DS-2CD2T63G2-2LI2U,"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;   Color: 0.005 lux@(F1.6, AGC ON), 0 lux with IR;  20fps(3200x1800), 25fps/30fps (2688×",3273800,3273800,0,0,5280323,2 Years Warranty,Hikvision
+DS-2CD2T63G2-4LI2U,,3435500,3435500,0,0,5541129,2 Years Warranty,Hikvision
+DS-2CD2523G2-LIS2U,"1/2.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(1920×1080); VCA functions",3008000,3008000,0,0,4851613,2 Years Warranty,Hikvision
+DS-2CD2543G2-LIS2U,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 25fps/30fps(2688×1520, 1920×1080); VCA ",3235300,3235300,0,0,5218226,2 Years Warranty,Hikvision
+DS-2CD2563G2-LIS2U,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG; Color: 0.005 Lux @ (F1.6, AGC ON), 0 lux with IR; 20fps(3200x1800),25fps/30fps(2688×1520,",3481700,3481700,0,0,5615645,2 Years Warranty,Hikvision
+DS-2CD2086G2H-I,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/24fps(3840×2160);25fps/30 ",4190400,4190400,0,0,6758710,2 Years Warranty,Hikvision
+DS-2CD2086G2H-IU,,4290600,4290600,0,0,6920323,2 Years Warranty,Hikvision
+DS-2CD2046G2H-I,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",3065800,3065800,0,0,4944839,2 Years Warranty,Hikvision
+DS-2CD2046G2H-IU,,3169700,3169700,0,0,5112419,2 Years Warranty,Hikvision
+DS-2CD2186G2H-I,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/24fps(3840×2160);25fps/30 ",4236600,4236600,0,0,6833226,2 Years Warranty,Hikvision
+DS-2CD2186G2H-ISU,,4429200,4429200,0,0,7143871,2 Years Warranty,Hikvision
+DS-2CD2146G2H-I,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",3112000,3112000,0,0,5019355,2 Years Warranty,Hikvision
+DS-2CD2146G2H-ISU,,3316200,3316200,0,0,5348710,2 Years Warranty,Hikvision
+DS-2CD2386G2H-I,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/24fps(3840×2160);25fps/30 ",4190400,4190400,0,0,6758710,2 Years Warranty,Hikvision
+DS-2CD2386G2H-IU,,4290600,4290600,0,0,6920323,2 Years Warranty,Hikvision
+DS-2CD2346G2H-I,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",3065800,3065800,0,0,4944839,2 Years Warranty,Hikvision
+DS-2CD2346G2H-IU,,3169700,3169700,0,0,5112419,2 Years Warranty,Hikvision
+DS-2CD2T86G2H-2I,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/24fps(3840×2160);25fps/30 ",4872100,4872100,0,0,7858226,2 Years Warranty,Hikvision
+DS-2CD2T86G2H-4I,,5014600,5014600,0,0,8088065,2 Years Warranty,Hikvision
+DS-2CD2T46G2H-2I,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",3462500,3462500,0,0,5584677,2 Years Warranty,Hikvision
+DS-2CD2T46G2H-4I,,3608800,3608800,0,0,5820645,2 Years Warranty,Hikvision
+DS-2CD2686G2HT-IZS,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",7818500,7818500,0,0,12610484,2 Years Warranty,Hikvision
+DS-2CD2646G2HT-IZS,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",6197000,6197000,0,0,9995161,2 Years Warranty,Hikvision
+DS-2CD2686G2H-IZS,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",8061100,8061100,0,0,13001774,2 Years Warranty,Hikvision
+DS-2CD2646G2H-IZS,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",6378100,6378100,0,0,10287258,2 Years Warranty,Hikvision
+DS-2CD2786G2HT-IZS,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",7818500,7818500,0,0,12610484,2 Years Warranty,Hikvision
+DS-2CD2746G2HT-IZS,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",6197000,6197000,0,0,9995161,2 Years Warranty,Hikvision
+DS-2CD2786G2H-IPTRZS,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",9193500,9193500,0,0,14828226,2 Years Warranty,Hikvision
+DS-2CD2746G2H-IPTRZS,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",7279300,7279300,0,0,11740806,2 Years Warranty,Hikvision
+DS-2CD2086G2H-I2U/SL,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/24fps(3840×2160);25fps/30 ",4444700,4444700,0,0,7168871,2 Years Warranty,Hikvision
+DS-2CD2066G2H-I2U/SL,"1/2.4"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Powered by Darkfighter technology, Color: 0.001lux@(F1.0, AGC ON), 0 lux with IR;   25",3470200,3470200,0,0,5597097,2 Years Warranty,Hikvision
+DS-2CD2046G2H-I2U/SL,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",3296900,3296900,0,0,5317581,2 Years Warranty,Hikvision
+DS-2CD2386G2H-IS2U/SL,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/24fps(3840×2160);25fps/30 ",4444700,4444700,0,0,7168871,2 Years Warranty,Hikvision
+DS-2CD2366G2H-IS2U/SL,"1/2.4"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (3200x1800, 2688×1520",3470200,3470200,0,0,5597097,2 Years Warranty,Hikvision
+DS-2CD2346G2H-IS2U/SL,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",3296900,3296900,0,0,5317581,2 Years Warranty,Hikvision
+DS-2CD2T86G2H-IS2U/SL,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/24fps(3840×2160);25fps/30 ",5045500,5045500,0,0,8137903,2 Years Warranty,Hikvision
+DS-2CD2T66G2H-IS2U/SL,"1/2.4"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (3200x1800, 2688×1520",3797500,3797500,0,0,6125000,2 Years Warranty,Hikvision
+DS-2CD2T46G2H-IS2U/SL,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",3620400,3620400,0,0,5839355,2 Years Warranty,Hikvision
+DS-2CD2686G2HT-IZS2U/SL,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",8303800,8303800,0,0,13393226,2 Years Warranty,Hikvision
+DS-2CD2666G2HT-IZS2U/SL,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.2, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × ",6871100,6871100,0,0,11082419,2 Years Warranty,Hikvision
+DS-2CD2646G2HT-IZS2U/SL,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",6547500,6547500,0,0,10560484,2 Years Warranty,Hikvision
+DS-2CD2786G2H-IPTRZS2U/SL,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",9713400,9713400,0,0,15666774,2 Years Warranty,Hikvision
+DS-2CD2766G2H-IPTRZS2U/SL,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.2, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × ",8041900,8041900,0,0,12970806,2 Years Warranty,Hikvision
+DS-2CD2746G2H-IPTRZS2U/SL,"1/3"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.0, AGC ON),0 Lux with light;  25fps/30fps (2688 × 1520, 1920 × 10",7660600,7660600,0,0,12355806,2 Years Warranty,Hikvision
+DS-2CD2087G2H-LI,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",4448400,4448400,0,0,7174839,2 Years Warranty,Hikvision
+DS-2CD2087G2H-LIU,,4533300,4533300,0,0,7311774,2 Years Warranty,Hikvision
+DS-2CD2047G2H-LI,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",3277600,3277600,0,0,5286452,2 Years Warranty,Hikvision
+DS-2CD2047G2H-LIU,,3377800,3377800,0,0,5448065,2 Years Warranty,Hikvision
+DS-2CD2187G2H-LI,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",4448400,4448400,0,0,7174839,2 Years Warranty,Hikvision
+DS-2CD2187G2H-LISU,,4625600,4625600,0,0,7460645,2 Years Warranty,Hikvision
+DS-2CD2147G2H-LI,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",3666600,3666600,0,0,5913871,2 Years Warranty,Hikvision
+DS-2CD2147G2H-LISU,,3851400,3851400,0,0,6211935,2 Years Warranty,Hikvision
+DS-2CD2387G2H-LI,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",4448400,4448400,0,0,7174839,2 Years Warranty,Hikvision
+DS-2CD2387G2H-LIU,,4625600,4625600,0,0,7460645,2 Years Warranty,Hikvision
+DS-2CD2347G2H-LI,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",3689700,3689700,0,0,5951129,2 Years Warranty,Hikvision
+DS-2CD2347G2H-LIU,,3789900,3789900,0,0,6112742,2 Years Warranty,Hikvision
+DS-2CD2T87G2H-LI,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",5303500,5303500,0,0,8554032,2 Years Warranty,Hikvision
+DS-2CD2T47G2H-LI,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",4363800,4363800,0,0,7038387,2 Years Warranty,Hikvision
+DS-2CD2687G2HT-LIZS,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",8103500,8103500,0,0,13070161,2 Years Warranty,Hikvision
+DS-2CD2667G2HT-LIZS,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/30fps (3200 × 1800, 2688 × 1",7398800,7398800,0,0,11933548,2 Years Warranty,Hikvision
+DS-2CD2647G2HT-LIZS,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008Lux @ (F1.2, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 108",6963500,6963500,0,0,11231452,2 Years Warranty,Hikvision
+DS-2CD2787G2HT-LIZS,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",8103500,8103500,0,0,13070161,2 Years Warranty,Hikvision
+DS-2CD2767G2HT-LIZS,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/30fps (3200 × 1800, 2688 × 1",7398800,7398800,0,0,11933548,2 Years Warranty,Hikvision
+DS-2CD2747G2HT-LIZS,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",6963500,6963500,0,0,11231452,2 Years Warranty,Hikvision
+DS-2CD2787G2H-LIPTRZS,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",9956100,9956100,0,0,16058226,2 Years Warranty,Hikvision
+DS-2CD2767G2H-LIPTRZS,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/30fps (3200 × 1800, 2688 × 1",9089500,9089500,0,0,14660484,2 Years Warranty,Hikvision
+DS-2CD2747G2H-LIPTRZS,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0008 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",8554200,8554200,0,0,13797097,2 Years Warranty,Hikvision
+DS-2CD2087G3-LIY,● HikAI-ISP for excellent noise reduction effect; ● 24/7 colorful imaging via ColorVu technology; ● Scene-adaptive WDR; ● Focus on Person and Vehicle ,4614100,4614100,0,0,7442097,2 Years Warranty,Hikvision
+DS-2CD2087G3-LI2UY,,4706500,4706500,0,0,7591129,2 Years Warranty,Hikvision
+DS-2CD2047G3-LIY,● HikAI-ISP for excellent noise reduction effect; ● 24/7 colorful imaging via ColorVu technology; ● Scene-adaptive WDR; ● Focus on Person and Vehicle ,3508700,3508700,0,0,5659194,2 Years Warranty,Hikvision
+DS-2CD2047G3-LI2UY,,3624200,3624200,0,0,5845484,2 Years Warranty,Hikvision
+DS-2CD2187G3-LIY,● HikAI-ISP for excellent noise reduction effect; ● 24/7 colorful imaging via ColorVu technology; ● Focus on Person and Vehicle classification based o,4614100,4614100,0,0,7442097,2 Years Warranty,Hikvision
+DS-2CD2187G3-LIS2UY,,4798900,4798900,0,0,7740161,2 Years Warranty,Hikvision
+DS-2CD2147G3-LIY,● HikAI-ISP for excellent noise reduction effect; ● 24/7 colorful imaging via ColorVu technology; ● Scene-adaptive WDR; ● Focus on Person and Vehicle ,3920800,3920800,0,0,6323871,2 Years Warranty,Hikvision
+DS-2CD2147G3-LIS2UY,,4124900,4124900,0,0,6653065,2 Years Warranty,Hikvision
+DS-2CD2387G3-LIY,● HikAI-ISP for excellent noise reduction effect; ● 24/7 colorful imaging via ColorVu technology; ● Scene-adaptive WDR; ● Focus on Person and Vehicle ,4614100,4614100,0,0,7442097,2 Years Warranty,Hikvision
+DS-2CD2387G3-LI2UY,,4798900,4798900,0,0,7740161,2 Years Warranty,Hikvision
+DS-2CD2347G3-LIY,● HikAI-ISP for excellent noise reduction effect; ● 24/7 colorful imaging via ColorVu technology; ● Scene-adaptive WDR; ● Focus on Person and Vehicle ,3920800,3920800,0,0,6323871,2 Years Warranty,Hikvision
+DS-2CD2347G3-LI2UY,,4028600,4028600,0,0,6497742,2 Years Warranty,Hikvision
+DS-2CD2T87G3-LIY,● HikAI-ISP for excellent noise reduction effect; ● 24/7 colorful imaging via ColorVu technology; ● Scene-adaptive WDR; ● Focus on Person and Vehicle ,5492300,5492300,0,0,8858548,2 Years Warranty,Hikvision
+DS-2CD2T47G3-LIY,● HikAI-ISP for excellent noise reduction effect; ● 24/7 colorful imaging via ColorVu technology; ● Scene-adaptive WDR; ● Focus on Person and Vehicle ,4629400,4629400,0,0,7466774,2 Years Warranty,Hikvision
+DS-2CD2087G3-LI2UY/SL,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",4825900,4825900,0,0,7783710,2 Years Warranty,Hikvision
+DS-2CD2047G3-LI2UY/SL,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0001 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",3716600,3716600,0,0,5994516,2 Years Warranty,Hikvision
+DS-2CD2387G3-LIS2UY/SL,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",4922200,4922200,0,0,7939032,2 Years Warranty,Hikvision
+DS-2CD2347G3-LIS2UY/SL,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0001 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",4121100,4121100,0,0,6646935,2 Years Warranty,Hikvision
+DS-2CD2T87G3-LIS2UY/SL,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 18",5734900,5734900,0,0,9249839,2 Years Warranty,Hikvision
+DS-2CD2T47G3-LIS2UY/SL,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0001 Lux @ (F1.0, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",4822100,4822100,0,0,7777581,2 Years Warranty,Hikvision
+DS-2CD2687G3-LIZS2UY/SL,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 180",8827600,8827600,0,0,14238065,2 Years Warranty,Hikvision
+DS-2CD2647G3-LIZS2UY/SL,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",7795400,7795400,0,0,12573226,2 Years Warranty,Hikvision
+DS-2CD2H87G3-LIZS2UY/SL,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.001 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/24fps(3840 × 2160, 3200 × 180",8827600,8827600,0,0,14238065,2 Years Warranty,Hikvision
+DS-2CD2H47G3-LIZS2UY/SL,"1/1.8"" Progressive Scan CMOS; H.265+/H.265/H.264+/H.264/MJPEG;  Color: 0.0005 Lux @ (F1.2, AGC ON),0 Lux with light 25fps/30fps(2688 × 1520, 1920 × 10",7795400,7795400,0,0,12573226,2 Years Warranty,Hikvision
+DS-2CD2787G3-LIPTRZS2UY/SL,"· Motorized Pan, Tilt, Rotate, Zoom for easy installation and monitoring · 24/7 colorful imaging via ColorVu technology · HikAI-ISP for excellent nois",10395100,10395100,0,0,16766290,2 Years Warranty,Hikvision
+DS-2CD2747G3-LIPTRZS2UY/SL,"· Motorized Pan, Tilt, Rotate, Zoom for easy installation and monitoring · 24/7 colorful imaging via ColorVu technology · HikAI-ISP for excellent nois",9239700,9239700,0,0,14902742,2 Years Warranty,Hikvision
+DS-2DE3404W-DE,· High quality imaging with 4 MP resolution · Clear imaging against strong back lighting due to 120 dB WDR technology · Pan and tilt ability enables c,5377500,5377500,0,0,8273077,2 Years Warranty,Hikvision
+DS-2DE3204W-DE,"2MP, 1/2.8"" CMOS sensor, 3-inch bubble, 4X optial zoom, outdoor&indoor use, H.264 codec,  Color: 0.1lux/F2.0, B/W:0.01lux/F2.0, Angle of View: 80-33.5",4901700,4901700,0,0,7541077,2 Years Warranty,Hikvision
+DS-2DE2C200MWG-E,"1/2.7″ Progressive Scan CMOS Color: 0.01 Lux @(F1.2，AGC ON), B/W: 0 Lux with IR 2.8 mm, horizontal FOV 105°, vertical FOV 58°, diagonal FOV 123° 4 mm,",1412300,1412300,0,0,2172769,2 Years Warranty,Hikvision
+DS-2DE2C400MWG-E,"1/2.7″ Progressive Scan CMOS Color: 0.01 Lux @(F1.2，AGC ON), B/W: 0 Lux with IR 2.8 mm, horizontal FOV 94°, vertical FOV 49°, diagonal FOV 114° 4 mm, ",1525600,1525600,0,0,2347077,2 Years Warranty,Hikvision
+DS-2DE3A404IWG-E,· High quality imaging with 4 MP resolution ·  Focuses on human and vehicle targets classification based on deep learning · Excellent low-light perfor,4686400,4686400,0,0,7209846,2 Years Warranty,Hikvision
+DS-2DE3A400BW-DE,"Accurate human and vehicle target classification and alarm, based on deep learning algorithm Support face capture. Up to 5 faces captured at the same ",4425800,4425800,0,0,6808923,2 Years Warranty,Hikvision
+DS-2DE2A404IW-DE3,"4MP, 1/3"" CMOS,H.265+/H.265/H.264+/H.264 codec，3D DNR, ICR,Color: 0.005lux/F1.6, B/W:0.001lux/F1.6, 4x optical zoom, Angle of View: 100° to 33° (Wide-",3666800,3666800,0,0,5641231,2 Years Warranty,Hikvision
+DS-2DE4425IW-DE,"4MP, 1/2.5"" CMOS,H.265+/H.265/H.264+/H.264 codec, 3D DNR, True WDR,  Ultra-low light  Powerde By DarkFighter Color: 0.005lux/F1.6, B/W:0.001lux/F1.6, ",9455900,9455900,0,0,14547538,2 Years Warranty,Hikvision
+DS-2DE4225IW-DE,"2MP, 1/2.8"" CMOS,H.265+/H.265/H.264+/H.264 codec, 3D DNR, True WDR,  Ultra-low light  Powerde By DarkFighter Color: 0.005lux/F1.6, B/W:0.001lux/F1.6, ",8549600,8549600,0,0,13153231,2 Years Warranty,Hikvision
+DS-2DE4215IW-DE,"2MP, 1/3"" CMOS sensor, H.265+/H.265/H.264+/H.264 codec, Color: 0.02lux/F1.5, B/W:0.02lux/F1.5, Optical Zoom:15x, Focus:5-75.0mm, Digital Zoom:16X, Pan",6827600,6827600,0,0,10504000,2 Years Warranty,Hikvision
+DS-2DE4430IW-DE,"4MP, 1/2.5"" CMOS,H.265+/H.265/H.264+/H.264 codec, 3D DNR, True WDR,  Ultra-low light  Powerde By DarkFighter Color: 0.005lux/F1.6, B/W:0.001lux/F1.6, ",7477200,7477200,0,0,11503385,2 Years Warranty,Hikvision
+DS-2DE4230IW-DE,"2MP, 1/2.8"" CMOS,H.265+/H.265/H.264+/H.264 codec, 3D DNR, True WDR,  Ultra-low light  Powerde By DarkFighter Color: 0.005lux/F1.6, B/W:0.001lux/F1.6, ",6759600,6759600,0,0,10399385,2 Years Warranty,Hikvision
+DS-2DE4A225IWG-E,· High quality imaging with 2 MP resolution · Excellent low-light performance via powered-by-DarkFighter technology · Clear imaging against strong bac,9863900,9863900,0,0,15175231,2 Years Warranty,Hikvision
+DS-2DE4A425IWG-E,· High quality imaging with 4 MP resolution · Excellent low-light performance via powered-by-DarkFighter technology · Clear imaging against strong bac,11219500,11219500,0,0,17260769,2 Years Warranty,Hikvision
+DS-2DE5225W-AE,"● 1/2.8"" Progressive Scan CMOS ● High quality imaging with 2 MP resolution ● Excellent low-light performance with powered-by-DarkFighter technology ● ",10199900,10199900,0,0,15692154,2 Years Warranty,Hikvision
+DS-2SE4C215MWG-E(12F0),Captures a large area and great details at the same time High quality imaging with 2 MP resolution Excellent low-light performance with powered-by-Dar,8538400,8538400,0,0,13136000,2 Years Warranty,Hikvision
+DS-2SE4C225MWG-E/12(F0),"Bullet lens: Accurate human and vehicle target classification, alarm,based on deep learning algorithm 1/3"" Progressive Scan CMOS Up to 1920 × 1080@30f",10513400,10513400,0,0,16174462,2 Years Warranty,Hikvision
+DS-2SE4C415MWG-E(14F0),Captures a large area and great details at the same time High quality imaging with 4 MP resolution Excellent low-light performance with powered-by-Dar,10056500,10056500,0,0,15471538,2 Years Warranty,Hikvision
+DS-2SE4C425MWG-E(14F0),Captures a large area and great details at the same time High quality imaging with 4 MP resolution Excellent low-light performance with powered-by-Dar,10966500,10966500,0,0,16871538,2 Years Warranty,Hikvision
+DS-2SE4C425MWG-E/14(F0),"Bullet lens: Accurate human and vehicle target classification, alarm,based on deep learning algorithm 1/3"" Progressive Scan CMOS Up to 2560 × 1440@30f",11476300,11476300,0,0,17655846,2 Years Warranty,Hikvision
+DS-2DE5425WG1-E,"AI-ISP/AI -FOCUS/VR image Accurate human and vehicle target classification, alarm, and  tracking based on deep learning algorithm Support face capture",9539100,9539100,0,0,14675538,2 Years Warranty,Hikvision
+DS-2DE5432WG1-E,"AI-ISP/AI -FOCUS/VR image Accurate human and vehicle target classification, alarm, and  tracking based on deep learning algorithm Support face capture",12813100,12813100,0,0,19712462,2 Years Warranty,Hikvision
+DS-2DE4225IWG1-E,"AI-ISP/AI -FOCUS/VR image Accurate human and vehicle target classification, alarm, and  tracking based on deep learning algorithm Support face capture",8919700,8919700,0,0,13722615,2 Years Warranty,Hikvision
+DS-2DE4425IWG1-E,"AI-ISP/AI -FOCUS/VR image Accurate human and vehicle target classification, alarm, and  tracking based on deep learning algorithm Support face capture",9829900,9829900,0,0,15122923,2 Years Warranty,Hikvision

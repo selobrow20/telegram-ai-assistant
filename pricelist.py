@@ -248,100 +248,157 @@ def extract_text_from_excel(doc_bytes: bytes, max_rows: int = 150) -> str:
         return ""
 
 def import_pricelist_from_excel(doc_bytes: bytes) -> Tuple[bool, str, int]:
-    """Membaca file Excel (.xlsx) dan mengimpor ke data/pricelist.csv jika berisi kolom pricelist."""
+    """Membaca file Excel (.xlsx) semua sheet dan menggabungkan (merge) ke data/pricelist.csv tanpa menghapus data produk yang sudah ada."""
     import openpyxl
     try:
         wb = openpyxl.load_workbook(io.BytesIO(doc_bytes), data_only=True)
-        ws = wb.active
-        rows = list(ws.iter_rows(values_only=True))
-        if not rows or len(rows) < 2:
-            return False, "File Excel kosong atau tidak memiliki baris data.", 0
+        new_extracted = {}
 
-        header_idx = -1
-        header_row = []
-        for idx, r in enumerate(rows[:15]):
-            r_str = [str(cell or "").lower().strip() for cell in r]
-            if any("model" in c or "tipe" in c or "type" in c for c in r_str):
-                header_idx = idx
-                header_row = r_str
-                break
+        for sname in wb.sheetnames:
+            if sname.lower() in ["update", "history", "changelog", "hot model list for retail", "hot model list for smb project"]:
+                continue
+            ws = wb[sname]
+            rows = list(ws.iter_rows(values_only=True))
+            if not rows or len(rows) < 2:
+                continue
 
-        if header_idx == -1:
-            return False, "Bukan format pricelist (kolom Model/Tipe tidak ditemukan).", 0
+            header_idx = -1
+            for idx, r in enumerate(rows[:12]):
+                r_str = [str(cell or "").lower().strip() for cell in r]
+                if any("model" in c or "tipe" in c or "type" in c or (c == "name" and any("price" in x or "dpp" in x for x in r_str)) for c in r_str):
+                    header_idx = idx
+                    break
 
-        col_model = -1
-        col_desc = -1
-        col_adp = -1
-        col_md = -1
-        col_installer = -1
-        col_online = -1
-        col_msrp = -1
-        col_warranty = -1
+            if header_idx == -1:
+                continue
 
-        for i, col_name in enumerate(header_row):
-            if "model" in col_name or "tipe" in col_name or "type" in col_name:
-                if col_model == -1:
+            header_row = [str(cell or "").lower().strip() for cell in rows[header_idx]]
+
+            col_order = -1
+            col_model = -1
+            col_desc = -1
+            col_dpp = -1
+            col_adp = -1
+            col_md = -1
+            col_msrp = -1
+            col_warranty = -1
+
+            for i, col_name in enumerate(header_row):
+                if "order" in col_name and ("model" in col_name or "name" in col_name):
+                    col_order = i
+                elif ("model" in col_name or "tipe" in col_name or "type" in col_name or col_name == "name") and col_model == -1:
                     col_model = i
-            elif "desc" in col_name or "keterangan" in col_name or "deskripsi" in col_name:
-                col_desc = i
-            elif "adp" in col_name:
-                col_adp = i
-            elif "bottom" in col_name or "md" in col_name or "dealer" in col_name:
-                col_md = i
-            elif "installer" in col_name:
-                col_installer = i
-            elif "online" in col_name or "ref" in col_name:
-                col_online = i
-            elif "msrp" in col_name or "srp" in col_name or "retail" in col_name:
-                col_msrp = i
-            elif "warranty" in col_name or "garansi" in col_name:
-                col_warranty = i
-            elif "harga" in col_name or "price" in col_name:
-                if col_adp == -1:
+                elif "desc" in col_name or "keterangan" in col_name or "deskripsi" in col_name or "spesifikasi" in col_name:
+                    col_desc = i
+                elif "dpp" in col_name:
+                    col_dpp = i
+                elif "adp" in col_name:
                     col_adp = i
+                elif "bottom" in col_name or "md" in col_name or "dealer" in col_name:
+                    col_md = i
+                elif "msrp" in col_name or "srp" in col_name or "retail" in col_name:
+                    col_msrp = i
+                elif "warranty" in col_name or "garansi" in col_name:
+                    col_warranty = i
 
-        new_products = []
-        for r in rows[header_idx + 1:]:
-            if not r or len(r) <= col_model or not r[col_model]:
-                continue
-            model = str(r[col_model]).strip()
-            if not model or model.lower() in ("none", "model", "tipe", "type"):
-                continue
-            desc = str(r[col_desc]).strip() if col_desc != -1 and len(r) > col_desc and r[col_desc] else ""
+            # Fallback untuk kolom harga jika belum ketemu
+            if col_dpp == -1 and col_adp == -1 and col_md == -1:
+                for i, col_name in enumerate(header_row):
+                    if "price" in col_name or "harga" in col_name:
+                        col_dpp = i
+                        break
 
             def clean_num(val):
                 if not val:
                     return "0"
+                try:
+                    if isinstance(val, (int, float)):
+                        return str(int(round(val)))
+                except Exception:
+                    pass
                 c = re.sub(r'[^0-9]', '', str(val))
                 return c if c else "0"
 
-            adp = clean_num(r[col_adp]) if col_adp != -1 and len(r) > col_adp else "0"
-            md = clean_num(r[col_md]) if col_md != -1 and len(r) > col_md else adp
-            installer = clean_num(r[col_installer]) if col_installer != -1 and len(r) > col_installer else "0"
-            online = clean_num(r[col_online]) if col_online != -1 and len(r) > col_online else "0"
-            msrp = clean_num(r[col_msrp]) if col_msrp != -1 and len(r) > col_msrp else "0"
-            warranty = str(r[col_warranty]).strip() if col_warranty != -1 and len(r) > col_warranty and r[col_warranty] else "3 Years Warranty"
+            for r in rows[header_idx + 1:]:
+                if not r:
+                    continue
 
-            new_products.append({
-                "Model": model,
-                "Description": desc,
-                "Harga_MD": md if int(md or 0) > 0 else adp,
-                "Harga_ADP": adp if int(adp or 0) > 0 else md,
-                "Harga_Installer": installer,
-                "Harga_Online": online,
-                "Harga_MSRP": msrp,
-                "Warranty": warranty
-            })
+                raw_order = str(r[col_order]).strip() if col_order != -1 and len(r) > col_order and r[col_order] else ""
+                raw_model = str(r[col_model]).strip() if col_model != -1 and len(r) > col_model and r[col_model] else ""
 
-        if not new_products:
-            return False, "Tidak ada data produk yang berhasil diekstrak.", 0
+                candidates = []
+                for rm in [raw_order, raw_model]:
+                    if not rm or rm.lower() in ("none", "model", "tipe", "type", "order model", "basic model", "name"):
+                        continue
+                    cm = re.sub(r'[\（\(](?:hot\s*sku|project|new)[^\）\)]*[\）\)]', '', rm, flags=re.IGNORECASE).strip()
+                    cm = cm.split('\n')[0].strip()
+                    if len(cm) >= 3 and cm not in candidates:
+                        candidates.append(cm)
 
+                if not candidates:
+                    continue
+
+                # Ambil harga
+                p_dpp = clean_num(r[col_dpp]) if col_dpp != -1 and len(r) > col_dpp else "0"
+                p_adp = clean_num(r[col_adp]) if col_adp != -1 and len(r) > col_adp else p_dpp
+                p_md = clean_num(r[col_md]) if col_md != -1 and len(r) > col_md else (p_dpp or p_adp)
+                p_final = p_dpp if int(p_dpp) > 0 else (p_adp if int(p_adp) > 0 else p_md)
+
+                if not p_final or int(p_final) == 0:
+                    continue
+
+                desc = str(r[col_desc]).strip() if col_desc != -1 and len(r) > col_desc and r[col_desc] else ""
+                desc = desc.replace('\n', ' ')
+                msrp = clean_num(r[col_msrp]) if col_msrp != -1 and len(r) > col_msrp else p_final
+                warranty = str(r[col_warranty]).strip() if col_warranty != -1 and len(r) > col_warranty and r[col_warranty] else "2 Years Warranty"
+
+                # Deteksi Brand otomatis
+                brand = "General"
+                first_cand = candidates[0].upper()
+                if first_cand.startswith("DS-") or first_cand.startswith("IDS-") or first_cand.startswith("HC-"):
+                    brand = "Hikvision"
+                elif first_cand.startswith("DH-") or first_cand.startswith("DHI-") or first_cand.startswith("XVR") or first_cand.startswith("NVR") or first_cand.startswith("HAC"):
+                    brand = "Dahua"
+                elif first_cand.startswith("RG-") or first_cand.startswith("REYEE") or "RUIJIE" in first_cand:
+                    brand = "Ruijie"
+
+                for cand in candidates:
+                    new_extracted[cand] = {
+                        "Model": cand,
+                        "Description": desc[:150],
+                        "Harga_MD": p_final,
+                        "Harga_ADP": p_final,
+                        "Harga_Installer": "0",
+                        "Harga_Online": "0",
+                        "Harga_MSRP": msrp or p_final,
+                        "Warranty": warranty,
+                        "Brand": brand
+                    }
+
+        if not new_extracted:
+            return False, "Tidak ada data produk yang berhasil diekstrak dari seluruh sheet.", 0
+
+        # Muat produk yang sudah ada agar tidak terhapus (Merge)
+        existing = {}
+        if PRICELIST_PATH.exists():
+            with open(PRICELIST_PATH, "r", encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                for r in reader:
+                    m = r.get("Model", "").strip()
+                    if m:
+                        existing[m] = r
+
+        # Gabungkan
+        for m, item in new_extracted.items():
+            existing[m] = item
+
+        fieldnames = ["Model", "Description", "Harga_MD", "Harga_ADP", "Harga_Installer", "Harga_Online", "Harga_MSRP", "Warranty", "Brand"]
         with open(PRICELIST_PATH, "w", newline="", encoding="utf-8") as f:
-            writer = csv.DictWriter(f, fieldnames=["Model", "Description", "Harga_MD", "Harga_ADP", "Harga_Installer", "Harga_Online", "Harga_MSRP", "Warranty"])
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
-            writer.writerows(new_products)
+            writer.writerows(existing.values())
 
-        return True, f"Berhasil mengimpor {len(new_products)} produk ke database pricelist.", len(new_products)
+        return True, f"Berhasil mengimpor {len(new_extracted)} produk ke database (Total sekarang: {len(existing)} produk).", len(new_extracted)
     except Exception as e:
         return False, f"Gagal membaca file Excel: {e}", 0
 

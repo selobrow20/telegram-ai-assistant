@@ -818,10 +818,11 @@ async def handle_document_message(message: Message, bot: Bot):
             # 1. Coba deteksi apakah ini file pricelist produk
             ok, msg, count = pricelist.import_pricelist_from_excel(doc_bytes)
             if ok:
+                total_all = len(pricelist.load_pricelist())
                 await message.answer(
                     f"✅ *Pricelist Excel Berhasil Diperbarui!*\n\n"
                     f"• {msg}\n"
-                    f"• Total `{count}` produk berhasil disimpan ke database harga ADP.\n"
+                    f"• Total `{total_all}` produk kini tersimpan di database harga (Hikvision / Ruijie / Dahua).\n"
                     f"Ketik tipe produk kapan saja untuk cek harga!",
                     reply_markup=get_main_keyboard(),
                     parse_mode=ParseMode.MARKDOWN

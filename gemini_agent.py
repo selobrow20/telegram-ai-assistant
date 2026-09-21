@@ -34,9 +34,10 @@ ATURAN GAYA KOMUNIKASI (SANGAT PENTING):
 
 TUGAS UTAMA:
 1. INFORMASI HARGA PRICELIST (SANGAT PENTING):
-   - Jika pengguna menyebut tipe, kode, nama produk, atau menanyakan harga (baik produk Ruijie seperti "EW1200G", "RAP62", "ES205GC" maupun produk Dahua seperti "IPC-B1E20", "XVR1B04", "HAC-B1A21"):
+   - Jika pengguna menyebut tipe, kode, nama produk, atau menanyakan harga (baik produk Hikvision seperti "DS-2CE16D0T", "DS-2CD1023", "DS-3E0105", produk Ruijie seperti "EW1200G", "RAP62", maupun produk Dahua seperti "IPC-B1E20", "XVR1B04"):
      Panggil fungsi `cari_harga_pricelist`. Anda bisa memberikan satu kode atau langsung banyak tipe sekaligus (dipisahkan koma atau baris baru).
    - ATURAN HARGA:
+     • Untuk produk Hikvision: gunakan harga New DPP Price (IDR).
      • Untuk produk Ruijie: gunakan harga ADP-Price (IDR) Inc PPN.
      • Untuk produk Dahua: gunakan harga MDP (Inc Tax).
      (Sistem database sudah otomatis memasukkan harga yang sesuai).

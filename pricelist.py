@@ -130,35 +130,56 @@ def search_pricelist(query: str, price_tier: str = "MD") -> Dict[str, Any]:
     }
 
 def format_single_product_answer(product: Dict[str, Any], tier: str = "MD") -> str:
-    """Format jawaban sesuai Aturan 6, 7."""
+    """Format jawaban: Tipe dan Harga saja tanpa keterangan."""
     model = product.get("Model", "N/A")
-    desc = product.get("Description", "-")
-    warranty = product.get("Warranty", "3 Years Warranty")
     
     tier_upper = tier.upper()
     if "MSRP" in tier_upper or "USER" in tier_upper:
         price_val = product.get("Harga_MSRP", "0")
-        price_label = "MSRP"
     elif "INSTALLER" in tier_upper:
         price_val = product.get("Harga_Installer", "0")
-        price_label = "Installer"
     elif "ADP" in tier_upper:
         price_val = product.get("Harga_ADP", "0")
-        price_label = "ADP"
     else: # Default MD
         price_val = product.get("Harga_MD", "0")
-        price_label = "MD"
         
     formatted_price = format_rupiah_num(price_val)
     
     return (
         f"Tipe: {model}\n"
-        f"Harga ({price_label}): {formatted_price}\n"
-        f"Keterangan: {desc} (Garansi: {warranty})"
+        f"Harga: {formatted_price}"
     )
 
 def query_pricelist_tool(query: str, tier: str = "MD") -> str:
-    """Fungsi pembantu yang dipanggil oleh Gemini Agent."""
+    """Fungsi pembantu yang dipanggil oleh Gemini Agent atau command bot.
+    Mendukung pencarian 1 tipe maupun sekaligus banyak tipe.
+    """
+    # Deteksi apakah query berisi banyak tipe (dipisah newline, koma, semicolon, atau 'dan')
+    cleaned = query.replace(";", "\n").replace(",", "\n")
+    cleaned = re.sub(r'\s+(?:dan|&)\s+', '\n', cleaned, flags=re.IGNORECASE)
+    parts = [p.strip() for p in cleaned.split("\n") if p.strip()]
+    
+    if len(parts) > 1:
+        results = []
+        for part in parts:
+            p_clean = re.sub(r'^(?:tolong\s+)?(?:carikan\s+)?(?:harga\s+)?(?:md\s+)?(?:untuk\s+)?', '', part, flags=re.IGNORECASE).strip()
+            p_clean = re.sub(r'\s+(?:berapa|dong|ya|unit|pcs)$', '', p_clean, flags=re.IGNORECASE).strip()
+            if not p_clean:
+                continue
+            res = search_pricelist(p_clean, tier)
+            st = res.get("status")
+            if st == "exact":
+                results.append(format_single_product_answer(res["product"], tier))
+            elif st == "ambiguous":
+                m_list = [f"{m['Model']} ({format_rupiah_num(m.get('Harga_MD', 0))})" for m in res['matches'][:3]]
+                results.append(f"Tipe: {p_clean} (Ambigu: {', '.join(m_list)})")
+            elif st == "not_found_with_suggestions" and res.get("suggestions"):
+                results.append(f"Tipe: {p_clean} (Tidak ditemukan, opsi: {', '.join(res['suggestions'])})")
+            else:
+                results.append(f"Tipe: {p_clean} (Tidak ditemukan)")
+        return "\n\n".join(results)
+    
+    # 1 tipe saja
     result = search_pricelist(query, tier)
     st = result.get("status")
     
@@ -170,15 +191,15 @@ def query_pricelist_tool(query: str, tier: str = "MD") -> str:
         lines = [f"Ditemukan beberapa tipe yang mirip dengan '{query}':"]
         for p in items:
             p_price = format_rupiah_num(p.get("Harga_MD", 0))
-            lines.append(f"• {p.get('Model')}: {p_price} ({p.get('Description')[:55]}...)")
-        lines.append("Mana tipe yang Anda maksud?")
+            lines.append(f"• Tipe: {p.get('Model')}\n  Harga: {p_price}")
+        lines.append("\nMana tipe yang Anda maksud?")
         return "\n".join(lines)
         
     elif st == "not_found_with_suggestions":
         sug = result.get("suggestions", [])
         if sug:
             sug_str = ", ".join(sug)
-            return f"Tipe '{query}' tidak ditemukan di pricelist. Mungkin yang Anda maksud salah satu dari tipe ini: {sug_str}?"
+            return f"Tipe '{query}' tidak ditemukan di pricelist. Mungkin yang Anda maksud: {sug_str}?"
         return f"Tipe '{query}' tidak ditemukan di pricelist."
         
     else:

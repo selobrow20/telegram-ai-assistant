@@ -1,6 +1,6 @@
 import sqlite3
 from datetime import datetime, date, timedelta
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple
 from config import DATABASE_PATH
 
 def get_connection():
@@ -59,6 +59,18 @@ def init_db():
                 last_scheduled_sent TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS authorized_users (
+                user_id INTEGER PRIMARY KEY,
+                user_name TEXT,
+                username TEXT,
+                chat_id INTEGER,
+                role TEXT DEFAULT 'user',
+                status TEXT DEFAULT 'pending',
+                requested_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                approved_at TIMESTAMP
             )
         ''')
         conn.commit()
@@ -438,4 +450,120 @@ def get_previous_month_summary(user_id: int) -> Dict[str, Any]:
             'expense_categories': exp_cats,
             'income_categories': inc_cats
         }
+
+
+# --- Modul Hak Akses & Verifikasi Pengguna (Privat Bot) ---
+
+def get_owners() -> List[Dict[str, Any]]:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM authorized_users WHERE role = 'owner'")
+        return [dict(r) for r in cursor.fetchall()]
+
+def get_user_auth(user_id: int) -> Optional[Dict[str, Any]]:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM authorized_users WHERE user_id = ?", (user_id,))
+        row = cursor.fetchone()
+        return dict(row) if row else None
+
+def is_user_authorized(user_id: int, admin_id: str = "") -> bool:
+    if admin_id and str(user_id) == str(admin_id):
+        return True
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT status, role FROM authorized_users WHERE user_id = ?", (user_id,))
+        row = cursor.fetchone()
+        if not row:
+            return False
+        return row['status'] == 'approved' or row['role'] in ('owner', 'admin')
+
+def request_access(user_id: int, user_name: str, username: str, chat_id: int, admin_id: str = "") -> Tuple[str, bool]:
+    """
+    Meminta akses atau mengecek status.
+    Return: (status, is_new_request)
+    User pertama atau user yang cocok dengan admin_id otomatis menjadi Owner & Approved.
+    """
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        
+        is_config_admin = bool(admin_id and str(user_id) == str(admin_id))
+        
+        cursor.execute("SELECT COUNT(*) as cnt FROM authorized_users WHERE role = 'owner'")
+        has_owner = cursor.fetchone()['cnt'] > 0
+        
+        cursor.execute("SELECT * FROM authorized_users WHERE user_id = ?", (user_id,))
+        row = cursor.fetchone()
+        
+        if is_config_admin or not has_owner:
+            # Otomatis menjadi Owner
+            cursor.execute('''
+                INSERT INTO authorized_users (user_id, user_name, username, chat_id, role, status, approved_at)
+                VALUES (?, ?, ?, ?, 'owner', 'approved', CURRENT_TIMESTAMP)
+                ON CONFLICT(user_id) DO UPDATE SET
+                    user_name = excluded.user_name,
+                    username = excluded.username,
+                    chat_id = excluded.chat_id,
+                    role = 'owner',
+                    status = 'approved',
+                    approved_at = CURRENT_TIMESTAMP
+            ''', (user_id, user_name, username or '', chat_id))
+            conn.commit()
+            return 'approved', False
+
+        if row:
+            cursor.execute('''
+                UPDATE authorized_users
+                SET user_name = ?, username = ?, chat_id = ?
+                WHERE user_id = ?
+            ''', (user_name, username or '', chat_id, user_id))
+            conn.commit()
+            return row['status'], False
+        else:
+            cursor.execute('''
+                INSERT INTO authorized_users (user_id, user_name, username, chat_id, role, status)
+                VALUES (?, ?, ?, ?, 'user', 'pending')
+            ''', (user_id, user_name, username or '', chat_id))
+            conn.commit()
+            return 'pending', True
+
+def approve_user(user_id: int) -> bool:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            UPDATE authorized_users
+            SET status = 'approved', approved_at = CURRENT_TIMESTAMP
+            WHERE user_id = ?
+        ''', (user_id,))
+        conn.commit()
+        return cursor.rowcount > 0
+
+def reject_user(user_id: int) -> bool:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            UPDATE authorized_users
+            SET status = 'rejected'
+            WHERE user_id = ?
+        ''', (user_id,))
+        conn.commit()
+        return cursor.rowcount > 0
+
+def revoke_user_access(user_id: int) -> bool:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            UPDATE authorized_users
+            SET status = 'pending'
+            WHERE user_id = ? AND role != 'owner'
+        ''', (user_id,))
+        conn.commit()
+        return cursor.rowcount > 0
+
+def get_all_authorized_users() -> List[Dict[str, Any]]:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM authorized_users ORDER BY role DESC, requested_at DESC")
+        return [dict(r) for r in cursor.fetchall()]
+
 

@@ -5,7 +5,8 @@ import os
 import sys
 from pathlib import Path
 
-from aiogram import Bot, Dispatcher, F
+from typing import Callable, Dict, Any, Awaitable
+from aiogram import Bot, Dispatcher, F, BaseMiddleware
 from aiogram.enums import ParseMode
 from aiogram.filters import Command, CommandStart
 from aiogram.types import (
@@ -13,10 +14,11 @@ from aiogram.types import (
     CallbackQuery,
     InlineKeyboardMarkup,
     InlineKeyboardButton,
-    FSInputFile
+    FSInputFile,
+    TelegramObject
 )
 
-from config import TELEGRAM_BOT_TOKEN, VOICE_REPLY_ENABLED
+from config import TELEGRAM_BOT_TOKEN, VOICE_REPLY_ENABLED, ADMIN_USER_ID
 import database as db
 import finance
 import gemini_agent
@@ -39,6 +41,95 @@ if not TELEGRAM_BOT_TOKEN:
 
 # Inisialisasi Dispatcher
 dp = Dispatcher()
+
+class AccessControlMiddleware(BaseMiddleware):
+    async def __call__(
+        self,
+        handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]],
+        event: TelegramObject,
+        data: Dict[str, Any]
+    ) -> Any:
+        user = data.get("event_from_user")
+        if not user:
+            return await handler(event, data)
+
+        user_id = user.id
+        user_name = user.first_name or "Teman"
+        username = user.username or ""
+
+        # Jika callback adalah persetujuan/penolakan akses oleh owner, jangan cegat!
+        if isinstance(event, CallbackQuery):
+            if event.data and (event.data.startswith("auth_approve_") or event.data.startswith("auth_reject_")):
+                return await handler(event, data)
+
+        # Cek apakah user sudah terotorisasi (Owner / Approved)
+        if db.is_user_authorized(user_id, ADMIN_USER_ID):
+            return await handler(event, data)
+
+        # Jika belum, daftarkan atau periksa status permohonan
+        chat_id = event.chat.id if isinstance(event, Message) else (event.message.chat.id if event.message else user_id)
+        status, is_new = db.request_access(user_id, user_name, username, chat_id, ADMIN_USER_ID)
+
+        if status == "approved":
+            # Otomatis disetujui (misal user pertama otomatis menjadi Owner)
+            return await handler(event, data)
+
+        bot: Bot = data["bot"]
+
+        if status == "pending":
+            msg_text = (
+                "🔒 *Akses Terbatas (Akun Belum Terverifikasi)*\n\n"
+                "Bot ini bersifat privat. Permintaan akses Anda telah dikirimkan ke pemilik bot untuk diverifikasi.\n\n"
+                f"🆔 *User ID Anda:* `{user_id}`\n\n"
+                "Silakan tunggu hingga pemilik bot menyetujui akses Anda."
+            )
+            if isinstance(event, Message):
+                await event.answer(msg_text, parse_mode=ParseMode.MARKDOWN)
+            elif isinstance(event, CallbackQuery):
+                await event.answer("Akses Anda belum diverifikasi oleh pemilik bot.", show_alert=True)
+
+            # Jika ini permintaan baru pertama kali, kirim notifikasi ke Owner!
+            if is_new:
+                owners = db.get_owners()
+                kb = InlineKeyboardMarkup(
+                    inline_keyboard=[
+                        [
+                            InlineKeyboardButton(text="✅ Izinkan Akses", callback_data=f"auth_approve_{user_id}"),
+                            InlineKeyboardButton(text="❌ Tolak", callback_data=f"auth_reject_{user_id}")
+                        ]
+                    ]
+                )
+                uname_str = f"@{username}" if username else "-"
+                notify_text = (
+                    "🔔 *PERMINTAAN VERIFIKASI PENGGUNA BARU*\n"
+                    "━━━━━━━━━━━━━━━━━━━━━━\n"
+                    f"👤 *Nama:* {user_name}\n"
+                    f"🔗 *Username:* {uname_str}\n"
+                    f"🆔 *User ID:* `{user_id}`\n\n"
+                    "Ada yang ingin menggunakan bot Anda. Apakah Anda ingin mengizinkan akses orang ini?"
+                )
+                for owner in owners:
+                    try:
+                        await bot.send_message(owner["chat_id"], notify_text, reply_markup=kb, parse_mode=ParseMode.MARKDOWN)
+                    except Exception as e:
+                        logger.warning(f"Gagal mengirim notif izin ke owner {owner['user_id']}: {e}")
+
+                if ADMIN_USER_ID and str(ADMIN_USER_ID).isdigit():
+                    adm_int = int(ADMIN_USER_ID)
+                    if not any(o["user_id"] == adm_int for o in owners):
+                        try:
+                            await bot.send_message(adm_int, notify_text, reply_markup=kb, parse_mode=ParseMode.MARKDOWN)
+                        except Exception:
+                            pass
+            return  # Hentikan proses, jangan teruskan ke command/handler
+
+        elif status == "rejected":
+            reject_msg = "❌ Maaf, akses Anda untuk menggunakan bot ini telah ditolak oleh pemilik."
+            if isinstance(event, Message):
+                await event.answer(reject_msg)
+            elif isinstance(event, CallbackQuery):
+                await event.answer("Akses Anda ditolak oleh pemilik.", show_alert=True)
+            return
 
 def get_main_keyboard() -> InlineKeyboardMarkup:
     buttons = [
@@ -261,7 +352,7 @@ async def cmd_help(message: Message):
     await message.answer(help_text, reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
 
 @dp.callback_query()
-async def handle_callbacks(callback: CallbackQuery):
+async def handle_callbacks(callback: CallbackQuery, bot: Bot):
     data = callback.data
     user_id = callback.from_user.id
     await callback.answer()
@@ -440,6 +531,149 @@ async def handle_callbacks(callback: CallbackQuery):
         await callback.answer(f"Tanggal diubah ke {day_val}")
     elif data == "menu_help":
         await cmd_help(callback.message)
+    elif data.startswith("auth_approve_"):
+        target_uid = int(data.replace("auth_approve_", ""))
+        is_owner = (ADMIN_USER_ID and str(user_id) == str(ADMIN_USER_ID)) or any(o["user_id"] == user_id for o in db.get_owners())
+        if not is_owner:
+            await callback.answer("Hanya pemilik bot yang berhak memberikan izin akses.", show_alert=True)
+            return
+
+        db.approve_user(target_uid)
+        target_info = db.get_user_auth(target_uid)
+        t_chat_id = target_info.get("chat_id", target_uid) if target_info else target_uid
+
+        new_text = f"{callback.message.text}\n\n✅ *STATUS: DISETUJUI*\n_Akses telah diizinkan oleh {callback.from_user.first_name}._"
+        try:
+            await callback.message.edit_text(new_text, reply_markup=None, parse_mode=ParseMode.MARKDOWN)
+        except Exception:
+            pass
+        await callback.answer("Pengguna berhasil disetujui! ✅")
+
+        try:
+            welcome_msg = (
+                "🎉 *Selamat! Permintaan akses Anda telah disetujui.*\n\n"
+                "Anda sekarang dapat menggunakan asisten AI Selobrow untuk cek harga, pencatatan keuangan, voice note, dan lainnya.\n\n"
+                "Ketik /help atau kirim pesan apa saja untuk memulai! 🚀"
+            )
+            await bot.send_message(t_chat_id, welcome_msg, reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
+        except Exception as e:
+            logger.warning(f"Gagal mengirim notifikasi persetujuan ke user {target_uid}: {e}")
+
+    elif data.startswith("auth_reject_"):
+        target_uid = int(data.replace("auth_reject_", ""))
+        is_owner = (ADMIN_USER_ID and str(user_id) == str(ADMIN_USER_ID)) or any(o["user_id"] == user_id for o in db.get_owners())
+        if not is_owner:
+            await callback.answer("Hanya pemilik bot yang berhak menolak akses.", show_alert=True)
+            return
+
+        db.reject_user(target_uid)
+        target_info = db.get_user_auth(target_uid)
+        t_chat_id = target_info.get("chat_id", target_uid) if target_info else target_uid
+
+        new_text = f"{callback.message.text}\n\n❌ *STATUS: DITOLAK*\n_Permintaan akses ditolak oleh {callback.from_user.first_name}._"
+        try:
+            await callback.message.edit_text(new_text, reply_markup=None, parse_mode=ParseMode.MARKDOWN)
+        except Exception:
+            pass
+        await callback.answer("Pengguna telah ditolak. ❌")
+
+        try:
+            await bot.send_message(t_chat_id, "❌ Maaf, permohonan akses Anda untuk bot ini telah ditolak oleh pemilik.")
+        except Exception:
+            pass
+
+
+@dp.message(Command("pengguna"))
+@dp.message(Command("users"))
+async def cmd_users(message: Message):
+    user_id = message.from_user.id
+    is_owner = (ADMIN_USER_ID and str(user_id) == str(ADMIN_USER_ID)) or any(o["user_id"] == user_id for o in db.get_owners())
+    if not is_owner:
+        await message.answer("❌ Perintah ini khusus untuk pemilik bot.")
+        return
+
+    users = db.get_all_authorized_users()
+    if not users:
+        await message.answer("Belum ada data pengguna yang tersimpan.")
+        return
+
+    text = "👥 *DAFTAR PENGGUNA BOT PRIVAT*\n━━━━━━━━━━━━━━━━━━━━━━\n"
+    for u in users:
+        if u.get("role") == "owner":
+            status_icon = "👑 Owner"
+        elif u.get("status") == "approved":
+            status_icon = "✅ Aktif"
+        elif u.get("status") == "pending":
+            status_icon = "⏳ Menunggu Izin"
+        else:
+            status_icon = "❌ Ditolak"
+
+        uname = f"@{u['username']}" if u.get("username") else "-"
+        text += (
+            f"• *{u.get('user_name', 'Tanpa Nama')}* ({uname})\n"
+            f"  ID: `{u['user_id']}` | Status: {status_icon}\n"
+        )
+    text += "\n_Perintah Pengelola:_\n• `/izinkan <user_id>` untuk memberi izin\n• `/cabut <user_id>` untuk menolak/mencabut akses"
+    await message.answer(text, parse_mode=ParseMode.MARKDOWN)
+
+
+@dp.message(Command("izinkan"))
+async def cmd_izinkan(message: Message, bot: Bot):
+    user_id = message.from_user.id
+    is_owner = (ADMIN_USER_ID and str(user_id) == str(ADMIN_USER_ID)) or any(o["user_id"] == user_id for o in db.get_owners())
+    if not is_owner:
+        await message.answer("❌ Perintah ini khusus untuk pemilik bot.")
+        return
+
+    parts = message.text.strip().split()
+    if len(parts) < 2 or not parts[1].isdigit():
+        await message.answer("Format salah. Gunakan: `/izinkan <user_id>`\nContoh: `/izinkan 123456789`", parse_mode=ParseMode.MARKDOWN)
+        return
+
+    target_uid = int(parts[1])
+    db.approve_user(target_uid)
+    await message.answer(f"✅ User `{target_uid}` berhasil disetujui & diberikan akses!", parse_mode=ParseMode.MARKDOWN)
+
+    target_info = db.get_user_auth(target_uid)
+    t_chat_id = target_info.get("chat_id", target_uid) if target_info else target_uid
+    try:
+        await bot.send_message(
+            t_chat_id,
+            "🎉 *Selamat! Akses bot Anda telah diaktifkan oleh pemilik.*\nKetik /help untuk panduan penggunaan.",
+            reply_markup=get_main_keyboard(),
+            parse_mode=ParseMode.MARKDOWN
+        )
+    except Exception:
+        pass
+
+
+@dp.message(Command("cabut"))
+async def cmd_cabut(message: Message, bot: Bot):
+    user_id = message.from_user.id
+    is_owner = (ADMIN_USER_ID and str(user_id) == str(ADMIN_USER_ID)) or any(o["user_id"] == user_id for o in db.get_owners())
+    if not is_owner:
+        await message.answer("❌ Perintah ini khusus untuk pemilik bot.")
+        return
+
+    parts = message.text.strip().split()
+    if len(parts) < 2 or not parts[1].isdigit():
+        await message.answer("Format salah. Gunakan: `/cabut <user_id>`\nContoh: `/cabut 123456789`", parse_mode=ParseMode.MARKDOWN)
+        return
+
+    target_uid = int(parts[1])
+    if str(target_uid) == str(user_id) or (ADMIN_USER_ID and str(target_uid) == str(ADMIN_USER_ID)):
+        await message.answer("❌ Tidak dapat mencabut akses akun pemilik bot sendiri.")
+        return
+
+    db.reject_user(target_uid)
+    await message.answer(f"🚫 Akses user `{target_uid}` berhasil dicabut/ditolak!", parse_mode=ParseMode.MARKDOWN)
+
+    target_info = db.get_user_auth(target_uid)
+    t_chat_id = target_info.get("chat_id", target_uid) if target_info else target_uid
+    try:
+        await bot.send_message(t_chat_id, "🔒 Akses Anda ke bot ini telah dinonaktifkan oleh pemilik.")
+    except Exception:
+        pass
 
 
 @dp.message(F.voice)
@@ -761,6 +995,10 @@ async def main():
 
     logger.info("Memulai Background Notification Scheduler (Daily/Weekly Recap, Monthly Report, Scheduled Reports)...")
     asyncio.create_task(notifications.start_notification_scheduler(bot))
+
+    # Pasang middleware hak akses privat
+    dp.message.middleware(AccessControlMiddleware())
+    dp.callback_query.middleware(AccessControlMiddleware())
 
     logger.info("Bot Telegram AI Selobrow siap beroperasi! Menunggu pesan...")
     await dp.start_polling(bot)

@@ -23,6 +23,7 @@ import gemini_agent
 import tts
 import pdf_converter
 import notifications
+import pricelist
 
 
 # Setup Logging
@@ -42,23 +43,26 @@ dp = Dispatcher()
 def get_main_keyboard() -> InlineKeyboardMarkup:
     buttons = [
         [
-            InlineKeyboardButton(text="💰 Cek Saldo", callback_data="menu_saldo"),
-            InlineKeyboardButton(text="📑 Laporan Bulan Ini", callback_data="menu_lap_month")
+            InlineKeyboardButton(text="🏷️ Cek Harga (MD)", callback_data="menu_harga"),
+            InlineKeyboardButton(text="💰 Cek Saldo", callback_data="menu_saldo")
         ],
         [
-            InlineKeyboardButton(text="📅 Laporan Hari Ini", callback_data="menu_lap_today"),
-            InlineKeyboardButton(text="⏳ Laporan 7 Hari", callback_data="menu_lap_week")
+            InlineKeyboardButton(text="📑 Laporan Bulan Ini", callback_data="menu_lap_month"),
+            InlineKeyboardButton(text="📅 Laporan Hari Ini", callback_data="menu_lap_today")
+        ],
+        [
+            InlineKeyboardButton(text="⏳ Laporan 7 Hari", callback_data="menu_lap_week"),
+            InlineKeyboardButton(text="📥 Download Excel", callback_data="menu_excel")
         ],
         [
             InlineKeyboardButton(text="✅ Daftar To-Do", callback_data="menu_tasks"),
             InlineKeyboardButton(text="📝 Catatan Harian", callback_data="menu_notes")
         ],
         [
-            InlineKeyboardButton(text="📥 Download Laporan Excel", callback_data="menu_excel"),
-            InlineKeyboardButton(text="🔔 Notifikasi Cerdas", callback_data="menu_notifikasi")
+            InlineKeyboardButton(text="🔔 Notifikasi Cerdas", callback_data="menu_notifikasi"),
+            InlineKeyboardButton(text="🗑️ Reset Saldo", callback_data="menu_resetsaldo")
         ],
         [
-            InlineKeyboardButton(text="🗑️ Reset Saldo ke Rp 0", callback_data="menu_resetsaldo"),
             InlineKeyboardButton(text="💡 Bantuan", callback_data="menu_help")
         ]
     ]
@@ -74,6 +78,7 @@ async def cmd_start(message: Message):
     welcome_text = (
         f"👋 Halo *{user_name}*!\n\n"
         "Saya **Selobrow**. Kirim teks atau Voice Note untuk:\n"
+        "• 🏷️ *Cek Harga Pricelist (MD)* (ketik tipe / model produk)\n"
         "• 💸 Catat uang & pantau saldo\n"
         "• 📊 Laporan & ekspor Excel / PDF\n"
         "• 📋 To-do list & catatan\n"
@@ -81,6 +86,25 @@ async def cmd_start(message: Message):
         "Pilih menu di bawah atau langsung chat:"
     )
     await message.answer(welcome_text, reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
+
+@dp.message(Command("harga"))
+@dp.message(Command("pricelist"))
+async def cmd_harga(message: Message):
+    parts = message.text.split(maxsplit=1)
+    if len(parts) > 1:
+        query = parts[1].strip()
+        ans = pricelist.query_pricelist_tool(query, "MD")
+        await message.answer(ans, reply_markup=get_main_keyboard())
+    else:
+        await message.answer(
+            "🏷️ *CEK HARGA PRICELIST (MD)*\n\n"
+            "Ketik tipe/kode produk di chat, contoh:\n"
+            "• `EW1200G` atau `/harga EW1200G`\n"
+            "• `RG-RAP2260`\n"
+            "• Atau tanya: _\"Harga MD EW3000GX beli 5 unit diskon 5%?\"_",
+            reply_markup=get_main_keyboard(),
+            parse_mode=ParseMode.MARKDOWN
+        )
 
 @dp.message(Command("notifikasi"))
 @dp.message(Command("notif"))
@@ -274,6 +298,16 @@ async def handle_callbacks(callback: CallbackQuery):
             await callback.message.answer("\n".join(lines), reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
     elif data == "menu_excel":
         await send_excel_selection_or_direct(callback, user_id)
+    elif data == "menu_harga":
+        await callback.message.answer(
+            "🏷️ *CEK HARGA PRICELIST (MD)*\n\n"
+            "Ketik tipe/kode produk di chat, contoh:\n"
+            "• `EW1200G` atau `/harga EW1200G`\n"
+            "• `RG-RAP2260`\n"
+            "• Atau tanya: _\"Harga MD EW3000GX beli 5 unit diskon 5%?\"_",
+            reply_markup=get_main_keyboard(),
+            parse_mode=ParseMode.MARKDOWN
+        )
     elif data == "dl_excel_pdf":
         last_pdf = pdf_converter.user_last_pdf.get(user_id)
         if last_pdf and os.path.exists(last_pdf.get("excel_path", "")):
@@ -513,6 +547,23 @@ async def handle_document_message(message: Message, bot: Bot):
                 mime_type=mime_type,
                 caption=caption
             )
+        elif file_name.lower().endswith(".csv") or mime_type == "text/csv":
+            try:
+                csv_text = doc_bytes.decode("utf-8")
+            except Exception:
+                csv_text = doc_bytes.decode("latin-1", errors="ignore")
+            ok, msg, count = pricelist.save_new_pricelist_csv(csv_text)
+            if ok:
+                await message.answer(
+                    f"✅ *Pricelist Berhasil Diperbarui!*\n\n"
+                    f"• {msg}\n"
+                    f"• Total `{count}` produk kini siap dicari harganya (MD / Installer / MSRP).",
+                    reply_markup=get_main_keyboard(),
+                    parse_mode=ParseMode.MARKDOWN
+                )
+            else:
+                await message.answer(f"⚠️ Gagal memperbarui pricelist: {msg}")
+            return
         else:
             status_msg = await message.answer(
                 f"⏳ Memproses PDF `{file_name}` ke Excel...",

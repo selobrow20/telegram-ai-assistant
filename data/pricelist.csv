@@ -1,0 +1,125 @@
+Model,Description,Harga_MD,Harga_ADP,Harga_Installer,Harga_Online,Harga_MSRP,Warranty
+RG-LIC-EG-SDW-S-1Device-1Y,"Code S, SD-WAN license apply for EG100/200/300/400 Series, 1 device, 1 year. RMA supported",306471,306471,0,0,485000,1 Years Warranty
+RG-LIC-EG-SDW-M-1Device-1Y,"Code M, SD-WAN license apply for EG1510XS Series, 1 device, 1 year. RMA supported",918803,918803,0,0,1455000,1 Years Warranty
+RG-EG105GW(T),"5-Port All-in-One Cloud Managed Router, Max. 4 x Gigabit WAN, AC1300 Dual Band",1334220,1283160,1437450,1707000,1878000,3 Years Warranty
+RG-EG105GW-X,"5-Port All-in-One Cloud Managed Router, Max. 4 x Gigabit WAN, AX3000 Dual Band",2292150,2204460,2469750,2905000,3196000,3 Years Warranty
+RG-EG105G-V3,"5-Port Gigabit Cloud Managed Router, Max. 2 x Gigabit WAN",1000110,961260,1076700,1280000,1408000,3 Years Warranty
+RG-EG209GS,"9-Port Gigabit Cloud Managed Router, Max. 4 x Gigabit WAN, 1 x SFP port",1444110,1388610,1556220,1850000,2035000,3 Years Warranty
+RG-EG310GH-E,"10-Port Gigabit Cloud Managed Router, Max. 4 x Gigabit WAN",3167940,3045840,3412140,4040000,4444000,3 Years Warranty
+RG-EG406XS,"6-Port Gigabit Cloud Managed Router, Max. 5 WAN, 5 * 2.5G ports, 1 * 10G SFP+ ports",3564210,3395490,3799530,4514000,4965000,3 Years Warranty
+RG-EG710XS,"10-Port Gigabit Cloud Managed Router, Max. 9 WAN, 4 * 2.5G ports, 2 * 10G SFP+ ports",5103780,4769670,5341320,6309000,6940000,3 Years Warranty
+RG-EG105G-P-V3,"5-Port Gigabit Cloud Managed Router, Max. 2 x Gigabit WAN, 4 PoE ports, budget 54W",1485180,1427460,1599510,1940000,2134000,3 Years Warranty
+RG-EG210G-P-V3,"10-Port Gigabit Cloud Managed Router, Max. 4 x Gigabit WAN, 8 PoE ports, budget 110W",2383170,2291040,2567430,3100000,3410000,3 Years Warranty
+RG-EG305GH-P-E,"10-Port Gigabit Cloud Managed Router, Max. 4 x Gigabit WAN, 4 PoE ports, budget 60W",2775000,2668440,2990340,3600000,3960000,3 Years Warranty
+RG-EG310GH-P-E,"10-Port Gigabit Cloud Managed Router, Max. 4 x Gigabit WAN, 8 PoE ports, budget 110W",3260070,3135750,3513150,4200000,4620000,3 Years Warranty
+RG-EG406XS-P,"6-Port Gigabit Cloud Managed Router, Max. 5 WAN, 4 PoE-out ports, budget 110W, 1 * 10G SFP+",3801750,3620820,4055940,4844000,5328000,3 Years Warranty
+RG-RAP72,"BE3600 Dual band (2.4GHz&5GHz) access points, 2x2 MU-MIMO, Wi-Fi 7",2001330,1905870,2096790,2500000,2750000,3 Years Warranty
+RG-RAP62,"AX1800 Dual band (2.4GHz&5GHz) access points, 2x2 MU-MIMO, Wi-Fi 6",1567320,1507380,1659450,1990000,2189000,3 Years Warranty
+RG-RAP2260(G),"AX1800 Dual band (2.4GHz&5GHz) access points, 2x2 MU-MIMO, 2 Gigabit LAN",1666110,1602840,1726050,2150000,2365000,3 Years Warranty
+RG-RAP2266,"AX3000 Dual band (2.4GHz&5GHz) access points, 2x2 MU-MIMO, 160MHz",2164500,2082360,2291040,2750000,3025000,3 Years Warranty
+RG-RAP2260(E),"AX3200 Dual band (2.4GHz&5GHz) access points, 4x4 MU-MIMO, 2.5G Port",2520810,2424240,2763900,3200000,3520000,3 Years Warranty
+RG-AP720-L,"AC1200 Wave 2 Dual band indoor access points, 2x2 MU-MIMO",1790430,1721610,1894770,2300000,2530000,3 Years Warranty
+RG-RAP2200(E),"AC1300 Wave 2 Dual band indoor access points, 2 Gigabit LAN",965700,929070,975690,1240000,1364000,3 Years Warranty
+RG-RAP2200(F),"AC1300 Wave 2 Dual band indoor access points, 2 10/100M LAN",811410,780330,859140,1040000,1144000,3 Years Warranty
+RG-RAP62-OD,"AX3000 Dual band outdoor access points, IP65, 160MHz",2116770,2035740,2281050,2686000,2955000,3 Years Warranty
+RG-RAP6262(G),"AX1800 Dual band outdoor access points, IP68, Omni antennas",2586300,2486400,2786100,3280000,3608000,3 Years Warranty
+RG-RAP52-OD,"AC1300 Dual band outdoor access points, IP65",1325340,1275390,1428570,1690000,1859000,3 Years Warranty
+RG-RAP6202(G),"AC1300 Dual band outdoor access points, IP68",2035740,1958040,2193360,2590000,2849000,3 Years Warranty
+RG-POE-AF15,"1-port PoE adapter (1000Base-T, 52V, 15.6W)",177600,169830,187590,226000,249000,3 Years Warranty
+RG-POE-AT30,"1-port PoE adapter (1000Base-T, 52V, 31.2W)",265290,255300,280830,339000,373000,3 Years Warranty
+RG-POE-50-60W-MG,"1-port PoE adapter (2500Base-T, 50V, 60W)",429570,412920,455100,550000,605000,3 Years Warranty
+RG-E-120(GE),"1-port PoE adapter (1000Base-T, 802.3af)",324120,311910,344100,415000,457000,3 Years Warranty
+RG-E-130(GE),"1-port PoE adapter (1000Base-T, PoE+/ 802.3at)",392940,378510,417360,499000,549000,3 Years Warranty
+RG-RAP62-Wall-Lite,AX3000 Wave 2 Dual band wall-mount access point,1509600,1474080,1548450,1970000,3321000,3 Years Warranty
+RG-RAP1200(F),"AC1300 Wave 2 Dual band wall-mount access point, 10/100M",610500,587190,658230,780000,858000,3 Years Warranty
+RG-RAP1201,"AC1300 Wave 2 Dual band wall-mount access point, Gigabit",795870,765900,858030,999000,1099000,3 Years Warranty
+RG-RAP1200(P),"AC1300 Wave 2 Dual band wall-mount access point, Gigabit PoE-Out",1006770,967920,1085580,1290000,1419000,3 Years Warranty
+RG-NIS2100-4GT2SFP-HP,"6-Port Gigabit Industrial Switch, 2 SFP, IP40, 180W",1785990,1717170,1923630,2588000,2847000,5 Years Warranty
+RG-NIS2100-8GT2SFP-HP,"10-Port Gigabit Industrial Switch, 2 SFP, IP40, 300W",2264400,2177820,2439780,3520000,3872000,5 Years Warranty
+RG-NIS-PA120-54,AC/DC 120W DIN-Rail Power Supply for industrial switch,640470,616050,690420,1003000,1103000,3 Years Warranty
+RG-NIS-PA240-54,AC/DC 240W DIN-Rail Power Supply for industrial switch,962370,925740,1036740,1346000,1481000,3 Years Warranty
+RG-NBS3100-8GT2SFP-P-V2,"10-Port Gigabit L2 Cloud Managed PoE+ Switch, 2 SFP, 125W",2950380,2837160,3177930,3850000,4235000,5 Years Warranty
+RG-NBS3100-24GT4SFP-P-V2,"24-Port Gigabit L2 Cloud Managed PoE+ Switch, 4 SFP, 370W",5270280,5067150,5675430,6950000,7645000,5 Years Warranty
+RG-NBS3100-48GT4SFP-P-V2,"48-Port Gigabit L2 Cloud Managed PoE+ Switch, 4 SFP, 370W",10153170,9763560,10935720,13300000,14630000,5 Years Warranty
+RG-NBS3100-8GT2SFP,"10-Port Gigabit L2 Cloud Managed Switch, 2 SFP",1771560,1703850,1908090,2300000,2530000,5 Years Warranty
+RG-NBS3100-24GT4SFP-V2,"24-Port Gigabit L2 Cloud Managed Switch, 4 SFP",2678430,2575200,2884890,3450000,3795000,5 Years Warranty
+RG-NBS3200-24GT4XS-P-V2,"24-Port Gigabit L2+ Cloud Managed PoE+ Switch, 4 10G SFP+, 370W",5911860,5684310,6366960,8694000,9563000,5 Years Warranty
+RG-NBS3200-48GT4XS-P-V2,"48-Port Gigabit L2+ Cloud Managed PoE+ Switch, 4 10G SFP+, 370W",11065590,10640460,11918070,16353000,17988000,5 Years Warranty
+RG-NBS3200-24SFP/8GT4XS,"24-Port Gigabit L2+ Cloud Managed Switch, 24 SFP + 8 Combo, 4 10G SFP+",7894320,7591290,8502600,10557000,11613000,5 Years Warranty
+RG-NBS3200-24GT4XS,"24-Port Gigabit L2+ Cloud Managed Switch, 4 10G SFP+",4120320,3962700,4437780,5524000,6076000,5 Years Warranty
+RG-NBS3200-48GT4XS,"48-Port Gigabit L2+ Cloud Managed Switch, 4 10G SFP+",6186030,5947380,6662220,8487000,9336000,5 Years Warranty
+RG-ES205GC-P,"5-Port Gigabit Smart Cloud Managed PoE Switch, 1 RJ45 uplink, 54W",912420,878010,965700,1170000,1287000,3 Years Warranty
+RG-ES206GS-P,"6-Port Gigabit Smart Cloud Managed PoE Switch, 2 uplink (1 SFP), 54W",997890,959040,1055610,1290000,1419000,3 Years Warranty
+RG-ES206MG-P,"6-Port 2.5Gig Smart Cloud Managed PoE Switch, 1 SFP+, 1 2.5G uplink, 70W",1496280,1425240,1568430,2000000,2200000,3 Years Warranty
+RG-ES207GS-HP,"4 x GE PoE++, 2 x GE RJ45, 1 x SFP, Cloud Managed Switch, 120W",1237650,1178820,1296480,1600000,3126500,3 Years Warranty
+RG-ES207GS-P,"6-Port Gigabit Cloud Managed PoE Switch with 1 x SFP, 54W",840270,800310,880230,1088000,2497000,3 Years Warranty
+RG-ES207GS-LP,"4 x GE PoE+, 2 x GE RJ45, 1 x SFP, Cloud Managed Switch, 40W",658230,632700,683760,850000,1831500,3 Years Warranty
+RG-ES209GC-P,"9-Port Gigabit Smart Cloud Managed PoE Switch, 1 RJ45 uplink, 120W",1542900,1482960,1631700,1990000,2189000,3 Years Warranty
+RG-ES209MG-P,"9-Port 2.5Gig Smart Cloud Managed PoE Switch, 1 SFP+ uplink, 130W",2646240,2519700,2772780,3550000,3905000,3 Years Warranty
+RG-ES210GS-P,"10-Port Gigabit Smart Cloud Managed PoE Switch, 2 uplink (1 SFP), 120W",1682760,1617270,1779330,2200000,2420000,3 Years Warranty
+RG-ES211GS-P,"10-Port Gigabit Cloud Managed PoE Switch with 1 x SFP, 120W",1475190,1405260,1546230,1950000,3441500,3 Years Warranty
+RG-ES211GS-LP,"8 x GE PoE+, 2 x GE RJ45, 1 x SFP, Cloud Managed Switch, 70W",1064490,1023420,1105560,1400000,2941500,3 Years Warranty
+RG-ES220GS-LP,"20-Port Gigabit Smart Cloud Managed PoE Switch, 2 SFP, 2 RJ45 uplink, 130W",2702850,2574090,2806080,3450000,3795000,3 Years Warranty
+RG-ES228GS-LP,"28-Port Gigabit Smart Cloud Managed PoE Switch, 2 SFP, 2 RJ45 uplink, 250W",3653010,3478740,3791760,4550000,5005000,3 Years Warranty
+RG-ES220GS-P,"20-Port Gigabit Smart Cloud Managed PoE Switch, 2 SFP, 2 RJ45 uplink, 250W",3741810,3597510,3957150,4750000,5225000,3 Years Warranty
+RG-ES220GS-P-V2,"16 x GE PoE+, 2 x GE RJ45, 2 x SFP, Cloud Managed Switch, 250W",3741810,3597510,3957150,4750000,5225000,3 Years Warranty
+RG-ES228GS-P,"28-Port Gigabit Smart Cloud Managed PoE Switch, 2 SFP, 2 RJ45 uplink, 370W",5173710,4975020,5473410,6450000,7095000,3 Years Warranty
+RG-ES228GS-P-V2,"2 x 10/100BASE-T PoE+, 1 x RJ45 PoE-in, Unmanage PoE Extender, 30W",5173710,4975020,5473410,6450000,7205000,3 Years Warranty
+RG-ES205GC,"5-Port Gigabit Smart Cloud Managed Switch, 1 RJ45 uplink",388500,372960,410700,490000,539000,3 Years Warranty
+RG-ES205GC-V2,5-Port Gigabit Cloud-Managed Switch,388500,372960,410700,490000,539000,3 Years Warranty
+RG-ES208GC,8-Port Gigabit Smart Cloud Managed Switch,497280,478410,526140,625000,688000,3 Years Warranty
+RG-ES208GC-V2,8-Port Gigabit Cloud Managed Switch,497280,478410,526140,625000,688000,3 Years Warranty
+RG-ES216GC-V2,16-Port Gigabit Smart Cloud Managed Switch,1518480,1460760,1607280,1900000,2090000,3 Years Warranty
+RG-ES216GC2MS,16-Port Gigabit Cloud Managed Switch with 2 x 2.5G SFP+,1317570,1254300,1379730,1750000,1925000,3 Years Warranty
+RG-ES224GC-V2,24-Port Gigabit Smart Cloud Managed Switch,1952490,1878120,2065710,2440000,2684000,3 Years Warranty
+RG-ES224GC2MS,24-Port Gigabit Cloud Managed Switch with 2 x 2.5G SFP+,2015760,1901430,2130090,2540000,2794000,3 Years Warranty
+RG-ES207GS-AC-OD,"4 x GE PoE+, 1 x GE RJ45, 2 x SFP, Cloud Managed Switch, 60W, IP65",1579530,1504050,1655010,2100000,3700000,3 Years Warranty
+RG-ES207GS-PI-OD,"4 x GE PoE+, 1 x GE RJ45(802.3bt in), 2 x SFP, Cloud Managed Switch, 60W, IP65",1581750,1506270,1657230,2100000,3700000,3 Years Warranty
+RG-ES05F,5-Port 10/100 Mbps Desktop Plastic Switch,98790,95460,101010,125000,138000,3 Years Warranty
+RG-ES08F,8-Port 10/100 Mbps Desktop Plastic Switch,134310,128760,136530,165000,182000,3 Years Warranty
+RG-ES05G-L,"5-Port Gigabit unmanaged Switch, Plastic Case",206460,198690,212010,270000,297000,3 Years Warranty
+RG-ES08G-L,"8-Port Gigabit unmanaged Switch, Plastic Case",308580,296370,315240,390000,429000,3 Years Warranty
+RG-ES103F-P,"2 x 10/100M PoE+, 1 x RJ45 PoE in, Unmanage PoE Extender, 30W",189810,185370,194250,250000,462500,3 Years Warranty
+RG-ES106F-P,"6-Port 100Mbps, 4 PoE/PoE+ ports, budget 54W, Steel Case",444000,426240,456210,570000,627000,3 Years Warranty
+RG-ES110F-P,"10-Port 100Mbps, 8 PoE/PoE+ ports, budget 110W, Steel Case",933510,896880,961260,1190000,1309000,3 Years Warranty
+RG-ES110FG-P,"8-Port 100M + 2 Uplink Gigabit, 8 PoE ports, budget 110W, Steel Case",1073370,1032300,1104450,1370000,1507000,3 Years Warranty
+RG-ES110GS-P-L,"8-Port Gigabit + 1 Uplink GE + 1 SFP, 8 PoE ports, budget 120W",1316460,1265400,1354200,1680000,1848000,3 Years Warranty
+RG-ES118FGS-LP,"16-Port 100M + 2 GE RJ45/SFP combo, 16 PoE ports, budget 120W",2052390,1973580,2112330,2620000,2882000,3 Years Warranty
+RG-ES118GS-P-L,"16-Port Gigabit + 2 SFP, 16 PoE ports, budget 247W",2575200,2475300,2649570,3270000,3597000,3 Years Warranty
+RG-ES126FGS-LP,"24-Port 100M + 1 Uplink GE + 1 GE combo, 24 PoE ports, budget 180W",2645130,2543010,2722830,3380000,3718000,3 Years Warranty
+RG-ES126FGS-P,"24-Port 100M + 1 Uplink GE + 1 GE combo, 24 PoE ports, budget 370W",2905980,2794980,2990340,3700000,4070000,3 Years Warranty
+RG-ES105GD,"5-Port Gigabit unmanaged Switch, Steel Case",306360,295260,316350,385000,424000,3 Years Warranty
+RG-ES108GD,"8-Port Gigabit unmanaged Switch, Steel Case",417360,400710,429570,530000,583000,3 Years Warranty
+RG-ES116G-L,"16-Port Gigabit unmanaged Switch, Steel Case",919080,883560,945720,1150000,1265000,3 Years Warranty
+RG-ES124G-L,"24-Port Gigabit unmanaged Switch, Steel Case",1163280,1118880,1197690,1460000,1606000,3 Years Warranty
+Mini-GBIC-GT,"1000BASE-TX, SFP Transceiver (100m)",1046730,1005660,1126650,1350000,1485000,3 Years Warranty
+NIS-GE-SFP-550M-MM850,"1000BASE-SX mini GBIC (850nm), 550m, industrial",416250,399600,448440,530000,583000,5 Years Warranty
+NIS-GE-SFP-10KM-SM1310,"1000BASE-LX mini GBIC (1310nm), 10km, industrial",455100,437340,490620,580000,638000,5 Years Warranty
+NIS-GE-SFP-20KM-SM1310-BIDI,"Gigabit BIDI Transceiver - TX1310/RX1550, 20km, LC",689310,662670,742590,890000,979000,5 Years Warranty
+NIS-GE-SFP-20KM-SM1550-BIDI,"Gigabit BIDI Transceiver - TX1550/RX1310, 20km, LC",689310,662670,742590,890000,979000,5 Years Warranty
+XG-SFP-LR-SM1310,"10GBASE-LR, SFP+ Transceiver (1310nm, 10km, LC)",1273170,1224330,1371960,1620000,1782000,3 Years Warranty
+XG-SFP-SR-MM850,"10GBASE-SR, SFP+ Transceiver, MM (850nm, 300m, LC)",785880,754800,846930,990000,1089000,3 Years Warranty
+Pair RG-EST100-E,"2.4GHz 8dBi 500m Outdoor wireless bridge, up to 300Mbps, 2 Units",700410,673770,754800,890000,979000,3 Years Warranty
+Pair RG-EST310 V2,"5GHz 10dBi 1KM Outdoor wireless bridge, up to 867Mbps, 2 units",1672770,1608390,1802640,2095000,2305000,3 Years Warranty
+RG-EST330F-P,"5GHz 13dBi 3KM Outdoor wireless bridge, up to 867Mbps, 1 unit",1070040,1028970,1112220,1496000,1646000,3 Years Warranty
+Pair RG-EST350G,"5GHz 16dBi 5KM Outdoor wireless bridge, up to 867Mbps, 2 units",2360970,2269950,2451990,2960000,3256000,3 Years Warranty
+RG-EST450G,"5GHz 15dBi 5KM Outdoor wireless bridge, up to 867Mbps, 1 unit",1684980,1619490,1749360,2170000,2387000,3 Years Warranty
+RG-AirMetro460F,"Wireless bridge CPE, 5GHz 867Mbps, up to 23dBi, 1*10/100M",842490,809190,906870,1100000,1210000,3 Years Warranty
+RG-AirMetro460G,"Wireless bridge CPE, 5GHz 867Mbps, up to 23dBi, 1*10/100/1000M",1141080,1096680,1228770,1553000,1708000,3 Years Warranty
+RG-AirMetro550G-B,"Wireless bridge base station, 5GHz 867Mbps, 2*GE ports, up to 32 CPEs",2041290,1962480,2197800,2600000,2860000,3 Years Warranty
+RG-ANT13-360,Omnidirectional external antenna 5GHz 13dBi 360°,2275500,2187810,2451990,2900000,3190000,3 Years Warranty
+RG-ANT16S-120,Sector external antenna 5GHz 16dBi 120°,1385280,1332000,1492950,1760000,1936000,3 Years Warranty
+RG-ANT20S-90,Sector external antenna 5GHz 20dBi 90°,2151180,2069040,2318790,2740000,3014000,3 Years Warranty
+RG-EW300N,300Mbps single band (2.4GHz) home router,170940,167610,174270,220000,242000,3 Years Warranty
+RG-EW300T,"300Mbps single band 4G LTE Wi-Fi router, Nano SIM",652680,636030,668220,845000,930000,3 Years Warranty
+RG-EW300 PRO,300Mbps single band home router with FEM,288600,283050,306360,375000,413000,3 Years Warranty
+RG-EW1200,"1200Mbps Dual band home router, 2x2 MU-MIMO",338550,330780,359640,440000,484000,3 Years Warranty
+RG-EW1200G,"1200M dual-band wireless mesh router, 4 Gigabit ports",425130,415140,451770,540000,580000,3 Years Warranty
+RG-EW1300G,"1300Mbps Dual band home router, Gigabit WAN, 5 antennas",483960,469530,508380,620000,682000,3 Years Warranty
+RG-EW1200G PRO,"1300Mbps Dual band home router, Gigabit WAN, 6 antennas with FEM",573870,557220,608280,733000,806000,3 Years Warranty
+RG-EW3000GX,"3000Mbps Dual band Wi-Fi 6 home router, 160MHz",866910,841380,910200,1130000,1243000,3 Years Warranty
+RG-EW3000GX PRO,"3000Mbps Dual band Wi-Fi 6 home router with FEM, 160MHz",1169940,1135530,1227660,1498000,1648000,3 Years Warranty
+RG-EW6000GX,"6000Mbps Dual band Wi-Fi 6 home router, 4x4 MU-MIMO, 2.5G WAN",1626150,1548450,1691640,2090000,2299000,3 Years Warranty
+RG-EW7200BE PRO,"BE7200 Dual-Band Wi-Fi 7 Router, 5x2.5GE Ports",2841600,2706180,2954820,3600000,3960000,3 Years Warranty
+RG-PON1200G,"Wi-Fi 5 AC1200 GPON Dualband ONU, 2*GE Port",460650,438450,471750,580000,638000,3 Years Warranty
+RG-PON3000GX,"Wi-Fi 6 AX3000 GPON Dualband ONU, 4*GE Port + USB",623820,593850,639360,770000,847000,3 Years Warranty

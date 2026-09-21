@@ -639,7 +639,16 @@ async def handle_document_message(message: Message, bot: Bot):
                 pass
     except Exception as e:
         logger.error(f"Gagal memproses dokumen: {e}", exc_info=True)
-        await message.answer(f"Maaf, terjadi kendala saat memproses dokumen: {e}")
+        err_msg = str(e)
+        if "file is too big" in err_msg.lower():
+            await message.answer(
+                f"⚠️ *Ukuran File Terlalu Besar ({file_name})*\n\n"
+                "Telegram Bot membatasi unduhan file maksimal **20 MB** (file ini sekitar 26.8 MB karena ada foto produk di dalamnya).\n\n"
+                "💡 *Tips:* Simpan file Excel Anda sebagai format **.CSV** (File -> Save As -> CSV UTF-8). Ukurannya akan mengecil di bawah 1 MB dan langsung bisa dibaca bot!",
+                parse_mode=ParseMode.MARKDOWN
+            )
+        else:
+            await message.answer(f"Maaf, terjadi kendala saat memproses dokumen: {e}")
 
 
 @dp.message(F.text)

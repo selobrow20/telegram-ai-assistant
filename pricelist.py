@@ -344,3 +344,44 @@ def import_pricelist_from_excel(doc_bytes: bytes) -> Tuple[bool, str, int]:
         return True, f"Berhasil mengimpor {len(new_products)} produk ke database pricelist.", len(new_products)
     except Exception as e:
         return False, f"Gagal membaca file Excel: {e}", 0
+
+def update_product_price(model_query: str, new_price: Any) -> Tuple[bool, str]:
+    """Mengubah atau memperbarui harga suatu produk di data/pricelist.csv."""
+    clean_price = re.sub(r'[^0-9]', '', str(new_price))
+    if not clean_price:
+        return False, "Nominal harga tidak valid."
+
+    products = load_pricelist()
+    q_norm = normalize_code(model_query)
+
+    found = False
+    updated_model = ""
+    for p in products:
+        m_norm = normalize_code(p.get("Model", ""))
+        if q_norm == m_norm or (q_norm.startswith("rg") and q_norm[2:] == m_norm[2:]) or (q_norm.startswith("dh") and q_norm[2:] == m_norm[2:]):
+            p["Harga_ADP"] = clean_price
+            p["Harga_MD"] = clean_price
+            updated_model = p.get("Model", model_query)
+            found = True
+            break
+
+    if not found:
+        for p in products:
+            m_norm = normalize_code(p.get("Model", ""))
+            if q_norm in m_norm:
+                p["Harga_ADP"] = clean_price
+                p["Harga_MD"] = clean_price
+                updated_model = p.get("Model", model_query)
+                found = True
+                break
+
+    if not found:
+        return False, f"Produk '{model_query}' tidak ditemukan di database pricelist."
+
+    fieldnames = ["Model", "Description", "Harga_MD", "Harga_ADP", "Harga_Installer", "Harga_Online", "Harga_MSRP", "Warranty", "Brand"]
+    with open(PRICELIST_PATH, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(products)
+
+    return True, f"✅ Harga {updated_model} berhasil diupdate menjadi {format_rupiah_num(clean_price)}."

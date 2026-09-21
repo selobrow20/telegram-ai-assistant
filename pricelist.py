@@ -65,9 +65,9 @@ def search_pricelist(query: str, price_tier: str = "ADP") -> Dict[str, Any]:
                 "price_tier": price_tier
             }
     
-    # 2. Coba tanpa awalan brand jika ada ('dhi', 'dh', 'ids', 'ds', 'rg', 'reyee')
+    # 2. Coba tanpa awalan brand jika ada ('dhi', 'dh', 'ids', 'ds', 'rg', 'reyee', 'hilook', 'hiview', 'thc', 'ipc', 'th', 'hv', 'hik')
     def strip_brand_pfx(s: str) -> str:
-        for pfx in ['reyee', 'dhi', 'dh', 'ids', 'ds', 'rg']:
+        for pfx in ['reyee', 'dhi', 'dh', 'ids', 'ds', 'rg', 'hilook', 'hiview', 'thc', 'ipc', 'th', 'hv', 'hik']:
             if s.startswith(pfx):
                 return s[len(pfx):]
         return s
@@ -103,11 +103,10 @@ def search_pricelist(query: str, price_tier: str = "ADP") -> Dict[str, Any]:
             "matches": substring_matches,
             "price_tier": price_tier
         }
-        
+    
     # 4. Jika tidak ditemukan, gunakan similarity (difflib) untuk 3 kandidat paling mirip
     all_models = [p.get("Model", "") for p in products]
     all_norms = {normalize_code(m): m for m in all_models}
-    
     close_norms = difflib.get_close_matches(q_norm, list(all_norms.keys()), n=3, cutoff=0.4)
     if not close_norms:
         # Coba juga pencarian kata kunci pada Description
@@ -152,13 +151,19 @@ def format_single_product_answer(product: Dict[str, Any], tier: str = "ADP") -> 
         price_val = product.get("Harga_MDP") or product.get("Harga_MD") or product.get("Harga_ADP")
     elif brand.lower() == "ruijie":
         price_val = product.get("Harga_ADP") or product.get("Harga_MD")
+    elif brand.lower() == "hilook":
+        price_val = product.get("Harga_MSRP") or product.get("Harga_MD") or product.get("Harga_ADP")
+    elif brand.lower() == "hiview":
+        price_val = product.get("Harga_MD") or product.get("Harga_ADP") or product.get("Harga_MSRP")
     else:
-        price_val = product.get("Harga_ADP") or product.get("Harga_MD")
+        price_val = product.get("Harga_ADP") or product.get("Harga_MD") or product.get("Harga_MSRP")
 
     if tier_upper == "MSRP" and product.get("Harga_MSRP"):
         price_val = product.get("Harga_MSRP")
     elif tier_upper in ("NON-DPP", "NONDPP") and product.get("Harga_Non_DPP"):
         price_val = product.get("Harga_Non_DPP")
+    elif tier_upper in ("DEALER", "MD") and product.get("Harga_MD"):
+        price_val = product.get("Harga_MD")
 
     if not price_val or str(price_val).strip() in ("", "0"):
         formatted_price = "harga tidak tersedia"
@@ -370,7 +375,12 @@ def import_pricelist_from_excel(doc_bytes: bytes) -> Tuple[bool, str, int]:
                 # Deteksi Brand otomatis
                 brand = "General"
                 first_cand = candidates[0].upper()
-                if first_cand.startswith("DS-") or first_cand.startswith("IDS-") or first_cand.startswith("HC-"):
+                file_str = str(file_path).lower()
+                if "hilook" in file_str or first_cand.startswith("THC-") or first_cand.startswith("IPC-B12") or first_cand.startswith("IPC-D12") or first_cand.startswith("IPC-B14") or first_cand.startswith("IPC-D14") or first_cand.startswith("DVR-2") or first_cand.startswith("NVR-1"):
+                    brand = "HiLook"
+                elif "hiview" in file_str or first_cand.startswith("HV-") or first_cand.startswith("TH-") or first_cand.startswith("T1A20") or first_cand.startswith("B1A20") or first_cand.startswith("T1290") or first_cand.startswith("B1290"):
+                    brand = "Hiview"
+                elif first_cand.startswith("DS-") or first_cand.startswith("IDS-") or first_cand.startswith("HC-"):
                     brand = "Hikvision"
                 elif first_cand.startswith("DH-") or first_cand.startswith("DHI-") or first_cand.startswith("XVR") or first_cand.startswith("NVR") or first_cand.startswith("HAC"):
                     brand = "Dahua"
@@ -383,9 +393,11 @@ def import_pricelist_from_excel(doc_bytes: bytes) -> Tuple[bool, str, int]:
                         "Description": desc[:150],
                         "Harga_MD": p_final,
                         "Harga_ADP": p_final,
-                        "Harga_Installer": "0",
-                        "Harga_Online": "0",
+                        "Harga_DPP": p_dpp or p_final,
                         "Harga_MSRP": msrp or p_final,
+                        "Harga_Non_DPP": "",
+                        "Category": sname,
+                        "Sumber": f"{brand} {sname}",
                         "Warranty": warranty,
                         "Brand": brand
                     }
@@ -407,11 +419,12 @@ def import_pricelist_from_excel(doc_bytes: bytes) -> Tuple[bool, str, int]:
         for m, item in new_extracted.items():
             existing[m] = item
 
-        fieldnames = ["Model", "Description", "Harga_MD", "Harga_ADP", "Harga_Installer", "Harga_Online", "Harga_MSRP", "Warranty", "Brand"]
+        fieldnames = ["Model", "Description", "Harga_MD", "Harga_ADP", "Harga_DPP", "Harga_MSRP", "Harga_Non_DPP", "Category", "Sumber", "Warranty", "Brand"]
         with open(PRICELIST_PATH, "w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
-            writer.writerows(existing.values())
+            for r in existing.values():
+                writer.writerow({k: r.get(k, "") for k in fieldnames})
 
         return True, f"Berhasil mengimpor {len(new_extracted)} produk ke database (Total sekarang: {len(existing)} produk).", len(new_extracted)
     except Exception as e:

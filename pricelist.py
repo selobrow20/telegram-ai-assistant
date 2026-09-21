@@ -56,7 +56,7 @@ def search_pricelist(query: str, price_tier: str = "", brand_filter: str = "") -
     
     # Deteksi merek dalam query jika ada (Aturan 3)
     detected_brand = brand_filter.strip().lower() if brand_filter else ""
-    brands = ["hikvision", "dahua", "ruijie", "hilook", "hiview"]
+    brands = ["hikvision", "dahua", "ruijie", "hilook", "hiview", "imou"]
     if not detected_brand:
         for b in brands:
             pattern = rf'\b{b}\b'
@@ -91,9 +91,9 @@ def search_pricelist(query: str, price_tier: str = "", brand_filter: str = "") -
             "price_tier": price_tier
         }
     
-    # 2. Coba tanpa awalan brand jika ada ('dhi', 'dh', 'ids', 'ds', 'rg', 'reyee', 'hilook', 'hiview', 'thc', 'ipc', 'th', 'hv', 'hik')
+    # 2. Coba tanpa awalan brand jika ada ('dhi', 'dh', 'ids', 'ds', 'rg', 'reyee', 'hilook', 'hiview', 'imou', 'thc', 'ipc', 'th', 'hv', 'hik')
     def strip_brand_pfx(s: str) -> str:
-        for pfx in ['reyee', 'dhi', 'dh', 'ids', 'ds', 'rg', 'hilook', 'hiview', 'thc', 'ipc', 'th', 'hv', 'hik']:
+        for pfx in ['reyee', 'dhi', 'dh', 'ids', 'ds', 'rg', 'hilook', 'hiview', 'imou', 'thc', 'ipc', 'th', 'hv', 'hik']:
             if s.startswith(pfx):
                 return s[len(pfx):]
         return s
@@ -191,6 +191,16 @@ def format_single_product_answer(product: Dict[str, Any], tier: str = "") -> str
         price_val = product.get("Harga_MD") or product.get("Harga_ADP") or product.get("Harga_MSRP")
     elif brand_lower == "hiview":
         price_val = product.get("Harga_MD") or product.get("Harga_ADP") or product.get("Harga_MSRP")
+    elif brand_lower == "imou":
+        if tier_upper == "SDP":
+            price_val = product.get("Harga_SDP") or product.get("Harga_ADP")
+        elif tier_upper in ("SRP", "MSRP"):
+            price_val = product.get("Harga_MSRP") or product.get("Harga_SRP")
+        elif tier_upper == "ONLINE":
+            price_val = product.get("Harga_Non_DPP") or product.get("Harga_Online")
+        else:
+            # Default IPP (sesuai instruksi user)
+            price_val = product.get("Harga_IPP") or product.get("Harga_MD") or product.get("Harga_ADP")
     else:
         price_val = product.get("Harga_ADP") or product.get("Harga_MD") or product.get("Harga_MSRP")
 

@@ -72,15 +72,13 @@ async def cmd_start(message: Message):
     user_name = message.from_user.first_name if message.from_user else "Teman"
     db.register_or_update_user(user_id, user_name, message.chat.id)
     welcome_text = (
-        f"👋 Halo, *{user_name}*! Saya **Selobrow**, asisten AI pribadi Anda.\n\n"
-        "Saya siap membantu kebutuhan sehari-hari Anda:\n"
-        "🎙️ *Interaksi Suara & Teks*: Anda bisa mengetik atau langsung kirim **Voice Note** (pesan suara)!\n"
-        "💸 *Catatan Keuangan Otomatis*: Cukup sebutkan pengeluaran/pemasukan Anda.\n"
-        "📊 *Laporan Keuangan*: Pantau saldo, arus kas, dan rincian pengeluaran per kategori.\n"
-        "🔔 *Notifikasi Cerdas*: Rekap pengeluaran harian, mingguan, bulanan, & tanggal gajian otomatis.\n"
-        "📋 *To-Do & Catatan*: Simpan tugas, pengingat, dan ide penting kapan saja.\n"
-        "🧠 *AI Bebas*: Tanyakan apa saja, mulai dari draf pesan hingga saran hidup.\n\n"
-        "Silakan pilih menu cepat di bawah atau langsung ketik/kirim suara:"
+        f"👋 Halo *{user_name}*!\n\n"
+        "Saya **Selobrow**. Kirim teks atau Voice Note untuk:\n"
+        "• 💸 Catat uang & pantau saldo\n"
+        "• 📊 Laporan & ekspor Excel / PDF\n"
+        "• 📋 To-do list & catatan\n"
+        "• 🔔 Notifikasi & rekap rutin\n\n"
+        "Pilih menu di bawah atau langsung chat:"
     )
     await message.answer(welcome_text, reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
 
@@ -94,14 +92,13 @@ async def cmd_notifikasi(message: Message):
     kb = notifications.get_notification_settings_keyboard(settings)
     sched_day = settings.get('scheduled_day', 25)
     text = (
-        "🔔 *PENGATURAN NOTIFIKASI CERDAS SELOBROW*\n"
+        "🔔 *NOTIFIKASI CERDAS*\n"
         "━━━━━━━━━━━━━━━━━━━━━━\n"
-        "Selobrow dapat mengirimkan rekapitulasi & laporan keuangan otomatis:\n\n"
-        "• ☀️ *Daily Recap* (07:00 WIB): Rincian pengeluaran kemarin (_'Kemarin kamu keluar Rp XX.XXX'_).\n"
-        "• 📅 *Weekly Recap* (Senin 07:30 WIB): Evaluasi keuangan selama 7 hari terakhir.\n"
-        "• 📑 *Monthly Report* (Tanggal 1 08:00 WIB): Rekap bulanan lengkap + analisis AI + lampiran file Excel.\n"
-        f"• ⏰ *Scheduled Reports* (Tanggal {sched_day} 08:30 WIB): Laporan terjadwal otomatis pada tanggal pilihan Anda.\n\n"
-        "Silakan klik tombol di bawah untuk menyalakan/mematikan fitur atau mengubah tanggal terjadwal:"
+        "• ☀️ *Daily Recap* (07:00 WIB)\n"
+        "• 📅 *Weekly Recap* (Senin 07:30 WIB)\n"
+        "• 📑 *Monthly Report* (Tgl 1 08:00 WIB)\n"
+        f"• ⏰ *Scheduled Report* (Tgl {sched_day} 08:30 WIB)\n\n"
+        "Aktifkan / nonaktifkan fitur di bawah:"
     )
     await message.answer(text, reply_markup=kb, parse_mode=ParseMode.MARKDOWN)
 
@@ -139,13 +136,9 @@ async def send_excel_selection_or_direct(target, user_id: int):
         )
         msg_text = (
             "📊 *PILIHAN FILE EXCEL*\n\n"
-            "Anda memiliki 2 jenis file spreadsheet Excel yang dapat diunduh:\n\n"
-            f"1️⃣ *Laporan dari File PDF Terakhir*\n"
-            f"   📁 `{last_pdf['file_name']}`\n"
-            f"   _File spreadsheet yang diekstrak langsung secara terpisah dari dokumen PDF Anda (tanpa menyentuh database harian)._\n\n"
-            f"2️⃣ *Laporan Keuangan Harian (Database)*\n"
-            f"   _Rekap transaksi pembukuan keuangan pribadi harian Anda di database bot._\n\n"
-            "Silakan klik tombol di bawah untuk memilih file mana yang ingin Anda unduh:"
+            f"1️⃣ *PDF Terakhir:* `{last_pdf['file_name']}`\n"
+            "2️⃣ *Database Harian:* Catatan pembukuan bot\n\n"
+            "Pilih file yang ingin diunduh:"
         )
         if isinstance(target, CallbackQuery):
             await target.message.answer(msg_text, reply_markup=kb, parse_mode=ParseMode.MARKDOWN)
@@ -155,20 +148,17 @@ async def send_excel_selection_or_direct(target, user_id: int):
         status_msg = None
         send_target = target.message if isinstance(target, CallbackQuery) else target
         try:
-            status_msg = await send_target.answer("⏳ Sedang menyiapkan laporan keuangan Excel...")
+            status_msg = await send_target.answer("⏳ Menyiapkan file Excel...")
             excel_path = finance.export_financial_report_excel(user_id, "all")
             await send_target.answer_document(
                 FSInputFile(excel_path),
-                caption=(
-                    "📊 *File Laporan Keuangan Harian (Database)*\n\n"
-                    "_File di atas berisi rekap transaksi keuangan harian dari database bot._\n\n"
-                    "💡 *Ingin buat Excel dari file PDF lain?*\n"
-                    "Cukup kirimkan file dokumen PDF (misal laporan penjualan/printing, invoice, atau mutasi bank) ke chat ini, dan Selobrow akan otomatis membuatkan file Excel khusus dari PDF tersebut tanpa mengubah database harian Anda!"
-                ),
+                caption="📊 Rekap Transaksi (Database)",
+                reply_markup=get_main_keyboard(),
                 parse_mode=ParseMode.MARKDOWN
             )
         except Exception as e:
-            await send_target.answer(f"Gagal membuat file Excel: {e}")
+            logger.error(f"Gagal kirim dokumen excel: {e}")
+            await send_target.answer(f"Gagal membuat excel: {e}")
         finally:
             if status_msg:
                 try:
@@ -189,12 +179,9 @@ async def cmd_reset_saldo(message: Message):
     user_id = message.from_user.id
     count = db.reset_user_finances(user_id)
     await message.answer(
-        f"🗑️ *BERHASIL RESET KEUANGAN*\n\n"
-        f"Sebanyak {count} transaksi telah dihapus.\n"
-        f"💰 *Saldo saat ini:* `Rp 0`\n"
-        f"📥 *Total Pemasukan:* `Rp 0`\n"
-        f"📤 *Total Pengeluaran:* `Rp 0`\n\n"
-        f"_Pembukuan keuangan Anda sekarang bersih dan siap dimulai dari awal!_",
+        f"🗑️ *Saldo Direset!*\n\n"
+        f"• Transaksi dihapus: {count}\n"
+        f"• Saldo saat ini: `Rp 0`",
         parse_mode=ParseMode.MARKDOWN
     )
 
@@ -528,7 +515,7 @@ async def handle_document_message(message: Message, bot: Bot):
             )
         else:
             status_msg = await message.answer(
-                f"⏳ Sedang membaca dan menganalisis PDF `{file_name}` untuk disusun ke spreadsheet Excel (.xlsx)...",
+                f"⏳ Memproses PDF `{file_name}` ke Excel...",
                 parse_mode=ParseMode.MARKDOWN
             )
             summary_text, excel_path = await pdf_converter.convert_pdf_document_to_excel(
@@ -556,11 +543,7 @@ async def handle_document_message(message: Message, bot: Bot):
 
             await message.answer_document(
                 FSInputFile(excel_path),
-                caption=(
-                    f"📊 *File Excel dari Dokumen PDF:*\n"
-                    f"📁 `{file_name}`\n\n"
-                    f"_File Excel ini dibuat khusus secara terpisah langsung dari isi PDF Anda tanpa mencampuri database harian._"
-                ),
+                caption=f"📊 Excel: `{file_name}`",
                 reply_markup=kb,
                 parse_mode=ParseMode.MARKDOWN
             )

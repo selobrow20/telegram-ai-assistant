@@ -11,24 +11,20 @@ def generate_balance_summary(user_id: int) -> str:
     inc = format_rupiah(bal['total_income'])
     exp = format_rupiah(bal['total_expense'])
     sisa = format_rupiah(bal['balance'])
-    
     status_icon = "🟢" if bal['balance'] >= 0 else "🔴"
 
-    text = (
-        "📊 *RINGKASAN KEUANGAN KESELURUHAN*\n"
-        "━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"💰 *Total Pemasukan:* {inc}\n"
-        f"💸 *Total Pengeluaran:* {exp}\n"
-        f"━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"{status_icon} *Sisa Saldo:* {sisa}\n\n"
-        "_Tip: Ketik atau kirim voice note untuk mencatat transaksi, misal: 'Beli bensin 30rb' atau 'Dapat bonus 500k'_"
+    return (
+        "💰 *SALDO KEUANGAN*\n"
+        f"• Pemasukan: `{inc}`\n"
+        f"• Pengeluaran: `{exp}`\n"
+        "━━━━━━━━━━━━\n"
+        f"{status_icon} *Saldo:* `{sisa}`"
     )
-    return text
 
 def generate_financial_report(user_id: int, period: str = "month") -> str:
     period_label = {
         "today": "Hari Ini",
-        "week": "7 Hari Terakhir",
+        "week": "7 Hari",
         "month": "Bulan Ini",
         "all": "Semua Waktu"
     }.get(period, "Bulan Ini")
@@ -41,35 +37,23 @@ def generate_financial_report(user_id: int, period: str = "month") -> str:
     net = format_rupiah(summary['balance'])
 
     lines = [
-        f"📑 *LAPORAN KEUANGAN ({period_label.upper()})*",
-        "━━━━━━━━━━━━━━━━━━━━━━",
-        f"📥 *Total Pemasukan:* {tot_inc}",
-        f"📤 *Total Pengeluaran:* {tot_exp}",
-        f"💵 *Arus Kas Bersih:* {net}",
-        "━━━━━━━━━━━━━━━━━━━━━━"
+        f"📊 *Laporan ({period_label})*",
+        f"• Masuk: `{tot_inc}`",
+        f"• Keluar: `{tot_exp}`",
+        f"• Bersih: `{net}`"
     ]
 
     if summary['expense_categories']:
-        lines.append("\n📌 *Rincian Pengeluaran per Kategori:*")
-        for cat in summary['expense_categories']:
-            pct = (cat['total'] / summary['total_expense'] * 100) if summary['total_expense'] > 0 else 0
-            lines.append(f" • *{cat['category']}*: {format_rupiah(cat['total'])} ({pct:.1f}% - {cat['count']}x)")
-
-    if summary['income_categories']:
-        lines.append("\n💎 *Rincian Pemasukan:*")
-        for cat in summary['income_categories']:
-            lines.append(f" • *{cat['category']}*: {format_rupiah(cat['total'])} ({cat['count']}x)")
+        lines.append("\n📌 *Pengeluaran:*")
+        for cat in summary['expense_categories'][:5]:
+            lines.append(f"• {cat['category']}: {format_rupiah(cat['total'])}")
 
     if transactions:
-        lines.append("\n🕒 *Transaksi Terbaru:*")
-        for t in transactions[:8]:
-            icon = "🟢 +" if t['type'] == 'income' else "🔴 -"
+        lines.append("\n🕒 *Transaksi Terakhir:*")
+        for t in transactions[:5]:
+            icon = "+" if t['type'] == 'income' else "-"
             desc = f" ({t['description']})" if t['description'] else ""
-            lines.append(f"{icon} {format_rupiah(t['amount'])} _{t['category']}_{desc} [{t['date']}]")
-        if len(transactions) > 8:
-            lines.append(f"_...dan {len(transactions) - 8} transaksi lainnya._")
-    else:
-        lines.append("\n_Belum ada transaksi pada periode ini._")
+            lines.append(f"• {icon}{format_rupiah(t['amount'])} {t['category']}{desc}")
 
     return "\n".join(lines)
 

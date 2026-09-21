@@ -33,67 +33,45 @@ def build_daily_recap_message(user_id: int, user_name: str) -> str:
     data = db.get_yesterday_expenses(user_id)
     bal = db.get_balance(user_id)
     
-    date_id = format_date_id(data['date'])
     tot_exp = finance.format_rupiah(data['total_expense'])
     sisa_saldo = finance.format_rupiah(bal['balance'])
     
     if data['total_expense'] > 0:
         lines = [
-            f"☀️ *SELAMAT PAGI, {user_name.upper()}!* 👋",
-            "━━━━━━━━━━━━━━━━━━━━━━",
-            f"💸 *Rekap Pengeluaran Kemarin ({date_id}):*",
-            f"Kemarin kamu keluar *{tot_exp}* ({data['count']} transaksi).\n",
-            "📌 *Rincian per Kategori:*"
+            f"☀️ *Pagi, {user_name}!*",
+            f"💸 *Kemarin kamu keluar:* `{tot_exp}` ({data['count']}x)",
         ]
-        for c in data['categories']:
-            c_tot = finance.format_rupiah(c['total'])
-            lines.append(f" • *{c['category']}*: {c_tot}")
+        for c in data['categories'][:4]:
+            lines.append(f"• {c['category']}: {finance.format_rupiah(c['total'])}")
             
-        lines.append(f"\n💰 *Sisa Saldo Saat Ini:* `{sisa_saldo}`")
-        lines.append("━━━━━━━━━━━━━━━━━━━━━━")
-        lines.append("_Semoga harimu menyenangkan dan tetap hemat hari ini!_ 😊")
+        lines.append(f"💰 *Sisa Saldo:* `{sisa_saldo}`")
         return "\n".join(lines)
     else:
         return (
-            f"☀️ *SELAMAT PAGI, {user_name.upper()}!* 👋\n"
-            "━━━━━━━━━━━━━━━━━━━━━━\n"
-            f"✨ Kemarin ({date_id}) kamu tidak mencatat pengeluaran sama sekali (*Rp 0*).\n"
-            f"Keren & hemat banget! Pertahankan ya! 👏\n\n"
-            f"💰 *Sisa Saldo Saat Ini:* `{sisa_saldo}`\n"
-            "━━━━━━━━━━━━━━━━━━━━━━\n"
-            "_Siap menjalani hari ini dengan semangat baru!_ 🚀"
+            f"☀️ *Pagi, {user_name}!*\n"
+            f"✨ Kemarin kamu tidak ada pengeluaran (*Rp 0*).\n"
+            f"💰 *Sisa Saldo:* `{sisa_saldo}`"
         )
 
 def build_weekly_recap_message(user_id: int, user_name: str) -> str:
     data = db.get_last_7_days_expenses(user_id)
     bal = db.get_balance(user_id)
     
-    start_id = format_date_id(data['start_date'])
-    end_id = format_date_id(data['end_date'])
-    
     tot_inc = finance.format_rupiah(data['total_income'])
     tot_exp = finance.format_rupiah(data['total_expense'])
-    net = finance.format_rupiah(data['balance'])
     sisa = finance.format_rupiah(bal['balance'])
     
     lines = [
-        "📅 *REKAP KEUANGAN MINGGUAN (SENIN CERIA)* ☀️",
-        "━━━━━━━━━━━━━━━━━━━━━━",
-        f"Halo *{user_name}*, berikut evaluasi keuanganmu selama 7 hari terakhir ({start_id} s/d {end_id}):\n",
-        f"📥 *Total Pemasukan:* `{tot_inc}`",
-        f"📤 *Total Pengeluaran:* `{tot_exp}`",
-        f"💵 *Arus Kas Bersih:* `{net}`\n"
+        "📅 *Rekap Mingguan*",
+        f"• Masuk: `{tot_inc}`",
+        f"• Keluar: `{tot_exp}`"
     ]
     
     if data['top_expense_categories']:
-        lines.append("📌 *Pengeluaran Terbesar:*")
-        for c in data['top_expense_categories'][:4]:
-            c_tot = finance.format_rupiah(c['total'])
-            lines.append(f" • *{c['category']}*: {c_tot} ({c['count']}x)")
-            
-    lines.append(f"\n💰 *Total Saldo Sekarang:* `{sisa}`")
-    lines.append("━━━━━━━━━━━━━━━━━━━━━━")
-    lines.append("_Yuk mulai minggu baru ini dengan rencana keuangan yang rapi dan terkontrol!_ 💪")
+        top = ", ".join([f"{c['category']} ({finance.format_rupiah(c['total'])})" for c in data['top_expense_categories'][:3]])
+        lines.append(f"• Pengeluaran: {top}")
+        
+    lines.append(f"💰 *Saldo:* `{sisa}`")
     return "\n".join(lines)
 
 async def build_monthly_report_with_ai(user_id: int, user_name: str) -> Tuple[str, Optional[str]]:
@@ -102,28 +80,20 @@ async def build_monthly_report_with_ai(user_id: int, user_name: str) -> Tuple[st
     
     tot_inc = finance.format_rupiah(data['total_income'])
     tot_exp = finance.format_rupiah(data['total_expense'])
-    net = finance.format_rupiah(data['balance'])
     sisa = finance.format_rupiah(bal['balance'])
     month_name = data['month_name']
     
-    # Generate analisis AI melalui Gemini
     ai_analysis = ""
     if GEMINI_API_KEY and (data['total_income'] > 0 or data['total_expense'] > 0):
         try:
             client = genai.Client(api_key=GEMINI_API_KEY)
+            cat_list = [f"{c['category']} {finance.format_rupiah(c['total'])}" for c in data['expense_categories'][:3]]
+            cat_str = ", ".join(cat_list)
             prompt = (
-                f"Anda adalah konsultan keuangan pribadi 'Selobrow'.\n"
-                f"Analisis keuangan pengguna bernama {user_name} untuk bulan {month_name}:\n"
-                f"- Total Pemasukan: {tot_inc}\n"
-                f"- Total Pengeluaran: {tot_exp}\n"
-                f"- Arus Kas Bersih: {net}\n"
-                f"- Kategori Pengeluaran: {', '.join([f'{c["category"]} ({finance.format_rupiah(c["total"])})' for c in data['expense_categories'][:5]])}\n"
-                f"- Sisa Saldo Total: {sisa}\n\n"
-                f"Berikan:\n"
-                f"1. Analisis kesehatan finansial singkat (2-3 kalimat santai dan ramah).\n"
-                f"2. Evaluasi kategori yang paling boros / prioritas.\n"
-                f"3. 2 tips praktis dan actionable untuk bulan berikutnya.\n"
-                f"Gunakan gaya bahasa Indonesia yang suportif, hangat, dan bersahabat dengan emoji yang pas."
+                f"Tulis evaluasi keuangan singkat untuk {user_name} bulan {month_name}:\n"
+                f"Masuk: {tot_inc}, Keluar: {tot_exp}, Sisa: {sisa}.\n"
+                f"Kategori: {cat_str}.\n"
+                f"PENTING: Tulis HANYA 2-3 kalimat ringkas (1 analisis pos boros + 1 saran praktis). Tanpa basa-basi pembuka/penutup."
             )
             resp = client.models.generate_content(
                 model="gemini-3.1-flash-lite",
@@ -135,24 +105,14 @@ async def build_monthly_report_with_ai(user_id: int, user_name: str) -> Tuple[st
             logger.warning(f"Gagal generate analisis AI bulanan: {e}")
             
     if not ai_analysis:
-        ai_analysis = (
-            "💡 *Saran Finansial:*\n"
-            "Terus pantau arus kas Anda setiap hari. Usahakan menyisihkan minimal 20% dari setiap pemasukan untuk tabungan atau dana darurat sebelum dibelanjakan!"
-        )
+        ai_analysis = "Pertahankan pencatatan harian dan usahakan menabung minimal 10-20% di awal bulan."
         
     lines = [
-        f"📊 *LAPORAN BULANAN RESMI: {month_name.upper()}*",
-        "━━━━━━━━━━━━━━━━━━━━━━",
-        f"Halo *{user_name}*, berikut rekapitulasi keuangan Anda bulan lalu:\n",
-        f"📥 *Total Pemasukan:* `{tot_inc}`",
-        f"📤 *Total Pengeluaran:* `{tot_exp}`",
-        f"💵 *Arus Kas Bersih:* `{net}`",
-        f"💰 *Saldo Tersisa:* `{sisa}`\n",
-        "━━━━━━━━━━━━━━━━━━━━━━",
-        "🧠 *ANALISIS & SARAN SELOBROW:*",
-        ai_analysis,
-        "━━━━━━━━━━━━━━━━━━━━━━",
-        "_File rekapitulasi Excel (.xlsx) bulan ini telah dilampirkan di bawah._"
+        f"📊 *Laporan Bulanan: {month_name}*",
+        f"• Pemasukan: `{tot_inc}`",
+        f"• Pengeluaran: `{tot_exp}`",
+        f"• Saldo Kas: `{sisa}`\n",
+        f"💡 *Catatan:* {ai_analysis}"
     ]
     
     excel_path = None
@@ -171,25 +131,15 @@ def build_scheduled_report_message(user_id: int, user_name: str, day: int) -> st
     tot_exp = finance.format_rupiah(summary['total_expense'])
     sisa = finance.format_rupiah(bal['balance'])
     
-    lines = [
-        f"⏰ *LAPORAN TERJADWAL (TANGGAL {day})* 🔔",
-        "━━━━━━━━━━━━━━━━━━━━━━",
-        f"Halo *{user_name}*, ini pengingat keuangan otomatis Anda per tanggal {day}:\n",
-        f"💰 *Saldo Saat Ini:* `{sisa}`",
-        f"📥 *Pemasukan Bulan Ini:* `{tot_inc}`",
-        f"📤 *Pengeluaran Bulan Ini:* `{tot_exp}`\n"
-    ]
-    
-    if summary['expense_categories']:
-        lines.append("📌 *Pengeluaran Terbesar Bulan Ini:*")
-        for c in summary['expense_categories'][:3]:
-            lines.append(f" • *{c['category']}*: {finance.format_rupiah(c['total'])}")
-            
-    lines.append("\n━━━━━━━━━━━━━━━━━━━━━━")
-    lines.append("_Ketik /excel untuk mengunduh laporan spreadsheet Excel kapan saja._")
-    return "\n".join(lines)
+    return (
+        f"⏰ *Laporan Tanggal {day}*\n"
+        f"• Masuk Bulan Ini: `{tot_inc}`\n"
+        f"• Keluar Bulan Ini: `{tot_exp}`\n"
+        f"💰 *Saldo:* `{sisa}`"
+    )
 
 def get_notification_settings_keyboard(settings: Dict[str, Any]) -> InlineKeyboardMarkup:
+
     daily_icon = "✅ Aktif" if settings.get('daily_recap_enabled') else "❌ Nonaktif"
     weekly_icon = "✅ Aktif" if settings.get('weekly_recap_enabled') else "❌ Nonaktif"
     monthly_icon = "✅ Aktif" if settings.get('monthly_report_enabled') else "❌ Nonaktif"

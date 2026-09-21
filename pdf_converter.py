@@ -136,7 +136,11 @@ async def convert_pdf_document_to_excel(doc_bytes: bytes, file_name: str, captio
         f"2. Ekstrak data menjadi struktur JSON yang valid dan lengkap untuk dibuatkan file spreadsheet Excel multi-sheet.\n"
         f"3. Pada 'summary': masukkan ringkasan metrik utama (seperti Judul, Periode, Total Omzet/Pemasukan, Total Pengeluaran/Biaya, Laba Bersih, Jumlah Pesanan, Kategori Terlaris, dll).\n"
         f"4. Pada 'tables': ekstrak SELURUH data rincian/transaksi/tabel yang ditemukan ke dalam tabel (memiliki 'name', 'headers', dan 'rows'). Pastikan semua angka, rincian biaya, atau transaksi dimasukkan secara lengkap baris demi baris.\n"
-        f"5. Pada 'executive_summary': buat ringkasan profesional dalam bahasa Indonesia dengan format rapi (bullet points) yang menjelaskan performa laporan ini untuk dibaca pengguna di Telegram.\n\n"
+        f"5. Pada 'executive_summary': buat ringkasan SANGAT SINGKAT & TO-THE-POINT (maksimal 3-5 poin bullet sederhana, tanpa salam pembuka panjang). Contoh:\n"
+        f"   📄 Ringkasan Dokumen:\n"
+        f"   • Total Omzet: Rp X\n"
+        f"   • Total Pengeluaran: Rp Y\n"
+        f"   • Laba Bersih: Rp Z\n\n"
         f"WAJIB KELUARKAN DALAM FORMAT JSON SEPERTI CONTOH BERIKUT:\n"
         f"{{\n"
         f'  "title": "Laporan Penjualan / Performa Printing",\n'
@@ -154,7 +158,7 @@ async def convert_pdf_document_to_excel(doc_bytes: bytes, file_name: str, captio
         f'      ]\n'
         f'    }}\n'
         f'  ],\n'
-        f'  "executive_summary": "Rangkuman lengkap..."\n'
+        f'  "executive_summary": "📄 Ringkasan Dokumen:\\n• Total Omzet: Rp ...\\n• Total Pengeluaran: Rp ..."\n'
         f"}}\n"
     )
 
@@ -238,9 +242,8 @@ async def convert_pdf_document_to_excel(doc_bytes: bytes, file_name: str, captio
                 "rows": [[str(idx+1), line] for idx, line in enumerate(clean_lines[:100])]
             }],
             "executive_summary": (
-                f"📄 *LAPORAN DOKUMEN: {file_name}*\n\n"
-                f"File PDF telah berhasil diproses dan dikonversi menjadi spreadsheet Excel (.xlsx). "
-                f"Rincian isi laporan telah disusun rapi di lembar kerja Excel terlampir."
+                f"📄 *Laporan:* `{file_name}`\n"
+                f"✅ Berhasil diekstrak ke Excel."
             )
         }
 
@@ -251,10 +254,8 @@ async def convert_pdf_document_to_excel(doc_bytes: bytes, file_name: str, captio
     summary_text = parsed_data.get('executive_summary', '')
     if not summary_text or len(summary_text) < 15:
         summary_text = (
-            f"📄 *LAPORAN TELAH BERHASIL DIKONVERSI KE EXCEL*\n\n"
-            f"• **Dokumen:** `{file_name}`\n"
-            f"• **Judul:** {parsed_data.get('title', file_name)}\n"
-            f"• **Status:** File spreadsheet Excel (.xlsx) telah dibuat khusus dari PDF ini secara terpisah tanpa mengubah database catatan harian Anda."
+            f"📄 *Laporan:* `{file_name}`\n"
+            f"✅ File spreadsheet Excel siap diunduh di bawah."
         )
 
     # Simpan ke registry jika user_id diberikan

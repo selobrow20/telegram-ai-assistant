@@ -174,14 +174,14 @@ async def cmd_start(message: Message):
     user_name = message.from_user.first_name if message.from_user else "Teman"
     db.register_or_update_user(user_id, user_name, message.chat.id)
     welcome_text = (
-        f"👋 Halo *{user_name}*!\n\n"
-        "Saya **Selobrow**. Kirim teks atau Voice Note untuk:\n"
-        "• 🏷️ *Cek Harga Pricelist (ADP)* (ketik tipe / model produk)\n"
-        "• 💸 Catat uang & pantau saldo\n"
-        "• 📊 Laporan & ekspor Excel / PDF\n"
-        "• 📋 To-do list & catatan\n"
-        "• 🔔 Notifikasi & rekap rutin\n\n"
-        "Pilih menu di bawah atau langsung chat:"
+        f"👋 Yo *{user_name}*!\n\n"
+        "Gue **Selobrow**, asisten pribadi lu yang siap bantu kapan aja. Santai aja bor, lu bisa kirim teks atau Voice Note buat:\n"
+        "• 🏷️ *Cek Harga Pricelist* (langsung ketik tipe/model produk)\n"
+        "• 💸 *Catat Duit & Pantau Saldo*\n"
+        "• 📊 *Laporan & Rekap Rutin*\n"
+        "• ⏰ *Alarm & Pengingat Acara*\n"
+        "• 📋 *To-do List & Catatan*\n\n"
+        "Ada yang bisa gue bantu sekarang, bor?"
     )
     await message.answer(welcome_text, reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
 
@@ -1087,12 +1087,12 @@ async def handle_text_message(message: Message, bot: Bot):
     # Intersep panggilan nama bot atau sapaan santai
     if lower_text in ["bor", "bro", "selobrow", "halo", "hai", "p", "oi", "hey", "halo bor", "halo selobrow", "selamat pagi", "selamat siang", "selamat malam"]:
         welcome_greeting = (
-            f"Halo *{user_name}*! 👋\n"
-            "Ya bor, ada yang bisa Selobrow bantu?\n\n"
-            "• Ketik tipe untuk *Cek Harga Pricelist*\n"
-            "• Ketik nominal untuk *Catat Keuangan*\n"
-            "• Ketik _'ingatkan...'_ untuk *Setel Alarm / Pengingat*\n"
-            "• Ketik /kalender untuk *Cek Agenda & Acara*"
+            f"Yo *{user_name}*! 👋 Santai bor, ada apa nih?\n"
+            "Selobrow siap bantu, mau ngapain kita hari ini?\n\n"
+            "• Ketik tipe buat *Cek Harga*\n"
+            "• Ketik pengeluaran/pemasukan buat *Catat Duit*\n"
+            "• Ketik _'ingatkan...'_ buat *Pasang Alarm / Pengingat*\n"
+            "• Ketik /kalender buat *Cek Agenda & Acara*"
         )
         await message.answer(welcome_greeting, reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
         return

@@ -23,19 +23,21 @@ def clear_user_history(user_id: int):
     user_histories.pop(user_id, None)
 
 SYSTEM_PROMPT = """
-Anda adalah asisten kerja pribadi 'Selobrow' di Telegram.
-PENTING: Nama Anda adalah 'Selobrow'. Panggilan akrab dari pengguna: 'Selobrow', 'brow', 'bor', 'bro'.
+Anda adalah 'Selobrow', asisten kerja pribadi yang super gaul, asyik, santai, dan solutif di Telegram.
+Panggil pengguna dengan santai dan akrab seperti "bor", "bro", atau namanya jika cocok.
+
+GAYA KOMUNIKASI (GAUL & SANTAI - SANGAT PENTING):
+1. Gunakan gaya bahasa gaul santai khas anak muda / partner kerja akrab (contoh: "Yo bor!", "Siap bor!", "Beres!", "Aman!", "Gass", "Mantap!", dll.).
+2. JANGAN KAKU seperti robot atau CS formal. Hindari kata-kata birokrasi/kaku seperti "Dengan hormat", "Saya informasikan bahwa", dsb.
+3. Tetap to the point, ringkas, dan jelas. Jangan bertele-tele.
+4. PENGECUALIAN KHUSUS TANYA HARGA BARANG/PRICELIST:
+   - Kalau pengguna menanyakan tipe/harga produk, WAJIB JAWAB HANYA MODEL DAN HARGA SAJA: `<Model> : Rp <Harga>` tanpa basa-basi tambahan apa pun.
+   - Di luar urusan harga produk (sapaan, curhat, keuangan, to-do, catatan, alarm, obrolan santai), bersikaplah super gaul, asyik, dan santai!
 
 PENTING - MEMBEDAKAN SAPAAN/OBROLAN DENGAN PENCARIAN HARGA:
-- Jika pengguna hanya menyapa, mengobrol, atau memanggil nama Anda (contoh: "bor", "bro", "selobrow", "halo", "hai", "p", "oi", "siang", "pagi", "malam", "tes", dsb.), DILARANG KERAS mencari harga di pricelist!
-- Balas sapaan tersebut dengan ramah, santai, dan to the point (contoh: "Halo! Ya bor, ada yang bisa Selobrow bantu?").
+- Jika pengguna hanya menyapa, mengobrol, atau memanggil nama Anda (contoh: "bor", "bro", "selobrow", "halo", "hai", "p", "oi", "siang", "pagi", "malam", "lagi apa", dsb.), DILARANG KERAS mencari harga di pricelist!
+- Balas sapaan tersebut dengan gaya gaul, asyik, dan santai (contoh: "Yo bor! Ada yang bisa dibantu hari ini? Mau cek harga, catat duit, atau pasang alarm?").
 - HANYA panggil fungsi `cari_harga_pricelist` jika pengguna memang menyebutkan kode/tipe produk, spesifikasi, atau menanyakan harga barang (contoh: "EW1200G", "IPC-C22SP", "harga H3A", "Cruiser 2", "switch 24 port", dll.).
-
-ATURAN GAYA KOMUNIKASI (SANGAT PENTING):
-1. JAWAB SINGKAT, PADAT, DAN LANGSUNG KE INTI (To the point).
-2. JANGAN menggunakan basa-basi pembuka yang panjang.
-3. Berikan informasi yang dibutuhkan dalam format rapi dan bersih.
-4. Gunakan bahasa Indonesia santai, sopan, dan jelas.
 
 TUGAS UTAMA:
 1. INFORMASI HARGA PRICELIST (SANGAT PENTING):
@@ -116,7 +118,7 @@ def create_tools_for_user(user_id: int, user_name: str = "Teman", chat_id: int =
         fmt_saldo = finance.format_rupiah(bal['balance'])
         jenis_str = "Pemasukan" if t_type == "income" else "Pengeluaran"
         desc_str = f" - {keterangan}" if keterangan else ""
-        return f"✅ {jenis_str} {fmt_nominal} ({kategori}{desc_str})\n💰 Sisa Saldo: {fmt_saldo}"
+        return f"✅ Beres bor! {jenis_str} {fmt_nominal} ({kategori}{desc_str}) udah dicatat.\n💰 Sisa Saldo: {fmt_saldo}"
 
 
     def cek_saldo() -> str:
@@ -137,7 +139,8 @@ def create_tools_for_user(user_id: int, user_name: str = "Teman", chat_id: int =
             batas_waktu: Waktu atau tanggal deadline (opsional, contoh: 'Besok jam 9 pagi')
         """
         task_id = db.add_task(user_id, judul_tugas, batas_waktu if batas_waktu else None)
-        return f"Tugas berhasil disimpan dengan ID #{task_id}: '{judul_tugas}'" + (f" (Deadline: {batas_waktu})" if batas_waktu else "")
+        dl = f" (Deadline: {batas_waktu})" if batas_waktu else ""
+        return f"Sip bor! Tugas #{task_id} udah dicatat: '{judul_tugas}'{dl}"
 
     def lihat_daftar_tugas(status: str = "pending") -> str:
         """Melihat daftar tugas / to-do list.
@@ -147,8 +150,8 @@ def create_tools_for_user(user_id: int, user_name: str = "Teman", chat_id: int =
         st = None if status == "all" else status
         tasks = db.get_tasks(user_id, st)
         if not tasks:
-            return "Tidak ada tugas dalam daftar saat ini. Semua beres!"
-        res = "Daftar Tugas:\n"
+            return "Santai bor, gak ada tugas yang nunggak saat ini. Semua beres! 😎"
+        res = "📋 Daftar Tugas Lu:\n"
         for t in tasks:
             icon = "✅" if t['status'] == 'completed' else "⏳"
             dl = f" (Deadline: {t['due_date']})" if t['due_date'] else ""
@@ -162,8 +165,8 @@ def create_tools_for_user(user_id: int, user_name: str = "Teman", chat_id: int =
         """
         ok = db.update_task_status(user_id, task_id, "completed")
         if ok:
-            return f"Hebat! Tugas #{task_id} berhasil ditandai selesai."
-        return f"Tugas dengan ID #{task_id} tidak ditemukan."
+            return f"Mantap bor! Tugas #{task_id} kelar ✅"
+        return f"Tugas dengan ID #{task_id} gak ketemu, bor."
 
     def simpan_catatan(judul: str, isi_catatan: str) -> str:
         """Menyimpan memo atau catatan harian bebas.
@@ -172,13 +175,13 @@ def create_tools_for_user(user_id: int, user_name: str = "Teman", chat_id: int =
             isi_catatan: Isi lengkap teks catatan
         """
         nid = db.add_note(user_id, isi_catatan, judul)
-        return f"Catatan '{judul}' berhasil disimpan dengan ID #{nid}."
+        return f"Sip, catatan '{judul}' udah aman disimpan [#{nid}]."
 
     def lihat_catatan() -> str:
         """Melihat catatan atau memo harian yang pernah disimpan."""
         notes = db.get_notes(user_id, limit=10)
         if not notes:
-            return "Belum ada catatan yang tersimpan."
+            return "Belum ada catatan yang tersimpan nih, bor."
         res = "Catatan Tersimpan:\n"
         for n in notes:
             t = f"*{n['title']}*: " if n['title'] else ""
@@ -304,14 +307,14 @@ def create_tools_for_user(user_id: int, user_name: str = "Teman", chat_id: int =
         """
         c_id = chat_id or user_id
         rem_id = db.add_reminder(user_id, c_id, isi_pengingat, waktu_iso)
-        return f"⏰ Alarm & Pengingat berhasil dipasang!\n• Pengingat: {isi_pengingat}\n• Waktu: {waktu_iso} WIB\n• ID: #{rem_id}"
+        return f"⏰ Siap bor, alarm udah aktif!\n• Pengingat: {isi_pengingat}\n• Waktu: {waktu_iso} WIB\n• ID: #{rem_id}"
 
     def lihat_pengingat() -> str:
         """Melihat daftar pengingat atau alarm aktif pengguna."""
         rems = db.get_user_reminders(user_id, status='pending')
         if not rems:
-            return "Tidak ada pengingat atau alarm aktif saat ini."
-        lines = ["⏰ *Daftar Pengingat / Alarm Aktif:*"]
+            return "Belum ada alarm atau pengingat aktif nih, bor. Santai dulu! ☕"
+        lines = ["⏰ *Daftar Alarm & Pengingat Aktif:*"]
         for r in rems:
             lines.append(f"• [#{r['id']}] {r['title']} (🕒 {r['remind_at']} WIB)")
         return "\n".join(lines)
@@ -323,8 +326,8 @@ def create_tools_for_user(user_id: int, user_name: str = "Teman", chat_id: int =
         """
         ok = db.delete_reminder(user_id, id_pengingat)
         if ok:
-            return f"Pengingat #{id_pengingat} berhasil dibatalkan."
-        return f"Pengingat #{id_pengingat} tidak ditemukan."
+            return f"Aman bor, pengingat #{id_pengingat} udah dibatalkan."
+        return f"Pengingat #{id_pengingat} gak ketemu, bor."
 
     def tambah_agenda_kalender(judul_acara: str, tanggal: str, jam: str = "", keterangan: str = "") -> str:
         """Menambahkan dan menandai acara / agenda pada kalender.
@@ -337,7 +340,7 @@ def create_tools_for_user(user_id: int, user_name: str = "Teman", chat_id: int =
         ev_id = db.add_calendar_event(user_id, judul_acara, tanggal, jam, keterangan)
         jam_str = f" jam {jam}" if jam else ""
         desc_str = f" ({keterangan})" if keterangan else ""
-        return f"📅 Acara berhasil ditandai di kalender!\n• Acara: {judul_acara}\n• Tanggal: {tanggal}{jam_str}{desc_str}\n• ID: #{ev_id}"
+        return f"📅 Beres bor! Acara udah ditandai di kalender:\n• Acara: {judul_acara}\n• Tanggal: {tanggal}{jam_str}{desc_str}\n• ID: #{ev_id}"
 
     def lihat_kalender(bulan_atau_tanggal: str = "") -> str:
         """Melihat tampilan kalender bulanan (dengan penanda * untuk hari yang memiliki acara), atau melihat agenda pada tanggal tertentu.
@@ -349,7 +352,7 @@ def create_tools_for_user(user_id: int, user_name: str = "Teman", chat_id: int =
         if len(target) == 10 and target.count('-') == 2:
             events = db.get_calendar_events_by_date(user_id, target)
             if not events:
-                return f"Tidak ada agenda acara pada tanggal {target}."
+                return f"Gak ada agenda acara di tanggal {target}, bor. Masih kosong!"
             lines = [f"📅 Agenda untuk {target}:"]
             for ev in events:
                 jam_str = f" [{ev['event_time']}]" if ev.get('event_time') else ""
@@ -373,8 +376,8 @@ def create_tools_for_user(user_id: int, user_name: str = "Teman", chat_id: int =
         """
         ok = db.delete_calendar_event(user_id, id_acara)
         if ok:
-            return f"Agenda #{id_acara} berhasil dihapus dari kalender."
-        return f"Agenda #{id_acara} tidak ditemukan."
+            return f"Aman bor, agenda #{id_acara} udah dihapus dari kalender."
+        return f"Agenda #{id_acara} gak ketemu di kalender, bor."
 
     return [
         cari_harga_pricelist,

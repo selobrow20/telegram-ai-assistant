@@ -6,6 +6,7 @@ from config import GEMINI_API_KEY, GEMINI_MODEL
 import database as db
 import finance
 import pricelist
+import notifications
 
 logger = logging.getLogger(__name__)
 
@@ -65,11 +66,14 @@ TUGAS UTAMA:
    - Tambah to-do (`tambah_tugas_harian`), selesai (`selesaikan_tugas`), lihat (`lihat_daftar_tugas`).
    - Simpan memo (`simpan_catatan`), lihat memo (`lihat_catatan`).
 
-5. NOTIFIKASI CERDAS:
-   - Pengaturan notifikasi -> panggil `atur_notifikasi_cerdas`.
+5. NOTIFIKASI CERDAS & JADWAL:
+   - Cek status notifikasi -> panggil `cek_status_notifikasi`.
+   - Mengubah preferensi -> panggil `atur_notifikasi_cerdas`.
+   - Kirim preview / tes notifikasi sekarang -> panggil `kirim_tes_notifikasi`.
+   - PENTING: Semua notifikasi cerdas (Daily Recap 07:00 WIB, Weekly Recap Senin 07:30 WIB, Monthly Report Tgl 1 08:00 WIB, Scheduled Report Tgl 25 08:30 WIB) SECARA DEFAULT SUDAH AKTIF dan berjalan di latar belakang. JANGAN PERNAH berasumsi atau mengatakan "notifikasi belum aktif" tanpa memanggil `cek_status_notifikasi`!
 """
 
-def create_tools_for_user(user_id: int):
+def create_tools_for_user(user_id: int, user_name: str = "Teman"):
     def catat_transaksi_keuangan(tipe: str, nominal: float, kategori: str, keterangan: str = "") -> str:
         """Mencatat pemasukan atau pengeluaran keuangan ke database.
         Args:
@@ -202,6 +206,49 @@ def create_tools_for_user(user_id: int):
             res_msgs.append(f"Semua Notifikasi Cerdas telah {'diaktifkan ✅' if status else 'dinonaktifkan ❌'}")
         return "Pengaturan Notifikasi Cerdas berhasil diperbarui:\n" + "\n".join(f"• {m}" for m in res_msgs)
 
+    def cek_status_notifikasi() -> str:
+        """Mengecek status terkini seluruh notifikasi cerdas pengguna (apakah aktif, jam kirim, dan tanggal laporan terjadwal)."""
+        s = db.get_notification_settings(user_id)
+        daily = f"Aktif (Setiap hari {s.get('daily_recap_time', '07:00')} WIB)" if s.get('daily_recap_enabled') else "Nonaktif"
+        weekly = "Aktif (Setiap Senin 07:30 WIB)" if s.get('weekly_recap_enabled') else "Nonaktif"
+        monthly = "Aktif (Setiap Tanggal 1 08:00 WIB + AI & Excel)" if s.get('monthly_report_enabled') else "Nonaktif"
+        sched = f"Aktif (Setiap Tanggal {s.get('scheduled_day', 25)} 08:30 WIB)" if s.get('scheduled_reports_enabled') else "Nonaktif"
+        
+        return (
+            "🔔 Status Notifikasi Cerdas Anda:\n"
+            f"• ☀️ Rekap Harian: {daily}\n"
+            f"• 📅 Rekap Mingguan: {weekly}\n"
+            f"• 📑 Laporan Bulanan AI: {monthly}\n"
+            f"• ⏰ Laporan Terjadwal: {sched}\n\n"
+            "Semua jadwal notifikasi aktif secara otomatis. Pengguna bisa mengubah preferensi atau meminta 'tes notifikasi' kapan saja."
+        )
+
+    def kirim_tes_notifikasi(jenis: str = "daily") -> str:
+        """Mengirimkan preview atau contoh pesan notifikasi rekap keuangan saat ini untuk memastikan fitur notifikasi berjalan dengan baik.
+        Gunakan jika pengguna menanyakan tes notifikasi, preview notifikasi, atau ingin melihat contoh rekapan sekarang.
+        Args:
+            jenis: 'daily' (rekap harian), 'weekly' (rekap mingguan), 'monthly' (laporan bulanan), atau 'scheduled' (laporan terjadwal)
+        """
+        j = jenis.lower()
+        if "week" in j or "minggu" in j:
+            return notifications.build_weekly_recap_message(user_id, user_name)
+        elif "month" in j or "bulan" in j:
+            summary = db.get_previous_month_summary(user_id)
+            bal = db.get_balance(user_id)
+            return (
+                f"📊 Laporan Bulanan (Preview)\n"
+                f"• Pemasukan: {finance.format_rupiah(summary['total_income'])}\n"
+                f"• Pengeluaran: {finance.format_rupiah(summary['total_expense'])}\n"
+                f"• Saldo Kas: {finance.format_rupiah(bal['balance'])}\n"
+                f"💡 Jadwal pengiriman otomatis: Setiap tanggal 1 pukul 08:00 WIB disertai lampiran file Excel."
+            )
+        elif "sched" in j or "jadwal" in j or "tanggal" in j:
+            s = db.get_notification_settings(user_id)
+            day = s.get('scheduled_day', 25)
+            return notifications.build_scheduled_report_message(user_id, user_name, day)
+        else:
+            return notifications.build_daily_recap_message(user_id, user_name)
+
     def cari_harga_pricelist(kode_atau_nama_produk: str, jenis_harga: str = "ADP") -> str:
         """Mencari harga produk di database pricelist berdasarkan kode, model, atau nama.
         Gunakan fungsi ini jika pengguna menyebut tipe/kode produk atau menanyakan harga.
@@ -230,7 +277,9 @@ def create_tools_for_user(user_id: int):
         cek_saldo,
         buat_laporan_keuangan,
         reset_keuangan,
+        cek_status_notifikasi,
         atur_notifikasi_cerdas,
+        kirim_tes_notifikasi,
         tambah_tugas_harian,
         lihat_daftar_tugas,
         selesaikan_tugas,
@@ -275,7 +324,7 @@ def format_friendly_error(e: Exception) -> str:
 async def process_user_text(user_id: int, user_name: str, text: str) -> str:
     try:
         client = get_client()
-        tools = create_tools_for_user(user_id)
+        tools = create_tools_for_user(user_id, user_name)
         
         history = user_histories.setdefault(user_id, [])
         user_content = types.Content(
@@ -315,7 +364,7 @@ async def process_user_text(user_id: int, user_name: str, text: str) -> str:
 async def process_user_voice(user_id: int, user_name: str, voice_bytes: bytes, mime_type: str = "audio/ogg") -> str:
     try:
         client = get_client()
-        tools = create_tools_for_user(user_id)
+        tools = create_tools_for_user(user_id, user_name)
         
         audio_part = types.Part.from_bytes(data=voice_bytes, mime_type=mime_type)
         instruction_part = types.Part.from_text(
@@ -357,7 +406,7 @@ async def process_user_voice(user_id: int, user_name: str, voice_bytes: bytes, m
 async def process_user_image(user_id: int, user_name: str, image_bytes: bytes, mime_type: str = "image/jpeg", caption: str = "") -> str:
     try:
         client = get_client()
-        tools = create_tools_for_user(user_id)
+        tools = create_tools_for_user(user_id, user_name)
 
         prompt_text = (
             f"[User: {user_name} mengirim foto/gambar]. Caption pengguna: '{caption if caption else 'Tidak ada'}'\n"
@@ -410,7 +459,7 @@ async def process_user_image(user_id: int, user_name: str, image_bytes: bytes, m
 async def process_user_document(user_id: int, user_name: str, doc_bytes: bytes, file_name: str, mime_type: str = "application/pdf", caption: str = "") -> str:
     try:
         client = get_client()
-        tools = create_tools_for_user(user_id)
+        tools = create_tools_for_user(user_id, user_name)
 
         # Ekstraksi teks digital dari PDF menggunakan pypdf
         extracted_text = ""

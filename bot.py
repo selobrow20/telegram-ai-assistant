@@ -64,6 +64,8 @@ class AccessControlMiddleware(BaseMiddleware):
 
         # Cek apakah user sudah terotorisasi (Owner / Approved)
         if db.is_user_authorized(user_id, ADMIN_USER_ID):
+            chat_id = event.chat.id if isinstance(event, Message) else (event.message.chat.id if event.message else user_id)
+            db.register_or_update_user(user_id, user_name, chat_id)
             return await handler(event, data)
 
         # Jika belum, daftarkan atau periksa status permohonan
@@ -72,6 +74,7 @@ class AccessControlMiddleware(BaseMiddleware):
 
         if status == "approved":
             # Otomatis disetujui (misal user pertama otomatis menjadi Owner)
+            db.register_or_update_user(user_id, user_name, chat_id)
             return await handler(event, data)
 
         bot: Bot = data["bot"]
@@ -216,6 +219,14 @@ async def cmd_notifikasi(message: Message):
         "Aktifkan / nonaktifkan fitur di bawah:"
     )
     await message.answer(text, reply_markup=kb, parse_mode=ParseMode.MARKDOWN)
+
+@dp.message(Command("tesnotif"))
+@dp.message(Command("tes_notif"))
+async def cmd_tes_notif(message: Message, bot: Bot):
+    user_id = message.from_user.id
+    user_name = message.from_user.first_name or "Teman"
+    db.register_or_update_user(user_id, user_name, message.chat.id)
+    await notifications.send_test_notification(bot, user_id, message.chat.id, user_name)
 
 @dp.message(Command("keuangan"))
 async def cmd_keuangan(message: Message):
@@ -531,6 +542,11 @@ async def handle_callbacks(callback: CallbackQuery, bot: Bot):
         await callback.answer(f"Tanggal diubah ke {day_val}")
     elif data == "menu_help":
         await cmd_help(callback.message)
+    elif data == "test_notif_now":
+        user_name = callback.from_user.first_name or "Teman"
+        db.register_or_update_user(user_id, user_name, callback.message.chat.id)
+        await callback.answer("Mengirim tes notifikasi... ⏳")
+        await notifications.send_test_notification(bot, user_id, callback.message.chat.id, user_name)
     elif data.startswith("auth_approve_"):
         target_uid = int(data.replace("auth_approve_", ""))
         is_owner = (ADMIN_USER_ID and str(user_id) == str(ADMIN_USER_ID)) or any(o["user_id"] == user_id for o in db.get_owners())
@@ -959,6 +975,14 @@ async def handle_text_message(message: Message, bot: Bot):
         "🔔 notifikasi cerdas", "notifikasi cerdas", "atur notifikasi"
     ]:
         await cmd_notifikasi(message)
+        return
+
+    # Intersep tes notifikasi langsung
+    if lower_text in [
+        "/tesnotif", "/tes_notif", "tes notifikasi", "tes notif",
+        "coba notifikasi", "test notifikasi", "test notif"
+    ]:
+        await cmd_tes_notif(message, bot)
         return
 
     # Registrasi user agar terdaftar di sistem notifikasi

@@ -338,6 +338,9 @@ def update_notification_setting(user_id: int, field: str, value: Any) -> bool:
         return False
     with get_connection() as conn:
         cursor = conn.cursor()
+        cursor.execute("SELECT 1 FROM notification_settings WHERE user_id = ?", (user_id,))
+        if not cursor.fetchone():
+            cursor.execute("INSERT INTO notification_settings (user_id) VALUES (?)", (user_id,))
         cursor.execute(f'''
             UPDATE notification_settings
             SET {field} = ?, updated_at = CURRENT_TIMESTAMP

@@ -179,12 +179,38 @@ def get_notification_settings_keyboard(settings: Dict[str, Any]) -> InlineKeyboa
         ],
         [
             InlineKeyboardButton(
+                text="🧪 Kirim Tes Notifikasi Sekarang",
+                callback_data="test_notif_now"
+            )
+        ],
+        [
+            InlineKeyboardButton(
                 text="🔙 Kembali ke Menu Utama",
                 callback_data="menu_help"
             )
         ]
     ]
     return InlineKeyboardMarkup(inline_keyboard=keyboard)
+
+
+async def send_test_notification(bot: Bot, user_id: int, chat_id: int, user_name: str):
+    msg_text = build_daily_recap_message(user_id, user_name)
+    test_header = (
+        "🧪 *TES NOTIFIKASI BERHASIL*\n"
+        "━━━━━━━━━━━━━━━━━━━━━━\n"
+        "Berikut adalah contoh format notifikasi rekap yang akan Anda terima otomatis:\n\n"
+    )
+    test_footer = (
+        "\n\n━━━━━━━━━━━━━━━━━━━━━━\n"
+        "✅ *Sistem notifikasi aktif & normal!*\n"
+        "Jadwal pengiriman otomatis:\n"
+        "• Daily Recap: Setiap hari 07:00 WIB\n"
+        "• Weekly Recap: Setiap Senin 07:30 WIB\n"
+        "• Monthly Report: Setiap tanggal 1 08:00 WIB\n"
+        "• Scheduled Report: Setiap tanggal pilihan Anda 08:30 WIB"
+    )
+    await bot.send_message(chat_id=chat_id, text=test_header + msg_text + test_footer, parse_mode=ParseMode.MARKDOWN)
+
 
 async def start_notification_scheduler(bot: Bot):
     logger.info("Background Notification Scheduler dimulai (Timezone: Asia/Jakarta WIB).")
@@ -260,4 +286,4 @@ async def start_notification_scheduler(bot: Bot):
         except Exception as loop_err:
             logger.error(f"Error pada notification scheduler loop: {loop_err}", exc_info=True)
             
-        await asyncio.sleep(60)
+        await asyncio.sleep(25)

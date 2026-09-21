@@ -1001,18 +1001,41 @@ async def handle_text_message(message: Message, bot: Bot):
         # Fallback jika ada karakter format telegram yang escape
         await message.answer(reply_text)
 
+async def start_health_server():
+    port_str = os.getenv("PORT")
+    if not port_str:
+        return
+    try:
+        from aiohttp import web
+        port = int(port_str)
+        async def handle_health(request):
+            return web.Response(text="Bot Selobrow is running!", status=200)
+
+        app = web.Application()
+        app.router.add_get("/", handle_health)
+        app.router.add_get("/health", handle_health)
+        runner = web.AppRunner(app)
+        await runner.setup()
+        site = web.TCPSite(runner, "0.0.0.0", port)
+        await site.start()
+        logger.info(f"Health check HTTP server berhasil aktif di port {port}")
+    except Exception as e:
+        logger.warning(f"Tidak dapat memulai health check HTTP server: {e}")
+
 async def main():
     db.init_db()
     logger.info("Database SQLite berhasil diinisialisasi.")
     
     if not TELEGRAM_BOT_TOKEN or len(TELEGRAM_BOT_TOKEN) < 10:
-        print("\n" + "="*60)
-        print("PERHATIAN: TELEGRAM_BOT_TOKEN belum disetel di file .env!")
-        print("Silakan buka file 'd:\\telegram-ai-assistant\\.env' dan masukkan:")
-        print("TELEGRAM_BOT_TOKEN=token_bot_anda_dari_BotFather")
-        print("GEMINI_API_KEY=kunci_api_gemini_anda")
-        print("="*60 + "\n")
-        return
+        logger.error("="*60)
+        logger.error("PERHATIAN FATAL: TELEGRAM_BOT_TOKEN belum disetel!")
+        logger.error("Jika di Railway/Server, tambahkan TELEGRAM_BOT_TOKEN di menu Variables.")
+        logger.error("Jika di lokal, masukkan ke file .env.")
+        logger.error("="*60)
+        raise ValueError("TELEGRAM_BOT_TOKEN belum disetel! Periksa environment variables / .env.")
+
+    # Jalankan HTTP health check server jika ada PORT (untuk Railway / Render)
+    await start_health_server()
 
     bot = Bot(token=TELEGRAM_BOT_TOKEN)
     logger.info("Menghapus webhook lama jika ada...")
@@ -1031,3 +1054,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+

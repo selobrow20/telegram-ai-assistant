@@ -41,7 +41,14 @@ KEMAMPUAN UTAMA ANDA:
 4. ASISTEN PRODUKTIVITAS & HARIAN:
    - Catat to-do list (`tambah_tugas_harian`), lihat to-do (`lihat_daftar_tugas`), selesai (`selesaikan_tugas`).
    - Simpan memo/catatan harian (`simpan_catatan`), lihat memo (`lihat_catatan`).
-5. INTERAKSI UMUM:
+5. NOTIFIKASI CERDAS (DAILY/WEEKLY RECAP, MONTHLY REPORT, & SCHEDULED REPORTS):
+   - Anda memiliki sistem pengingat dan rekap otomatis:
+     * Daily Recap setiap pagi (07:00 WIB): "Kemarin kamu keluar Rp XX.XXX".
+     * Weekly Recap setiap Senin pagi (07:30 WIB): Evaluasi 7 hari terakhir.
+     * Monthly Report setiap tanggal 1 (08:00 WIB): Laporan bulanan lengkap + analisis AI + lampiran file Excel.
+     * Scheduled Reports (default tanggal 25 / tanggal gajian): Laporan terjadwal otomatis.
+   - Jika pengguna meminta mengatur atau menyalakan/mematikan notifikasi (misal: "aktifkan rekap harian", "matikan notifikasi mingguan", "jadwalkan laporan tiap tanggal 28"), panggil fungsi `atur_notifikasi_cerdas`.
+6. INTERAKSI UMUM:
    - Selalu ramah, gunakan bahasa Indonesia yang santai, sopan, bersahabat dengan emoji yang pas.
 """
 
@@ -142,18 +149,54 @@ def create_tools_for_user(user_id: int):
         count = db.reset_user_finances(user_id)
         return f"Saldo dan seluruh riwayat transaksi ({count} transaksi) berhasil di-reset menjadi Rp 0. Pembukuan keuangan Anda sekarang bersih dan siap dimulai dari awal!"
 
+    def atur_notifikasi_cerdas(jenis_notifikasi: str, status: bool, tanggal: int = 0) -> str:
+        """Mengatur preferensi notifikasi cerdas pengguna (Daily Recap, Weekly Recap, Monthly Report, atau Scheduled Reports).
+        Args:
+            jenis_notifikasi: 'daily' (harian pagi), 'weekly' (mingguan Senin), 'monthly' (bulanan + AI), 'scheduled' (terjadwal tgl tertentu), atau 'all'
+            status: True untuk mengaktifkan, False untuk mematikan
+            tanggal: Tanggal 1-31 untuk laporan terjadwal (opsional)
+        """
+        val = 1 if status else 0
+        res_msgs = []
+        j = str(jenis_notifikasi).lower()
+        if "daily" in j or "harian" in j:
+            db.update_notification_setting(user_id, "daily_recap_enabled", val)
+            res_msgs.append(f"Rekap Harian (07:00 WIB) telah {'diaktifkan ✅' if status else 'dinonaktifkan ❌'}")
+        if "weekly" in j or "mingguan" in j:
+            db.update_notification_setting(user_id, "weekly_recap_enabled", val)
+            res_msgs.append(f"Rekap Mingguan (Senin 07:30 WIB) telah {'diaktifkan ✅' if status else 'dinonaktifkan ❌'}")
+        if "monthly" in j or "bulanan" in j:
+            db.update_notification_setting(user_id, "monthly_report_enabled", val)
+            res_msgs.append(f"Laporan Bulanan + Analisis AI telah {'diaktifkan ✅' if status else 'dinonaktifkan ❌'}")
+        if "sched" in j or "jadwal" in j or "tanggal" in j:
+            db.update_notification_setting(user_id, "scheduled_reports_enabled", val)
+            if 1 <= tanggal <= 31:
+                db.update_notification_setting(user_id, "scheduled_day", tanggal)
+                res_msgs.append(f"Laporan Terjadwal telah {'diaktifkan ✅' if status else 'dinonaktifkan ❌'} setiap tanggal {tanggal}")
+            else:
+                res_msgs.append(f"Laporan Terjadwal telah {'diaktifkan ✅' if status else 'dinonaktifkan ❌'}")
+        if not res_msgs:
+            db.update_notification_setting(user_id, "daily_recap_enabled", val)
+            db.update_notification_setting(user_id, "weekly_recap_enabled", val)
+            db.update_notification_setting(user_id, "monthly_report_enabled", val)
+            db.update_notification_setting(user_id, "scheduled_reports_enabled", val)
+            res_msgs.append(f"Semua Notifikasi Cerdas telah {'diaktifkan ✅' if status else 'dinonaktifkan ❌'}")
+        return "Pengaturan Notifikasi Cerdas berhasil diperbarui:\n" + "\n".join(f"• {m}" for m in res_msgs)
+
     return [
         catat_transaksi_keuangan,
         catat_banyak_transaksi,
         cek_saldo,
         buat_laporan_keuangan,
         reset_keuangan,
+        atur_notifikasi_cerdas,
         tambah_tugas_harian,
         lihat_daftar_tugas,
         selesaikan_tugas,
         simpan_catatan,
         lihat_catatan
     ]
+
 
 def generate_with_fallback(client: genai.Client, contents: list, config: types.GenerateContentConfig):
     models = [

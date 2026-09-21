@@ -22,6 +22,8 @@ import finance
 import gemini_agent
 import tts
 import pdf_converter
+import notifications
+
 
 # Setup Logging
 logging.basicConfig(
@@ -52,7 +54,8 @@ def get_main_keyboard() -> InlineKeyboardMarkup:
             InlineKeyboardButton(text="📝 Catatan Harian", callback_data="menu_notes")
         ],
         [
-            InlineKeyboardButton(text="📥 Download Laporan Excel (.xlsx)", callback_data="menu_excel")
+            InlineKeyboardButton(text="📥 Download Laporan Excel", callback_data="menu_excel"),
+            InlineKeyboardButton(text="🔔 Notifikasi Cerdas", callback_data="menu_notifikasi")
         ],
         [
             InlineKeyboardButton(text="🗑️ Reset Saldo ke Rp 0", callback_data="menu_resetsaldo"),
@@ -67,17 +70,40 @@ async def cmd_start(message: Message):
     user_id = message.from_user.id
     gemini_agent.clear_user_history(user_id)
     user_name = message.from_user.first_name if message.from_user else "Teman"
+    db.register_or_update_user(user_id, user_name, message.chat.id)
     welcome_text = (
         f"👋 Halo, *{user_name}*! Saya **Selobrow**, asisten AI pribadi Anda.\n\n"
         "Saya siap membantu kebutuhan sehari-hari Anda:\n"
         "🎙️ *Interaksi Suara & Teks*: Anda bisa mengetik atau langsung kirim **Voice Note** (pesan suara)!\n"
         "💸 *Catatan Keuangan Otomatis*: Cukup sebutkan pengeluaran/pemasukan Anda.\n"
         "📊 *Laporan Keuangan*: Pantau saldo, arus kas, dan rincian pengeluaran per kategori.\n"
+        "🔔 *Notifikasi Cerdas*: Rekap pengeluaran harian, mingguan, bulanan, & tanggal gajian otomatis.\n"
         "📋 *To-Do & Catatan*: Simpan tugas, pengingat, dan ide penting kapan saja.\n"
         "🧠 *AI Bebas*: Tanyakan apa saja, mulai dari draf pesan hingga saran hidup.\n\n"
         "Silakan pilih menu cepat di bawah atau langsung ketik/kirim suara:"
     )
     await message.answer(welcome_text, reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
+
+@dp.message(Command("notifikasi"))
+@dp.message(Command("notif"))
+async def cmd_notifikasi(message: Message):
+    user_id = message.from_user.id
+    user_name = message.from_user.first_name or "Teman"
+    db.register_or_update_user(user_id, user_name, message.chat.id)
+    settings = db.get_notification_settings(user_id)
+    kb = notifications.get_notification_settings_keyboard(settings)
+    sched_day = settings.get('scheduled_day', 25)
+    text = (
+        "🔔 *PENGATURAN NOTIFIKASI CERDAS SELOBROW*\n"
+        "━━━━━━━━━━━━━━━━━━━━━━\n"
+        "Selobrow dapat mengirimkan rekapitulasi & laporan keuangan otomatis:\n\n"
+        "• ☀️ *Daily Recap* (07:00 WIB): Rincian pengeluaran kemarin (_'Kemarin kamu keluar Rp XX.XXX'_).\n"
+        "• 📅 *Weekly Recap* (Senin 07:30 WIB): Evaluasi keuangan selama 7 hari terakhir.\n"
+        "• 📑 *Monthly Report* (Tanggal 1 08:00 WIB): Rekap bulanan lengkap + analisis AI + lampiran file Excel.\n"
+        f"• ⏰ *Scheduled Reports* (Tanggal {sched_day} 08:30 WIB): Laporan terjadwal otomatis pada tanggal pilihan Anda.\n\n"
+        "Silakan klik tombol di bawah untuk menyalakan/mematikan fitur atau mengubah tanggal terjadwal:"
+    )
+    await message.answer(text, reply_markup=kb, parse_mode=ParseMode.MARKDOWN)
 
 @dp.message(Command("keuangan"))
 async def cmd_keuangan(message: Message):
@@ -90,6 +116,7 @@ async def cmd_laporan(message: Message):
     user_id = message.from_user.id
     report = finance.generate_financial_report(user_id, "month")
     await message.answer(report, reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
+
 
 async def send_excel_selection_or_direct(target, user_id: int):
     last_pdf = pdf_converter.user_last_pdf.get(user_id)
@@ -302,8 +329,97 @@ async def handle_callbacks(callback: CallbackQuery):
             reply_markup=get_main_keyboard(),
             parse_mode=ParseMode.MARKDOWN
         )
+    elif data == "menu_notifikasi":
+        user_name = callback.from_user.first_name or "Teman"
+        db.register_or_update_user(user_id, user_name, callback.message.chat.id)
+        settings = db.get_notification_settings(user_id)
+        kb = notifications.get_notification_settings_keyboard(settings)
+        sched_day = settings.get('scheduled_day', 25)
+        text = (
+            "🔔 *PENGATURAN NOTIFIKASI CERDAS SELOBROW*\n"
+            "━━━━━━━━━━━━━━━━━━━━━━\n"
+            "Selobrow dapat mengirimkan rekapitulasi & laporan keuangan otomatis:\n\n"
+            "• ☀️ *Daily Recap* (07:00 WIB): Rincian pengeluaran kemarin (_'Kemarin kamu keluar Rp XX.XXX'_).\n"
+            "• 📅 *Weekly Recap* (Senin 07:30 WIB): Evaluasi keuangan selama 7 hari terakhir.\n"
+            "• 📑 *Monthly Report* (Tanggal 1 08:00 WIB): Rekap bulanan lengkap + analisis AI + lampiran file Excel.\n"
+            f"• ⏰ *Scheduled Reports* (Tanggal {sched_day} 08:30 WIB): Laporan terjadwal otomatis pada tanggal pilihan Anda.\n\n"
+            "Silakan klik tombol di bawah untuk menyalakan/mematikan fitur atau mengubah tanggal terjadwal:"
+        )
+        try:
+            await callback.message.edit_text(text, reply_markup=kb, parse_mode=ParseMode.MARKDOWN)
+        except Exception:
+            await callback.message.answer(text, reply_markup=kb, parse_mode=ParseMode.MARKDOWN)
+    elif data == "toggle_notif_daily":
+        settings = db.get_notification_settings(user_id)
+        new_val = 0 if settings.get('daily_recap_enabled') else 1
+        db.update_notification_setting(user_id, 'daily_recap_enabled', new_val)
+        updated = db.get_notification_settings(user_id)
+        kb = notifications.get_notification_settings_keyboard(updated)
+        await callback.message.edit_reply_markup(reply_markup=kb)
+        st_text = "diaktifkan ✅" if new_val else "dinonaktifkan ❌"
+        await callback.answer(f"Rekap Harian {st_text}")
+    elif data == "toggle_notif_weekly":
+        settings = db.get_notification_settings(user_id)
+        new_val = 0 if settings.get('weekly_recap_enabled') else 1
+        db.update_notification_setting(user_id, 'weekly_recap_enabled', new_val)
+        updated = db.get_notification_settings(user_id)
+        kb = notifications.get_notification_settings_keyboard(updated)
+        await callback.message.edit_reply_markup(reply_markup=kb)
+        st_text = "diaktifkan ✅" if new_val else "dinonaktifkan ❌"
+        await callback.answer(f"Rekap Mingguan {st_text}")
+    elif data == "toggle_notif_monthly":
+        settings = db.get_notification_settings(user_id)
+        new_val = 0 if settings.get('monthly_report_enabled') else 1
+        db.update_notification_setting(user_id, 'monthly_report_enabled', new_val)
+        updated = db.get_notification_settings(user_id)
+        kb = notifications.get_notification_settings_keyboard(updated)
+        await callback.message.edit_reply_markup(reply_markup=kb)
+        st_text = "diaktifkan ✅" if new_val else "dinonaktifkan ❌"
+        await callback.answer(f"Laporan Bulanan {st_text}")
+    elif data == "toggle_notif_scheduled":
+        settings = db.get_notification_settings(user_id)
+        new_val = 0 if settings.get('scheduled_reports_enabled') else 1
+        db.update_notification_setting(user_id, 'scheduled_reports_enabled', new_val)
+        updated = db.get_notification_settings(user_id)
+        kb = notifications.get_notification_settings_keyboard(updated)
+        await callback.message.edit_reply_markup(reply_markup=kb)
+        st_text = "diaktifkan ✅" if new_val else "dinonaktifkan ❌"
+        await callback.answer(f"Laporan Terjadwal {st_text}")
+    elif data == "menu_change_sched_day":
+        days = [1, 5, 10, 15, 20, 25, 28, 30]
+        rows = []
+        cur_row = []
+        for d in days:
+            cur_row.append(InlineKeyboardButton(text=f"Tgl {d}", callback_data=f"set_sched_day_{d}"))
+            if len(cur_row) == 4:
+                rows.append(cur_row)
+                cur_row = []
+        if cur_row:
+            rows.append(cur_row)
+        rows.append([InlineKeyboardButton(text="🔙 Batal / Kembali", callback_data="menu_notifikasi")])
+        kb = InlineKeyboardMarkup(inline_keyboard=rows)
+        await callback.message.edit_text(
+            "🗓️ *PILIH TANGGAL LAPORAN TERJADWAL*\n\n"
+            "Pilih tanggal setiap bulan saat Anda ingin menerima laporan keuangan otomatis (contoh: tanggal gajian atau evaluasi tagihan):",
+            reply_markup=kb,
+            parse_mode=ParseMode.MARKDOWN
+        )
+    elif data.startswith("set_sched_day_"):
+        day_val = int(data.replace("set_sched_day_", ""))
+        db.update_notification_setting(user_id, 'scheduled_day', day_val)
+        db.update_notification_setting(user_id, 'scheduled_reports_enabled', 1)
+        updated = db.get_notification_settings(user_id)
+        kb = notifications.get_notification_settings_keyboard(updated)
+        text = (
+            f"✅ *Tanggal Terjadwal Berhasil Disimpan!*\n\n"
+            f"Laporan otomatis akan dikirimkan setiap **tanggal {day_val}** pukul 08:30 WIB.\n\n"
+            "Pengaturan notifikasi saat ini:"
+        )
+        await callback.message.edit_text(text, reply_markup=kb, parse_mode=ParseMode.MARKDOWN)
+        await callback.answer(f"Tanggal diubah ke {day_val}")
     elif data == "menu_help":
         await cmd_help(callback.message)
+
 
 @dp.message(F.voice)
 async def handle_voice_message(message: Message, bot: Bot):
@@ -526,6 +642,16 @@ async def handle_text_message(message: Message, bot: Bot):
         await send_excel_selection_or_direct(message, user_id)
         return
 
+    # Intersep permintaan pengaturan notifikasi cerdas
+    if lower_text in [
+        "/notifikasi", "/notif", "notifikasi", "pengaturan notifikasi",
+        "🔔 notifikasi cerdas", "notifikasi cerdas", "atur notifikasi"
+    ]:
+        await cmd_notifikasi(message)
+        return
+
+    # Registrasi user agar terdaftar di sistem notifikasi
+    db.register_or_update_user(user_id, user_name, message.chat.id)
 
     reply_text = await gemini_agent.process_user_text(
         user_id=user_id,
@@ -555,8 +681,13 @@ async def main():
     bot = Bot(token=TELEGRAM_BOT_TOKEN)
     logger.info("Menghapus webhook lama jika ada...")
     await bot.delete_webhook(drop_pending_updates=True)
+
+    logger.info("Memulai Background Notification Scheduler (Daily/Weekly Recap, Monthly Report, Scheduled Reports)...")
+    asyncio.create_task(notifications.start_notification_scheduler(bot))
+
     logger.info("Bot Telegram AI Selobrow siap beroperasi! Menunggu pesan...")
     await dp.start_polling(bot)
+
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -42,7 +42,27 @@ def init_db():
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS notification_settings (
+                user_id INTEGER PRIMARY KEY,
+                user_name TEXT,
+                chat_id INTEGER,
+                daily_recap_enabled INTEGER DEFAULT 1,
+                daily_recap_time TEXT DEFAULT '07:00',
+                weekly_recap_enabled INTEGER DEFAULT 1,
+                monthly_report_enabled INTEGER DEFAULT 1,
+                scheduled_reports_enabled INTEGER DEFAULT 1,
+                scheduled_day INTEGER DEFAULT 25,
+                last_daily_sent TEXT,
+                last_weekly_sent TEXT,
+                last_monthly_sent TEXT,
+                last_scheduled_sent TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
         conn.commit()
+
 
 # --- Modul Keuangan ---
 
@@ -254,3 +274,168 @@ def delete_note(user_id: int, note_id: int) -> bool:
         cursor.execute('DELETE FROM notes WHERE id = ? AND user_id = ?', (note_id, user_id))
         conn.commit()
         return cursor.rowcount > 0
+
+# --- Modul Notifikasi Cerdas ---
+
+def register_or_update_user(user_id: int, user_name: str, chat_id: Optional[int] = None):
+    c_id = chat_id or user_id
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO notification_settings (user_id, user_name, chat_id)
+            VALUES (?, ?, ?)
+            ON CONFLICT(user_id) DO UPDATE SET
+                user_name = excluded.user_name,
+                chat_id = excluded.chat_id,
+                updated_at = CURRENT_TIMESTAMP
+        ''', (user_id, user_name, c_id))
+        conn.commit()
+
+def get_notification_settings(user_id: int) -> Dict[str, Any]:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM notification_settings WHERE user_id = ?', (user_id,))
+        row = cursor.fetchone()
+        if row:
+            return dict(row)
+        return {
+            'user_id': user_id,
+            'user_name': 'Teman',
+            'chat_id': user_id,
+            'daily_recap_enabled': 1,
+            'daily_recap_time': '07:00',
+            'weekly_recap_enabled': 1,
+            'monthly_report_enabled': 1,
+            'scheduled_reports_enabled': 1,
+            'scheduled_day': 25,
+            'last_daily_sent': None,
+            'last_weekly_sent': None,
+            'last_monthly_sent': None,
+            'last_scheduled_sent': None
+        }
+
+def update_notification_setting(user_id: int, field: str, value: Any) -> bool:
+    allowed_fields = {
+        'daily_recap_enabled', 'daily_recap_time',
+        'weekly_recap_enabled', 'monthly_report_enabled',
+        'scheduled_reports_enabled', 'scheduled_day',
+        'last_daily_sent', 'last_weekly_sent',
+        'last_monthly_sent', 'last_scheduled_sent'
+    }
+    if field not in allowed_fields:
+        return False
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(f'''
+            UPDATE notification_settings
+            SET {field} = ?, updated_at = CURRENT_TIMESTAMP
+            WHERE user_id = ?
+        ''', (value, user_id))
+        conn.commit()
+        return cursor.rowcount > 0
+
+def get_all_active_users_for_notification() -> List[Dict[str, Any]]:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM notification_settings')
+        return [dict(row) for row in cursor.fetchall()]
+
+def get_yesterday_expenses(user_id: int) -> Dict[str, Any]:
+    yesterday = (date.today() - timedelta(days=1)).isoformat()
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT category, description, amount
+            FROM transactions
+            WHERE user_id = ? AND type = 'expense' AND date = ?
+            ORDER BY amount DESC
+        ''', (user_id, yesterday))
+        rows = [dict(r) for r in cursor.fetchall()]
+        
+        total = sum(r['amount'] for r in rows)
+        cat_summary = {}
+        for r in rows:
+            cat = r['category']
+            cat_summary[cat] = cat_summary.get(cat, 0.0) + r['amount']
+            
+        return {
+            'date': yesterday,
+            'total_expense': total,
+            'count': len(rows),
+            'items': rows,
+            'categories': [{'category': k, 'total': v} for k, v in sorted(cat_summary.items(), key=lambda x: x[1], reverse=True)]
+        }
+
+def get_last_7_days_expenses(user_id: int) -> Dict[str, Any]:
+    today = date.today()
+    start_date = (today - timedelta(days=7)).isoformat()
+    end_date = (today - timedelta(days=1)).isoformat()
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT type, category, SUM(amount) as total, COUNT(id) as count
+            FROM transactions
+            WHERE user_id = ? AND date BETWEEN ? AND ?
+            GROUP BY type, category
+            ORDER BY total DESC
+        ''', (user_id, start_date, end_date))
+        rows = cursor.fetchall()
+        tot_inc = 0.0
+        tot_exp = 0.0
+        exp_cats = []
+        for r in rows:
+            if r['type'] == 'income':
+                tot_inc += float(r['total'])
+            else:
+                tot_exp += float(r['total'])
+                exp_cats.append({'category': r['category'], 'total': float(r['total']), 'count': r['count']})
+        return {
+            'start_date': start_date,
+            'end_date': end_date,
+            'total_income': tot_inc,
+            'total_expense': tot_exp,
+            'balance': tot_inc - tot_exp,
+            'top_expense_categories': exp_cats
+        }
+
+def get_previous_month_summary(user_id: int) -> Dict[str, Any]:
+    today = date.today()
+    first_this_month = today.replace(day=1)
+    last_prev_month = first_this_month - timedelta(days=1)
+    first_prev_month = last_prev_month.replace(day=1)
+    
+    start_date = first_prev_month.isoformat()
+    end_date = last_prev_month.isoformat()
+    
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT type, category, SUM(amount) as total, COUNT(id) as count
+            FROM transactions
+            WHERE user_id = ? AND date BETWEEN ? AND ?
+            GROUP BY type, category
+            ORDER BY total DESC
+        ''', (user_id, start_date, end_date))
+        rows = cursor.fetchall()
+        tot_inc = 0.0
+        tot_exp = 0.0
+        exp_cats = []
+        inc_cats = []
+        for r in rows:
+            if r['type'] == 'income':
+                tot_inc += float(r['total'])
+                inc_cats.append({'category': r['category'], 'total': float(r['total']), 'count': r['count']})
+            else:
+                tot_exp += float(r['total'])
+                exp_cats.append({'category': r['category'], 'total': float(r['total']), 'count': r['count']})
+        return {
+            'month_name': first_prev_month.strftime('%B %Y'),
+            'start_date': start_date,
+            'end_date': end_date,
+            'total_income': tot_inc,
+            'total_expense': tot_exp,
+            'balance': tot_inc - tot_exp,
+            'expense_categories': exp_cats,
+            'income_categories': inc_cats
+        }
+

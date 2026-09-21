@@ -48,7 +48,7 @@ def init_db():
                 user_name TEXT,
                 chat_id INTEGER,
                 daily_recap_enabled INTEGER DEFAULT 1,
-                daily_recap_time TEXT DEFAULT '07:00',
+                daily_recap_time TEXT DEFAULT '22:00',
                 weekly_recap_enabled INTEGER DEFAULT 1,
                 monthly_report_enabled INTEGER DEFAULT 1,
                 scheduled_reports_enabled INTEGER DEFAULT 1,
@@ -73,6 +73,33 @@ def init_db():
                 approved_at TIMESTAMP
             )
         ''')
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS reminders (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                chat_id INTEGER NOT NULL,
+                title TEXT NOT NULL,
+                remind_at TEXT NOT NULL,
+                status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending', 'sent', 'cancelled')),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS calendar_events (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                title TEXT NOT NULL,
+                event_date TEXT NOT NULL,
+                event_time TEXT,
+                description TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        # Migrasi waktu rekapan harian ke 22:00 WIB jika masih 07:00
+        try:
+            cursor.execute("UPDATE notification_settings SET daily_recap_time = '22:00' WHERE daily_recap_time = '07:00'")
+        except Exception:
+            pass
         conn.commit()
 
 
@@ -355,6 +382,32 @@ def get_all_active_users_for_notification() -> List[Dict[str, Any]]:
         cursor.execute('SELECT * FROM notification_settings')
         return [dict(row) for row in cursor.fetchall()]
 
+def get_today_expenses(user_id: int) -> Dict[str, Any]:
+    today = date.today().isoformat()
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT category, description, amount
+            FROM transactions
+            WHERE user_id = ? AND type = 'expense' AND date = ?
+            ORDER BY amount DESC
+        ''', (user_id, today))
+        rows = [dict(r) for r in cursor.fetchall()]
+        
+        total = sum(r['amount'] for r in rows)
+        cat_summary = {}
+        for r in rows:
+            cat = r['category']
+            cat_summary[cat] = cat_summary.get(cat, 0.0) + r['amount']
+            
+        return {
+            'date': today,
+            'total_expense': total,
+            'count': len(rows),
+            'items': rows,
+            'categories': [{'category': k, 'total': v} for k, v in sorted(cat_summary.items(), key=lambda x: x[1], reverse=True)]
+        }
+
 def get_yesterday_expenses(user_id: int) -> Dict[str, Any]:
     yesterday = (date.today() - timedelta(days=1)).isoformat()
     with get_connection() as conn:
@@ -568,5 +621,184 @@ def get_all_authorized_users() -> List[Dict[str, Any]]:
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM authorized_users ORDER BY role DESC, requested_at DESC")
         return [dict(r) for r in cursor.fetchall()]
+
+
+# --- Modul Pengingat & Alarm (Reminders & Alarms) ---
+
+def add_reminder(user_id: int, chat_id: int, title: str, remind_at: str) -> int:
+    """Menambahkan pengingat / alarm baru.
+    remind_at dalam format 'YYYY-MM-DD HH:MM'.
+    """
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO reminders (user_id, chat_id, title, remind_at, status)
+            VALUES (?, ?, ?, ?, 'pending')
+        ''', (user_id, chat_id, title.strip(), remind_at.strip()))
+        conn.commit()
+        return cursor.lastrowid
+
+def get_pending_reminders(before_time: str) -> List[Dict[str, Any]]:
+    """Mengambil semua pengingat yang statusnya pending dan waktunya sudah tiba."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT id, user_id, chat_id, title, remind_at, status, created_at
+            FROM reminders
+            WHERE status = 'pending' AND remind_at <= ?
+            ORDER BY remind_at ASC
+        ''', (before_time,))
+        return [dict(r) for r in cursor.fetchall()]
+
+def mark_reminder_sent(reminder_id: int) -> bool:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            UPDATE reminders SET status = 'sent' WHERE id = ?
+        ''', (reminder_id,))
+        conn.commit()
+        return cursor.rowcount > 0
+
+def get_user_reminders(user_id: int, status: Optional[str] = 'pending') -> List[Dict[str, Any]]:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        if status:
+            cursor.execute('''
+                SELECT id, user_id, chat_id, title, remind_at, status, created_at
+                FROM reminders
+                WHERE user_id = ? AND status = ?
+                ORDER BY remind_at ASC
+            ''', (user_id, status))
+        else:
+            cursor.execute('''
+                SELECT id, user_id, chat_id, title, remind_at, status, created_at
+                FROM reminders
+                WHERE user_id = ?
+                ORDER BY remind_at ASC
+            ''', (user_id,))
+        return [dict(r) for r in cursor.fetchall()]
+
+def delete_reminder(user_id: int, reminder_id: int) -> bool:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            UPDATE reminders SET status = 'cancelled' WHERE id = ? AND user_id = ?
+        ''', (reminder_id, user_id))
+        conn.commit()
+        return cursor.rowcount > 0
+
+
+# --- Modul Kalender & Acara (Calendar & Agenda) ---
+
+def add_calendar_event(user_id: int, title: str, event_date: str, event_time: str = "", description: str = "") -> int:
+    """Menambahkan agenda acara ke kalender.
+    event_date: 'YYYY-MM-DD'
+    event_time: 'HH:MM' (opsional)
+    """
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO calendar_events (user_id, title, event_date, event_time, description)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (user_id, title.strip(), event_date.strip(), event_time.strip() if event_time else None, description.strip() if description else None))
+        conn.commit()
+        return cursor.lastrowid
+
+def get_calendar_events_by_date(user_id: int, event_date: str) -> List[Dict[str, Any]]:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT id, user_id, title, event_date, event_time, description, created_at
+            FROM calendar_events
+            WHERE user_id = ? AND event_date = ?
+            ORDER BY CASE WHEN event_time IS NULL THEN 1 ELSE 0 END, event_time ASC
+        ''', (user_id, event_date))
+        return [dict(r) for r in cursor.fetchall()]
+
+def get_calendar_events_by_month(user_id: int, year_month: str) -> List[Dict[str, Any]]:
+    """year_month format: 'YYYY-MM'"""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT id, user_id, title, event_date, event_time, description, created_at
+            FROM calendar_events
+            WHERE user_id = ? AND event_date LIKE ?
+            ORDER BY event_date ASC, CASE WHEN event_time IS NULL THEN 1 ELSE 0 END, event_time ASC
+        ''', (user_id, f"{year_month}%"))
+        return [dict(r) for r in cursor.fetchall()]
+
+def get_upcoming_events(user_id: int, from_date: str, limit: int = 10) -> List[Dict[str, Any]]:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT id, user_id, title, event_date, event_time, description, created_at
+            FROM calendar_events
+            WHERE user_id = ? AND event_date >= ?
+            ORDER BY event_date ASC, CASE WHEN event_time IS NULL THEN 1 ELSE 0 END, event_time ASC
+            LIMIT ?
+        ''', (user_id, from_date, limit))
+        return [dict(r) for r in cursor.fetchall()]
+
+def delete_calendar_event(user_id: int, event_id: int) -> bool:
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            DELETE FROM calendar_events WHERE id = ? AND user_id = ?
+        ''', (event_id, user_id))
+        conn.commit()
+        return cursor.rowcount > 0
+
+def render_calendar_view(user_id: int, year: int, month: int) -> str:
+    import calendar
+    month_str = f"{year:04d}-{month:02d}"
+    events = get_calendar_events_by_month(user_id, month_str)
+    
+    event_days = set()
+    for ev in events:
+        try:
+            day = int(ev['event_date'].split('-')[2])
+            event_days.add(day)
+        except Exception:
+            pass
+            
+    month_names_id = [
+        "", "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+        "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+    ]
+    m_name = month_names_id[month] if 1 <= month <= 12 else str(month)
+    
+    cal = calendar.monthcalendar(year, month)
+    
+    lines = [
+        f"📅 *KALENDER {m_name.upper()} {year}*",
+        "━━━━━━━━━━━━━━━━━━━━━━",
+        "`Sn  Sl  Rb  Km  Jm  Sb  Mg`"
+    ]
+    
+    for week in cal:
+        row_str = []
+        for day in week:
+            if day == 0:
+                row_str.append("   ")
+            elif day in event_days:
+                row_str.append(f"{day:2d}*")
+            else:
+                row_str.append(f"{day:2d} ")
+        lines.append("`" + " ".join(row_str) + "`")
+        
+    lines.append("━━━━━━━━━━━━━━━━━━━━━━")
+    lines.append("*(Tanda `*` = ada acara/agenda)*\n")
+    
+    if events:
+        lines.append(f"📌 *Daftar Acara ({len(events)} agenda):*")
+        for ev in events:
+            tgl = ev['event_date'].split('-')[2]
+            jam_str = f" jam {ev['event_time']}" if ev.get('event_time') else ""
+            desc_str = f" - {ev['description']}" if ev.get('description') else ""
+            lines.append(f"• [Tgl {tgl}] *{ev['title']}*{jam_str}{desc_str}")
+    else:
+        lines.append("✨ *Belum ada acara tercatat di bulan ini.*")
+        
+    return "\n".join(lines)
 
 

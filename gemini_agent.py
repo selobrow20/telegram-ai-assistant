@@ -76,14 +76,23 @@ TUGAS UTAMA:
    - Tambah to-do (`tambah_tugas_harian`), selesai (`selesaikan_tugas`), lihat (`lihat_daftar_tugas`).
    - Simpan memo (`simpan_catatan`), lihat memo (`lihat_catatan`).
 
-5. NOTIFIKASI CERDAS & JADWAL:
+5. NOTIFIKASI CERDAS, PENGINGAT / ALARM & KALENDER:
+   - Rekapan Harian (Daily Recap) otomatis dikirim setiap pukul 22:00 WIB (jam 10 malam) yang merangkum pengeluaran hari ini.
+   - PENGINGAT & ALARM OTOMATIS:
+     - Jika pengguna meminta pengingat atau alarm ("ingatkan meeting jam 2 siang", "ingatkan telepon bos besok jam 9 pagi", "pasang alarm 30 menit lagi", dsb.), hitung waktu target berdasarkan waktu saat ini (WIB) dan panggil `pasang_pengingat(isi_pengingat, waktu_iso)`.
+     - Format `waktu_iso` HARUS 'YYYY-MM-DD HH:MM'.
+     - Cek pengingat aktif -> panggil `lihat_pengingat`.
+     - Batalkan pengingat -> panggil `batalkan_pengingat`.
+   - KALENDER & AGENDA ACARA:
+     - Jika pengguna ingin menandai acara di kalender ("tgl 25 ada pernikahan", "senin depan ada seminar") -> panggil `tambah_agenda_kalender`.
+     - Jika pengguna ingin melihat kalender atau mengecek acara ("lihat kalender", "ada acara apa bulan ini / besok") -> panggil `lihat_kalender`.
    - Cek status notifikasi -> panggil `cek_status_notifikasi`.
    - Mengubah preferensi -> panggil `atur_notifikasi_cerdas`.
    - Kirim preview / tes notifikasi sekarang -> panggil `kirim_tes_notifikasi`.
-   - PENTING: Semua notifikasi cerdas (Daily Recap 07:00 WIB, Weekly Recap Senin 07:30 WIB, Monthly Report Tgl 1 08:00 WIB, Scheduled Report Tgl 25 08:30 WIB) SECARA DEFAULT SUDAH AKTIF dan berjalan di latar belakang. JANGAN PERNAH berasumsi atau mengatakan "notifikasi belum aktif" tanpa memanggil `cek_status_notifikasi`!
+   - PENTING: Semua notifikasi cerdas (Daily Recap 22:00 WIB, Weekly Recap Senin 07:30 WIB, Monthly Report Tgl 1 08:00 WIB, Scheduled Report Tgl 25 08:30 WIB, dan Alarm Otomatis) SECARA DEFAULT SUDAH AKTIF dan berjalan di latar belakang. JANGAN PERNAH berasumsi atau mengatakan "notifikasi belum aktif" tanpa memanggil `cek_status_notifikasi`!
 """
 
-def create_tools_for_user(user_id: int, user_name: str = "Teman"):
+def create_tools_for_user(user_id: int, user_name: str = "Teman", chat_id: int = 0):
     def catat_transaksi_keuangan(tipe: str, nominal: float, kategori: str, keterangan: str = "") -> str:
         """Mencatat pemasukan atau pengeluaran keuangan ke database.
         Args:
@@ -279,9 +288,95 @@ def create_tools_for_user(user_id: int, user_name: str = "Teman"):
         ok, msg = pricelist.update_product_price(model_produk, harga_baru)
         return msg
 
+    def pasang_pengingat(isi_pengingat: str, waktu_iso: str) -> str:
+        """Memasang pengingat atau alarm yang akan otomatis mengirim notifikasi ke Telegram saat waktu tiba.
+        Args:
+            isi_pengingat: Deskripsi pengingat atau alarm (contoh: 'Meeting dengan tim proyek', 'Minum obat', 'Telpon klien')
+            waktu_iso: Waktu pengingat dalam format 'YYYY-MM-DD HH:MM' (WIB). Hitung berdasarkan waktu saat ini yang tercantum di konteks.
+        """
+        c_id = chat_id or user_id
+        rem_id = db.add_reminder(user_id, c_id, isi_pengingat, waktu_iso)
+        return f"⏰ Alarm & Pengingat berhasil dipasang!\n• Pengingat: {isi_pengingat}\n• Waktu: {waktu_iso} WIB\n• ID: #{rem_id}"
+
+    def lihat_pengingat() -> str:
+        """Melihat daftar pengingat atau alarm aktif pengguna."""
+        rems = db.get_user_reminders(user_id, status='pending')
+        if not rems:
+            return "Tidak ada pengingat atau alarm aktif saat ini."
+        lines = ["⏰ *Daftar Pengingat / Alarm Aktif:*"]
+        for r in rems:
+            lines.append(f"• [#{r['id']}] {r['title']} (🕒 {r['remind_at']} WIB)")
+        return "\n".join(lines)
+
+    def batalkan_pengingat(id_pengingat: int) -> str:
+        """Membatalkan atau menghapus pengingat / alarm berdasarkan ID pengingat.
+        Args:
+            id_pengingat: Angka ID pengingat yang ingin dibatalkan
+        """
+        ok = db.delete_reminder(user_id, id_pengingat)
+        if ok:
+            return f"Pengingat #{id_pengingat} berhasil dibatalkan."
+        return f"Pengingat #{id_pengingat} tidak ditemukan."
+
+    def tambah_agenda_kalender(judul_acara: str, tanggal: str, jam: str = "", keterangan: str = "") -> str:
+        """Menambahkan dan menandai acara / agenda pada kalender.
+        Args:
+            judul_acara: Nama acara atau perihal (contoh: 'Meeting Proyek', 'Kondangan Nikahan Budi')
+            tanggal: Tanggal acara dalam format 'YYYY-MM-DD'
+            jam: Waktu acara format 'HH:MM' (opsional, contoh: '19:30')
+            keterangan: Keterangan tambahan atau lokasi acara (opsional)
+        """
+        ev_id = db.add_calendar_event(user_id, judul_acara, tanggal, jam, keterangan)
+        jam_str = f" jam {jam}" if jam else ""
+        desc_str = f" ({keterangan})" if keterangan else ""
+        return f"📅 Acara berhasil ditandai di kalender!\n• Acara: {judul_acara}\n• Tanggal: {tanggal}{jam_str}{desc_str}\n• ID: #{ev_id}"
+
+    def lihat_kalender(bulan_atau_tanggal: str = "") -> str:
+        """Melihat tampilan kalender bulanan (dengan penanda * untuk hari yang memiliki acara), atau melihat agenda pada tanggal tertentu.
+        Args:
+            bulan_atau_tanggal: Kosongkan untuk kalender bulan ini, atau format 'YYYY-MM' untuk bulan lain, atau 'YYYY-MM-DD' untuk melihat acara di tanggal tertentu.
+        """
+        now = notifications.get_now_wib()
+        target = bulan_atau_tanggal.strip() if bulan_atau_tanggal else now.strftime("%Y-%m")
+        if len(target) == 10 and target.count('-') == 2:
+            events = db.get_calendar_events_by_date(user_id, target)
+            if not events:
+                return f"Tidak ada agenda acara pada tanggal {target}."
+            lines = [f"📅 Agenda untuk {target}:"]
+            for ev in events:
+                jam_str = f" [{ev['event_time']}]" if ev.get('event_time') else ""
+                desc_str = f" - {ev['description']}" if ev.get('description') else ""
+                lines.append(f"•{jam_str} {ev['title']}{desc_str}")
+            return "\n".join(lines)
+        else:
+            try:
+                parts = target.split('-')
+                year = int(parts[0])
+                month = int(parts[1])
+            except Exception:
+                year = now.year
+                month = now.month
+            return db.render_calendar_view(user_id, year, month)
+
+    def hapus_agenda_kalender(id_acara: int) -> str:
+        """Menghapus acara dari kalender berdasarkan ID agenda.
+        Args:
+            id_acara: Angka ID agenda yang ingin dihapus
+        """
+        ok = db.delete_calendar_event(user_id, id_acara)
+        if ok:
+            return f"Agenda #{id_acara} berhasil dihapus dari kalender."
+        return f"Agenda #{id_acara} tidak ditemukan."
+
     return [
         cari_harga_pricelist,
         update_harga_produk,
+        pasang_pengingat,
+        lihat_pengingat,
+        batalkan_pengingat,
+        tambah_agenda_kalender,
+        lihat_kalender,
+        hapus_agenda_kalender,
         catat_transaksi_keuangan,
         catat_banyak_transaksi,
         cek_saldo,
@@ -331,15 +426,18 @@ def format_friendly_error(e: Exception) -> str:
         return "⏳ *Server AI Sedang Sibuk*\n\nServer Google sedang mengalami lonjakan antrean. Mohon tunggu sebentar lalu coba lagi."
     return f"Maaf, terjadi kendala saat memproses: {err[:140]}"
 
-async def process_user_text(user_id: int, user_name: str, text: str) -> str:
+async def process_user_text(user_id: int, user_name: str, text: str, chat_id: int = 0) -> str:
     try:
         client = get_client()
-        tools = create_tools_for_user(user_id, user_name)
+        tools = create_tools_for_user(user_id, user_name, chat_id)
+        
+        now_wib = notifications.get_now_wib()
+        now_str = now_wib.strftime("%A, %Y-%m-%d %H:%M WIB")
         
         history = user_histories.setdefault(user_id, [])
         user_content = types.Content(
             role="user",
-            parts=[types.Part.from_text(text=f"[User: {user_name}]\n{text}")]
+            parts=[types.Part.from_text(text=f"[User: {user_name} | Waktu Sekarang: {now_str}]\n{text}")]
         )
         
         # Build contents payload
@@ -371,14 +469,17 @@ async def process_user_text(user_id: int, user_name: str, text: str) -> str:
         logger.error(f"Error in process_user_text: {e}", exc_info=True)
         return format_friendly_error(e)
 
-async def process_user_voice(user_id: int, user_name: str, voice_bytes: bytes, mime_type: str = "audio/ogg") -> str:
+async def process_user_voice(user_id: int, user_name: str, voice_bytes: bytes, mime_type: str = "audio/ogg", chat_id: int = 0) -> str:
     try:
         client = get_client()
-        tools = create_tools_for_user(user_id, user_name)
+        tools = create_tools_for_user(user_id, user_name, chat_id)
+        
+        now_wib = notifications.get_now_wib()
+        now_str = now_wib.strftime("%A, %Y-%m-%d %H:%M WIB")
         
         audio_part = types.Part.from_bytes(data=voice_bytes, mime_type=mime_type)
         instruction_part = types.Part.from_text(
-            text=f"[User: {user_name} mengirim pesan suara]. Dengarkan pesan suara ini secara saksama, pahami maksudnya, jalankan alat/fungsi jika ada transaksi/tugas/catatan, lalu berikan jawaban yang ramah dan relevan."
+            text=f"[User: {user_name} | Waktu Sekarang: {now_str} mengirim pesan suara]. Dengarkan pesan suara ini secara saksama, pahami maksudnya, jalankan alat/fungsi jika ada transaksi/tugas/catatan/pengingat/kalender, lalu berikan jawaban yang ramah dan relevan."
         )
 
         history = user_histories.setdefault(user_id, [])
@@ -413,13 +514,16 @@ async def process_user_voice(user_id: int, user_name: str, voice_bytes: bytes, m
         logger.error(f"Error in process_user_voice: {e}", exc_info=True)
         return format_friendly_error(e)
 
-async def process_user_image(user_id: int, user_name: str, image_bytes: bytes, mime_type: str = "image/jpeg", caption: str = "") -> str:
+async def process_user_image(user_id: int, user_name: str, image_bytes: bytes, mime_type: str = "image/jpeg", caption: str = "", chat_id: int = 0) -> str:
     try:
         client = get_client()
-        tools = create_tools_for_user(user_id, user_name)
+        tools = create_tools_for_user(user_id, user_name, chat_id)
+
+        now_wib = notifications.get_now_wib()
+        now_str = now_wib.strftime("%A, %Y-%m-%d %H:%M WIB")
 
         prompt_text = (
-            f"[User: {user_name} mengirim foto/gambar]. Caption pengguna: '{caption if caption else 'Tidak ada'}'\n"
+            f"[User: {user_name} | Waktu Sekarang: {now_str} mengirim foto/gambar]. Caption pengguna: '{caption if caption else 'Tidak ada'}'\n"
             "Analisis gambar tersebut secara teliti.\n"
             "JIKA GAMBAR ADALAH STRUK BELANJA, NOTA, KWITANSI, ATAU TIKET:\n"
             "1. Identifikasi nama toko/merchant (misal: Indomaret, Alfamart, SPBU, Cafe, Resto, dll).\n"
@@ -466,10 +570,13 @@ async def process_user_image(user_id: int, user_name: str, image_bytes: bytes, m
         logger.error(f"Error in process_user_image: {e}", exc_info=True)
         return format_friendly_error(e)
 
-async def process_user_document(user_id: int, user_name: str, doc_bytes: bytes, file_name: str, mime_type: str = "application/pdf", caption: str = "") -> str:
+async def process_user_document(user_id: int, user_name: str, doc_bytes: bytes, file_name: str, mime_type: str = "application/pdf", caption: str = "", chat_id: int = 0) -> str:
     try:
         client = get_client()
-        tools = create_tools_for_user(user_id, user_name)
+        tools = create_tools_for_user(user_id, user_name, chat_id)
+
+        now_wib = notifications.get_now_wib()
+        now_str = now_wib.strftime("%A, %Y-%m-%d %H:%M WIB")
 
         # Ekstraksi teks digital dari PDF menggunakan pypdf
         extracted_text = ""
@@ -488,7 +595,7 @@ async def process_user_document(user_id: int, user_name: str, doc_bytes: bytes, 
             logger.warning(f"Ekstraksi teks pypdf: {pe}")
 
         prompt_text = (
-            f"[User: {user_name} mengirim file dokumen: {file_name}]. Caption: '{caption if caption else 'Analisis dan masukkan ke pembukuan'}'\n"
+            f"[User: {user_name} | Waktu Sekarang: {now_str} mengirim file dokumen: {file_name}]. Caption: '{caption if caption else 'Analisis dan masukkan ke pembukuan'}'\n"
             "Analisis dokumen PDF ini secara mendalam:\n"
             "1. Pahami isi utama laporan, omzet penjualan, mutasi rekening, invoice, atau laporan keuangan di dalamnya.\n"
             "2. Berikan ringkasan eksekutif yang jelas dan terstruktur dalam format bullet points rapi (Omzet/Pendapatan, Pengeluaran, Laba Bersih, Catatan Operasional).\n"

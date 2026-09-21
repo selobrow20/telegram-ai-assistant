@@ -153,6 +153,10 @@ def get_main_keyboard() -> InlineKeyboardMarkup:
             InlineKeyboardButton(text="📝 Catatan Harian", callback_data="menu_notes")
         ],
         [
+            InlineKeyboardButton(text="📅 Kalender & Agenda", callback_data="menu_kalender"),
+            InlineKeyboardButton(text="⏰ Alarm & Pengingat", callback_data="menu_pengingat")
+        ],
+        [
             InlineKeyboardButton(text="🔔 Notifikasi Cerdas", callback_data="menu_notifikasi"),
             InlineKeyboardButton(text="🗑️ Reset Saldo", callback_data="menu_resetsaldo")
         ],
@@ -209,16 +213,61 @@ async def cmd_notifikasi(message: Message):
     settings = db.get_notification_settings(user_id)
     kb = notifications.get_notification_settings_keyboard(settings)
     sched_day = settings.get('scheduled_day', 25)
+    daily_time = settings.get('daily_recap_time', '22:00')
     text = (
         "🔔 *NOTIFIKASI CERDAS*\n"
         "━━━━━━━━━━━━━━━━━━━━━━\n"
-        "• ☀️ *Daily Recap* (07:00 WIB)\n"
+        f"• 🌙 *Daily Recap* ({daily_time} WIB / Jam 10 Malam)\n"
         "• 📅 *Weekly Recap* (Senin 07:30 WIB)\n"
         "• 📑 *Monthly Report* (Tgl 1 08:00 WIB)\n"
-        f"• ⏰ *Scheduled Report* (Tgl {sched_day} 08:30 WIB)\n\n"
+        f"• ⏰ *Scheduled Report* (Tgl {sched_day} 08:30 WIB)\n"
+        "• ⏰ *Alarm & Pengingat*: Aktif otomatis real-time\n\n"
         "Aktifkan / nonaktifkan fitur di bawah:"
     )
     await message.answer(text, reply_markup=kb, parse_mode=ParseMode.MARKDOWN)
+
+@dp.message(Command("kalender"))
+@dp.message(Command("agenda"))
+async def cmd_kalender(message: Message):
+    user_id = message.from_user.id
+    now = notifications.get_now_wib()
+    cal_view = db.render_calendar_view(user_id, now.year, now.month)
+    kb = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text="🔙 Kembali ke Menu", callback_data="menu_help")
+            ]
+        ]
+    )
+    await message.answer(
+        f"{cal_view}\n\n_Ketik 'tambahkan agenda [nama acara] tanggal YYYY-MM-DD' atau langsung minta di chat._",
+        reply_markup=kb,
+        parse_mode=ParseMode.MARKDOWN
+    )
+
+@dp.message(Command("pengingat"))
+@dp.message(Command("alarm"))
+async def cmd_pengingat(message: Message):
+    user_id = message.from_user.id
+    rems = db.get_user_reminders(user_id, status='pending')
+    if not rems:
+        await message.answer(
+            "⏰ *ALARM & PENGINGAT*\n━━━━━━━━━━━━━━━━━━━━━━\n"
+            "Belum ada alarm atau pengingat aktif.\n\n"
+            "💡 *Cara memasang alarm/pengingat:*\n"
+            "• _'Ingatkan meeting jam 2 siang'_\n"
+            "• _'Ingatkan besok jam 10 pagi zoom meeting'_\n"
+            "• _'Pasang alarm 30 menit lagi untuk jemput paket'_",
+            reply_markup=get_main_keyboard(),
+            parse_mode=ParseMode.MARKDOWN
+        )
+        return
+        
+    lines = ["⏰ *DAFTAR ALARM & PENGINGAT AKTIF:*", "━━━━━━━━━━━━━━━━━━━━━━"]
+    for r in rems:
+        lines.append(f"• [ID #{r['id']}] *{r['title']}* (🕒 {r['remind_at']} WIB)")
+    lines.append("\n_Ketik 'batalkan pengingat [ID]' untuk membatalkan._")
+    await message.answer("\n".join(lines), reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
 
 @dp.message(Command("tesnotif"))
 @dp.message(Command("tes_notif"))
@@ -452,20 +501,56 @@ async def handle_callbacks(callback: CallbackQuery, bot: Bot):
             reply_markup=get_main_keyboard(),
             parse_mode=ParseMode.MARKDOWN
         )
+    elif data == "menu_kalender":
+        now = notifications.get_now_wib()
+        cal_view = db.render_calendar_view(user_id, now.year, now.month)
+        kb = InlineKeyboardMarkup(
+            inline_keyboard=[
+                [
+                    InlineKeyboardButton(text="🔙 Kembali ke Menu", callback_data="menu_help")
+                ]
+            ]
+        )
+        await callback.message.answer(
+            f"{cal_view}\n\n_Ketik 'tambahkan agenda [nama acara] tanggal YYYY-MM-DD' atau langsung minta di chat._",
+            reply_markup=kb,
+            parse_mode=ParseMode.MARKDOWN
+        )
+    elif data == "menu_pengingat":
+        rems = db.get_user_reminders(user_id, status='pending')
+        if not rems:
+            await callback.message.answer(
+                "⏰ *ALARM & PENGINGAT*\n━━━━━━━━━━━━━━━━━━━━━━\n"
+                "Belum ada alarm atau pengingat aktif.\n\n"
+                "💡 *Cara memasang alarm/pengingat:*\n"
+                "• _'Ingatkan meeting jam 2 siang'_\n"
+                "• _'Ingatkan besok jam 10 pagi zoom meeting'_\n"
+                "• _'Pasang alarm 30 menit lagi untuk jemput paket'_",
+                reply_markup=get_main_keyboard(),
+                parse_mode=ParseMode.MARKDOWN
+            )
+        else:
+            lines = ["⏰ *DAFTAR ALARM & PENGINGAT AKTIF:*", "━━━━━━━━━━━━━━━━━━━━━━"]
+            for r in rems:
+                lines.append(f"• [ID #{r['id']}] *{r['title']}* (🕒 {r['remind_at']} WIB)")
+            lines.append("\n_Ketik 'batalkan pengingat [ID]' untuk membatalkan._")
+            await callback.message.answer("\n".join(lines), reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
     elif data == "menu_notifikasi":
         user_name = callback.from_user.first_name or "Teman"
         db.register_or_update_user(user_id, user_name, callback.message.chat.id)
         settings = db.get_notification_settings(user_id)
         kb = notifications.get_notification_settings_keyboard(settings)
         sched_day = settings.get('scheduled_day', 25)
+        daily_time = settings.get('daily_recap_time', '22:00')
         text = (
             "🔔 *PENGATURAN NOTIFIKASI CERDAS SELOBROW*\n"
             "━━━━━━━━━━━━━━━━━━━━━━\n"
             "Selobrow dapat mengirimkan rekapitulasi & laporan keuangan otomatis:\n\n"
-            "• ☀️ *Daily Recap* (07:00 WIB): Rincian pengeluaran kemarin (_'Kemarin kamu keluar Rp XX.XXX'_).\n"
+            f"• 🌙 *Daily Recap* ({daily_time} WIB / Jam 10 Malam): Evaluasi pengeluaran hari ini.\n"
             "• 📅 *Weekly Recap* (Senin 07:30 WIB): Evaluasi keuangan selama 7 hari terakhir.\n"
             "• 📑 *Monthly Report* (Tanggal 1 08:00 WIB): Rekap bulanan lengkap + analisis AI + lampiran file Excel.\n"
-            f"• ⏰ *Scheduled Reports* (Tanggal {sched_day} 08:30 WIB): Laporan terjadwal otomatis pada tanggal pilihan Anda.\n\n"
+            f"• ⏰ *Scheduled Reports* (Tanggal {sched_day} 08:30 WIB): Laporan terjadwal otomatis pada tanggal pilihan Anda.\n"
+            "• ⏰ *Alarm & Pengingat*: Berbunyi otomatis real-time saat jam tiba.\n\n"
             "Silakan klik tombol di bawah untuk menyalakan/mematikan fitur atau mengubah tanggal terjadwal:"
         )
         try:
@@ -713,7 +798,8 @@ async def handle_voice_message(message: Message, bot: Bot):
             user_id=user_id,
             user_name=user_name,
             voice_bytes=voice_bytes,
-            mime_type="audio/ogg"
+            mime_type="audio/ogg",
+            chat_id=message.chat.id
         )
 
         # Kirim balasan teks
@@ -760,7 +846,8 @@ async def handle_photo_message(message: Message, bot: Bot):
             user_name=user_name,
             image_bytes=image_bytes,
             mime_type="image/jpeg",
-            caption=caption
+            caption=caption,
+            chat_id=message.chat.id
         )
 
         try:
@@ -795,7 +882,8 @@ async def handle_document_message(message: Message, bot: Bot):
                 user_name=user_name,
                 image_bytes=doc_bytes,
                 mime_type=mime_type,
-                caption=caption
+                caption=caption,
+                chat_id=message.chat.id
             )
         elif file_name.lower().endswith(".csv") or mime_type == "text/csv":
             try:
@@ -837,7 +925,7 @@ async def handle_document_message(message: Message, bot: Bot):
                 return
 
             user_prompt = f"Analisis file spreadsheet Excel '{file_name}'. Catatan: '{caption}'. Ringkas data atau jawab pertanyaan secara singkat dan jelas:\n\n{excel_text[:10000]}"
-            analysis_reply = await gemini_agent.process_user_text(user_id, user_name, user_prompt)
+            analysis_reply = await gemini_agent.process_user_text(user_id, user_name, user_prompt, chat_id=message.chat.id)
 
             try:
                 await message.answer(f"📊 *Ringkasan Spreadsheet:* `{file_name}`\n\n{analysis_reply}", parse_mode=ParseMode.MARKDOWN)
@@ -986,13 +1074,24 @@ async def handle_text_message(message: Message, bot: Bot):
         await cmd_tes_notif(message, bot)
         return
 
+    # Intersep cepat menu kalender
+    if lower_text in ["/kalender", "/agenda", "kalender", "agenda", "buka kalender", "lihat kalender"]:
+        await cmd_kalender(message)
+        return
+
+    # Intersep cepat menu pengingat / alarm
+    if lower_text in ["/pengingat", "/alarm", "pengingat", "alarm", "daftar alarm", "daftar pengingat", "cek alarm", "cek pengingat"]:
+        await cmd_pengingat(message)
+        return
+
     # Registrasi user agar terdaftar di sistem notifikasi
     db.register_or_update_user(user_id, user_name, message.chat.id)
 
     reply_text = await gemini_agent.process_user_text(
         user_id=user_id,
         user_name=user_name,
-        text=user_text
+        text=user_text,
+        chat_id=message.chat.id
     )
 
     try:

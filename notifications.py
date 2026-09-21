@@ -30,7 +30,7 @@ def format_date_id(date_str: str) -> str:
         return date_str
 
 def build_daily_recap_message(user_id: int, user_name: str) -> str:
-    data = db.get_yesterday_expenses(user_id)
+    data = db.get_today_expenses(user_id)
     bal = db.get_balance(user_id)
     
     tot_exp = finance.format_rupiah(data['total_expense'])
@@ -38,8 +38,8 @@ def build_daily_recap_message(user_id: int, user_name: str) -> str:
     
     if data['total_expense'] > 0:
         lines = [
-            f"☀️ *Pagi, {user_name}!*",
-            f"💸 *Kemarin kamu keluar:* `{tot_exp}` ({data['count']}x)",
+            f"🌙 *Malam, {user_name}!*",
+            f"💸 *Hari ini kamu keluar:* `{tot_exp}` ({data['count']}x)",
         ]
         for c in data['categories'][:4]:
             lines.append(f"• {c['category']}: {finance.format_rupiah(c['total'])}")
@@ -48,8 +48,8 @@ def build_daily_recap_message(user_id: int, user_name: str) -> str:
         return "\n".join(lines)
     else:
         return (
-            f"☀️ *Pagi, {user_name}!*\n"
-            f"✨ Kemarin kamu tidak ada pengeluaran (*Rp 0*).\n"
+            f"🌙 *Malam, {user_name}!*\n"
+            f"✨ Hari ini kamu tidak ada pengeluaran (*Rp 0*).\n"
             f"💰 *Sisa Saldo:* `{sisa_saldo}`"
         )
 
@@ -146,10 +146,11 @@ def get_notification_settings_keyboard(settings: Dict[str, Any]) -> InlineKeyboa
     sched_icon = "✅ Aktif" if settings.get('scheduled_reports_enabled') else "❌ Nonaktif"
     sched_day = settings.get('scheduled_day', 25)
     
+    daily_time = settings.get('daily_recap_time', '22:00')
     keyboard = [
         [
             InlineKeyboardButton(
-                text=f"☀️ Rekap Harian (07:00): {daily_icon}",
+                text=f"🌙 Rekap Harian ({daily_time}): {daily_icon}",
                 callback_data="toggle_notif_daily"
             )
         ],
@@ -204,10 +205,11 @@ async def send_test_notification(bot: Bot, user_id: int, chat_id: int, user_name
         "\n\n━━━━━━━━━━━━━━━━━━━━━━\n"
         "✅ *Sistem notifikasi aktif & normal!*\n"
         "Jadwal pengiriman otomatis:\n"
-        "• Daily Recap: Setiap hari 07:00 WIB\n"
+        "• Daily Recap: Setiap hari 22:00 WIB (Jam 10 Malam)\n"
         "• Weekly Recap: Setiap Senin 07:30 WIB\n"
         "• Monthly Report: Setiap tanggal 1 08:00 WIB\n"
-        "• Scheduled Report: Setiap tanggal pilihan Anda 08:30 WIB"
+        "• Scheduled Report: Setiap tanggal pilihan Anda 08:30 WIB\n"
+        "• Alarm & Pengingat: Real-time tepat pada waktu yang ditentukan"
     )
     await bot.send_message(chat_id=chat_id, text=test_header + msg_text + test_footer, parse_mode=ParseMode.MARKDOWN)
 
@@ -220,10 +222,37 @@ async def start_notification_scheduler(bot: Bot):
             now = get_now_wib()
             today_str = now.strftime("%Y-%m-%d")
             time_str = now.strftime("%H:%M")
+            now_iso_min = now.strftime("%Y-%m-%d %H:%M")
             day_num = now.day
             weekday_num = now.weekday()  # 0 = Senin
             month_str = now.strftime("%Y-%m")
             
+            # 0. Proses Alarm & Pengingat yang jatuh tempo
+            try:
+                due_reminders = db.get_pending_reminders(now_iso_min)
+                for rem in due_reminders:
+                    rem_id = rem['id']
+                    rem_chat_id = rem.get('chat_id') or rem['user_id']
+                    rem_title = rem['title']
+                    rem_time = rem['remind_at']
+                    
+                    alarm_msg = (
+                        "⏰ *ALARM & PENGINGAT!* 🔔\n"
+                        "━━━━━━━━━━━━━━━━━━━━━━\n"
+                        f"📌 *Pengingat:* {rem_title}\n"
+                        f"🕒 *Waktu:* `{rem_time} WIB`\n"
+                        "━━━━━━━━━━━━━━━━━━━━━━\n"
+                        "_Pengingat ini otomatis berbunyi sesuai jadwal yang Anda atur._"
+                    )
+                    try:
+                        await bot.send_message(chat_id=rem_chat_id, text=alarm_msg, parse_mode=ParseMode.MARKDOWN)
+                        db.mark_reminder_sent(rem_id)
+                        logger.info(f"Alarm #{rem_id} terkirim ke chat {rem_chat_id}")
+                    except Exception as re:
+                        logger.warning(f"Gagal mengirim alarm #{rem_id}: {re}")
+            except Exception as e_rem:
+                logger.error(f"Error checking pending reminders: {e_rem}")
+
             subscribers = db.get_all_active_users_for_notification()
             
             for user in subscribers:
@@ -231,8 +260,8 @@ async def start_notification_scheduler(bot: Bot):
                 chat_id = user.get('chat_id') or user_id
                 user_name = user.get('user_name') or 'Teman'
                 
-                # 1. Daily Recap (Setiap pagi jam 07:00 atau waktu kustom)
-                daily_time = user.get('daily_recap_time') or '07:00'
+                # 1. Daily Recap (Setiap malam jam 22:00 atau waktu kustom)
+                daily_time = user.get('daily_recap_time') or '22:00'
                 if user.get('daily_recap_enabled') and time_str == daily_time:
                     if user.get('last_daily_sent') != today_str:
                         try:
@@ -286,4 +315,4 @@ async def start_notification_scheduler(bot: Bot):
         except Exception as loop_err:
             logger.error(f"Error pada notification scheduler loop: {loop_err}", exc_info=True)
             
-        await asyncio.sleep(25)
+        await asyncio.sleep(20)

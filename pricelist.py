@@ -65,12 +65,18 @@ def search_pricelist(query: str, price_tier: str = "ADP") -> Dict[str, Any]:
                 "price_tier": price_tier
             }
     
-    # 2. Coba tanpa awalan 'rg' jika ada (misal user cari 'ew1200g' -> 'rgew1200g')
-    q_no_rg = q_norm[2:] if q_norm.startswith("rg") else q_norm
+    # 2. Coba tanpa awalan brand jika ada ('dhi', 'dh', 'ids', 'ds', 'rg', 'reyee')
+    def strip_brand_pfx(s: str) -> str:
+        for pfx in ['reyee', 'dhi', 'dh', 'ids', 'ds', 'rg']:
+            if s.startswith(pfx):
+                return s[len(pfx):]
+        return s
+
+    q_stripped = strip_brand_pfx(q_norm)
     for p in products:
         m_norm = normalize_code(p.get("Model", ""))
-        m_no_rg = m_norm[2:] if m_norm.startswith("rg") else m_norm
-        if q_no_rg == m_no_rg:
+        m_stripped = strip_brand_pfx(m_norm)
+        if q_stripped == m_stripped:
             return {
                 "status": "exact",
                 "product": p,
@@ -81,8 +87,8 @@ def search_pricelist(query: str, price_tier: str = "ADP") -> Dict[str, Any]:
     substring_matches = []
     for p in products:
         m_norm = normalize_code(p.get("Model", ""))
-        m_no_rg = m_norm[2:] if m_norm.startswith("rg") else m_norm
-        if q_norm in m_norm or q_no_rg in m_no_rg:
+        m_stripped = strip_brand_pfx(m_norm)
+        if q_norm in m_norm or (len(q_stripped) >= 3 and q_stripped in m_stripped):
             substring_matches.append(p)
             
     if len(substring_matches) == 1:

@@ -140,12 +140,7 @@ def search_pricelist(query: str, price_tier: str = "ADP") -> Dict[str, Any]:
     }
 
 def format_single_product_answer(product: Dict[str, Any], tier: str = "ADP") -> str:
-    """Format jawaban sesuai Aturan 6 & 7:
-    Merek: ...
-    Model: ...
-    <tingkatan harga>: Rp ...
-    Sumber: ...
-    """
+    """Format: Model dan Harga saja untuk semua tipe dan merek."""
     model = product.get("Model", "N/A")
     brand = product.get("Brand", "General")
     
@@ -153,42 +148,29 @@ def format_single_product_answer(product: Dict[str, Any], tier: str = "ADP") -> 
     
     if brand.lower() == "hikvision":
         price_val = product.get("Harga_DPP") or product.get("Harga_ADP") or product.get("Harga_MD")
-        price_label = "DPP"
     elif brand.lower() == "dahua":
         price_val = product.get("Harga_MDP") or product.get("Harga_MD") or product.get("Harga_ADP")
-        price_label = "MDP"
     elif brand.lower() == "ruijie":
         price_val = product.get("Harga_ADP") or product.get("Harga_MD")
-        price_label = "ADP"
     else:
         price_val = product.get("Harga_ADP") or product.get("Harga_MD")
-        price_label = "Harga"
 
     if tier_upper == "MSRP" and product.get("Harga_MSRP"):
         price_val = product.get("Harga_MSRP")
-        price_label = "MSRP"
     elif tier_upper in ("NON-DPP", "NONDPP") and product.get("Harga_Non_DPP"):
         price_val = product.get("Harga_Non_DPP")
-        price_label = "Non-DPP"
 
     if not price_val or str(price_val).strip() in ("", "0"):
         formatted_price = "harga tidak tersedia"
     else:
         formatted_price = format_rupiah_num(price_val)
 
-    sumber = product.get("Sumber") or product.get("Category") or product.get("Description", "")[:50] or brand
-
-    return (
-        f"Merek: {brand}\n"
-        f"Model: {model}\n"
-        f"{price_label}: {formatted_price}\n"
-        f"Sumber: {sumber}"
-    )
+    return f"{model} : {formatted_price}"
 
 def query_pricelist_tool(query: str, tier: str = "ADP") -> str:
     """Fungsi pembantu yang dipanggil oleh Gemini Agent atau command bot.
     Mendukung pencarian 1 tipe maupun sekaligus banyak tipe.
-    Mengikuti Aturan 1-10 secara konsisten.
+    Format ringkas: Model dan Harga saja.
     """
     # Deteksi apakah query berisi banyak tipe (dipisah newline, koma, semicolon, atau 'dan')
     cleaned = query.replace(";", "\n").replace(",", "\n")
@@ -207,14 +189,14 @@ def query_pricelist_tool(query: str, tier: str = "ADP") -> str:
             if st == "exact":
                 results.append(format_single_product_answer(res["product"], tier))
             elif st == "ambiguous":
-                m_list = [f"• {m['Model']} ({m.get('Brand', '')} - {format_rupiah_num(m.get('Harga_ADP') or m.get('Harga_DPP') or m.get('Harga_MD'))})" for m in res['matches'][:4]]
-                results.append(f"Ditemukan beberapa model untuk '{p_clean}':\n" + "\n".join(m_list) + "\n*Mana yang Anda maksud?*")
+                m_list = [format_single_product_answer(m, tier) for m in res['matches'][:5]]
+                results.append("\n".join(m_list))
             elif st == "not_found_with_suggestions" and res.get("suggestions"):
                 sugs = [f"• {s}" for s in res["suggestions"]]
                 results.append(f"Model {p_clean} tidak ada di pricelist. Mungkin yang mirip:\n" + "\n".join(sugs))
             else:
                 results.append(f"Model {p_clean} tidak ada di pricelist.")
-        return "\n\n".join(results)
+        return "\n".join(results)
     
     # 1 tipe saja
     result = search_pricelist(query, tier)
@@ -225,12 +207,7 @@ def query_pricelist_tool(query: str, tier: str = "ADP") -> str:
         
     elif st == "ambiguous":
         items = result["matches"]
-        lines = [f"Ditemukan beberapa model yang cocok dengan '{query}':"]
-        for p in items:
-            p_price = format_rupiah_num(p.get("Harga_ADP") or p.get("Harga_DPP") or p.get("Harga_MD"))
-            b_name = p.get("Brand", "")
-            lines.append(f"• Model: {p.get('Model')} ({b_name})\n  Harga: {p_price}")
-        lines.append("\nMana yang Anda maksud?")
+        lines = [format_single_product_answer(p, tier) for p in items[:6]]
         return "\n".join(lines)
         
     elif st == "not_found_with_suggestions":

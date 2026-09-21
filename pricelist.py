@@ -1,8 +1,12 @@
 import csv
 import re
 import difflib
+import io
+import logging
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
+
+logger = logging.getLogger(__name__)
 
 PRICELIST_PATH = Path("data/pricelist.csv")
 
@@ -219,3 +223,124 @@ def save_new_pricelist_csv(content: str) -> Tuple[bool, str, int]:
         return True, f"Pricelist berhasil diperbarui dengan {len(products)} produk.", len(products)
     except Exception as e:
         return False, f"Gagal menyimpan pricelist CSV: {e}", 0
+
+def extract_text_from_excel(doc_bytes: bytes, max_rows: int = 150) -> str:
+    """Ekstrak isi teks/tabel dari file Excel (.xlsx) untuk dianalisis oleh AI."""
+    import openpyxl
+    try:
+        wb = openpyxl.load_workbook(io.BytesIO(doc_bytes), data_only=True)
+        sheets_data = []
+        for name in wb.sheetnames[:5]:
+            ws = wb[name]
+            lines = [f"=== Sheet: {name} ==="]
+            rows = list(ws.iter_rows(values_only=True))
+            for r in rows[:max_rows]:
+                if not any(r):
+                    continue
+                r_str = [str(c) if c is not None else "" for c in r]
+                lines.append(" | ".join(r_str))
+            if len(rows) > max_rows:
+                lines.append(f"... (dan {len(rows) - max_rows} baris lainnya)")
+            sheets_data.append("\n".join(lines))
+        return "\n\n".join(sheets_data)
+    except Exception as e:
+        logger.error(f"Gagal ekstrak excel: {e}")
+        return ""
+
+def import_pricelist_from_excel(doc_bytes: bytes) -> Tuple[bool, str, int]:
+    """Membaca file Excel (.xlsx) dan mengimpor ke data/pricelist.csv jika berisi kolom pricelist."""
+    import openpyxl
+    try:
+        wb = openpyxl.load_workbook(io.BytesIO(doc_bytes), data_only=True)
+        ws = wb.active
+        rows = list(ws.iter_rows(values_only=True))
+        if not rows or len(rows) < 2:
+            return False, "File Excel kosong atau tidak memiliki baris data.", 0
+
+        header_idx = -1
+        header_row = []
+        for idx, r in enumerate(rows[:15]):
+            r_str = [str(cell or "").lower().strip() for cell in r]
+            if any("model" in c or "tipe" in c or "type" in c for c in r_str):
+                header_idx = idx
+                header_row = r_str
+                break
+
+        if header_idx == -1:
+            return False, "Bukan format pricelist (kolom Model/Tipe tidak ditemukan).", 0
+
+        col_model = -1
+        col_desc = -1
+        col_adp = -1
+        col_md = -1
+        col_installer = -1
+        col_online = -1
+        col_msrp = -1
+        col_warranty = -1
+
+        for i, col_name in enumerate(header_row):
+            if "model" in col_name or "tipe" in col_name or "type" in col_name:
+                if col_model == -1:
+                    col_model = i
+            elif "desc" in col_name or "keterangan" in col_name or "deskripsi" in col_name:
+                col_desc = i
+            elif "adp" in col_name:
+                col_adp = i
+            elif "bottom" in col_name or "md" in col_name or "dealer" in col_name:
+                col_md = i
+            elif "installer" in col_name:
+                col_installer = i
+            elif "online" in col_name or "ref" in col_name:
+                col_online = i
+            elif "msrp" in col_name or "srp" in col_name or "retail" in col_name:
+                col_msrp = i
+            elif "warranty" in col_name or "garansi" in col_name:
+                col_warranty = i
+            elif "harga" in col_name or "price" in col_name:
+                if col_adp == -1:
+                    col_adp = i
+
+        new_products = []
+        for r in rows[header_idx + 1:]:
+            if not r or len(r) <= col_model or not r[col_model]:
+                continue
+            model = str(r[col_model]).strip()
+            if not model or model.lower() in ("none", "model", "tipe", "type"):
+                continue
+            desc = str(r[col_desc]).strip() if col_desc != -1 and len(r) > col_desc and r[col_desc] else ""
+
+            def clean_num(val):
+                if not val:
+                    return "0"
+                c = re.sub(r'[^0-9]', '', str(val))
+                return c if c else "0"
+
+            adp = clean_num(r[col_adp]) if col_adp != -1 and len(r) > col_adp else "0"
+            md = clean_num(r[col_md]) if col_md != -1 and len(r) > col_md else adp
+            installer = clean_num(r[col_installer]) if col_installer != -1 and len(r) > col_installer else "0"
+            online = clean_num(r[col_online]) if col_online != -1 and len(r) > col_online else "0"
+            msrp = clean_num(r[col_msrp]) if col_msrp != -1 and len(r) > col_msrp else "0"
+            warranty = str(r[col_warranty]).strip() if col_warranty != -1 and len(r) > col_warranty and r[col_warranty] else "3 Years Warranty"
+
+            new_products.append({
+                "Model": model,
+                "Description": desc,
+                "Harga_MD": md if int(md or 0) > 0 else adp,
+                "Harga_ADP": adp if int(adp or 0) > 0 else md,
+                "Harga_Installer": installer,
+                "Harga_Online": online,
+                "Harga_MSRP": msrp,
+                "Warranty": warranty
+            })
+
+        if not new_products:
+            return False, "Tidak ada data produk yang berhasil diekstrak.", 0
+
+        with open(PRICELIST_PATH, "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=["Model", "Description", "Harga_MD", "Harga_ADP", "Harga_Installer", "Harga_Online", "Harga_MSRP", "Warranty"])
+            writer.writeheader()
+            writer.writerows(new_products)
+
+        return True, f"Berhasil mengimpor {len(new_products)} produk ke database pricelist.", len(new_products)
+    except Exception as e:
+        return False, f"Gagal membaca file Excel: {e}", 0

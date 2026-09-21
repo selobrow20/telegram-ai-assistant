@@ -557,12 +557,46 @@ async def handle_document_message(message: Message, bot: Bot):
                 await message.answer(
                     f"✅ *Pricelist Berhasil Diperbarui!*\n\n"
                     f"• {msg}\n"
-                    f"• Total `{count}` produk kini siap dicari harganya (MD / Installer / MSRP).",
+                    f"• Total `{count}` produk kini siap dicari harganya (ADP-Price).",
                     reply_markup=get_main_keyboard(),
                     parse_mode=ParseMode.MARKDOWN
                 )
             else:
                 await message.answer(f"⚠️ Gagal memperbarui pricelist: {msg}")
+            return
+        elif file_name.lower().endswith((".xlsx", ".xls")) or "spreadsheet" in mime_type or "excel" in mime_type:
+            # 1. Coba deteksi apakah ini file pricelist produk
+            ok, msg, count = pricelist.import_pricelist_from_excel(doc_bytes)
+            if ok:
+                await message.answer(
+                    f"✅ *Pricelist Excel Berhasil Diperbarui!*\n\n"
+                    f"• {msg}\n"
+                    f"• Total `{count}` produk berhasil disimpan ke database harga ADP.\n"
+                    f"Ketik tipe produk kapan saja untuk cek harga!",
+                    reply_markup=get_main_keyboard(),
+                    parse_mode=ParseMode.MARKDOWN
+                )
+                return
+
+            # 2. Jika bukan pricelist, analisis isi data spreadsheet
+            status_msg = await message.answer(f"⏳ Membaca dan menganalisis spreadsheet `{file_name}`...", parse_mode=ParseMode.MARKDOWN)
+            excel_text = pricelist.extract_text_from_excel(doc_bytes)
+            if not excel_text:
+                await status_msg.edit_text(f"⚠️ Gagal membaca data dari `{file_name}`.")
+                return
+
+            user_prompt = f"Analisis file spreadsheet Excel '{file_name}'. Catatan: '{caption}'. Ringkas data atau jawab pertanyaan secara singkat dan jelas:\n\n{excel_text[:10000]}"
+            analysis_reply = await gemini_agent.process_user_text(user_id, user_name, user_prompt)
+
+            try:
+                await message.answer(f"📊 *Ringkasan Spreadsheet:* `{file_name}`\n\n{analysis_reply}", parse_mode=ParseMode.MARKDOWN)
+            except Exception:
+                await message.answer(f"📊 Ringkasan Spreadsheet: {file_name}\n\n{analysis_reply}")
+
+            try:
+                await status_msg.delete()
+            except Exception:
+                pass
             return
         else:
             status_msg = await message.answer(

@@ -33,9 +33,9 @@ ATURAN GAYA KOMUNIKASI (SANGAT PENTING):
 
 TUGAS UTAMA:
 1. INFORMASI HARGA PRICELIST (SANGAT PENTING):
-   - Jika pengguna menyebut tipe, kode, nama produk, atau menanyakan harga (misal: "EW1200G", "RAP2260", "harga MD EW3000GX"):
+   - Jika pengguna menyebut tipe, kode, nama produk, atau menanyakan harga (misal: "EW1200G", "RAP62", "ES205GC", "harga ADP"):
      Panggil fungsi `cari_harga_pricelist`. Anda bisa memberikan satu kode atau langsung banyak tipe sekaligus (dipisahkan koma atau baris baru).
-   - Default harga yang dicari dan dijawab adalah HARGA MD (Bottom Dealer Price Inc PPN).
+   - ATURAN HARGA: Untuk semua barang Ruijie, WAJIB gunakan HANYA harga **ADP-Price (IDR) Inc PPN**! JANGAN kasih harga yang lain.
    - ATURAN FORMAT: TAMPILKAN HANYA TIPE DAN HARGA SAJA. JANGAN menyertakan Keterangan, deskripsi, atau garansi!
    - Format jawaban HARUS:
      Tipe: <nama/kode tipe>
@@ -199,12 +199,13 @@ def create_tools_for_user(user_id: int):
             res_msgs.append(f"Semua Notifikasi Cerdas telah {'diaktifkan ✅' if status else 'dinonaktifkan ❌'}")
         return "Pengaturan Notifikasi Cerdas berhasil diperbarui:\n" + "\n".join(f"• {m}" for m in res_msgs)
 
-    def cari_harga_pricelist(kode_atau_nama_produk: str, jenis_harga: str = "MD") -> str:
+    def cari_harga_pricelist(kode_atau_nama_produk: str, jenis_harga: str = "ADP") -> str:
         """Mencari harga produk di database pricelist berdasarkan kode, model, atau nama.
         Gunakan fungsi ini jika pengguna menyebut tipe/kode produk atau menanyakan harga.
+        Standar harga untuk semua barang Ruijie adalah ADP-Price (IDR) Inc PPN.
         Args:
-            kode_atau_nama_produk: Tipe, kode, atau nama produk (contoh: 'EW1200G', 'RG-RAP62', 'ab-100', 'RG-ES205GC')
-            jenis_harga: 'MD' (default/Master Dealer), 'Installer', 'MSRP', atau 'ADP'
+            kode_atau_nama_produk: Tipe, kode, atau nama produk (contoh: 'EW1200G', 'RG-RAP62', 'RG-ES205GC')
+            jenis_harga: 'ADP' (default ADP-Price Inc PPN)
         """
         return pricelist.query_pricelist_tool(kode_atau_nama_produk, jenis_harga)
 

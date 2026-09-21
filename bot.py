@@ -43,7 +43,7 @@ dp = Dispatcher()
 def get_main_keyboard() -> InlineKeyboardMarkup:
     buttons = [
         [
-            InlineKeyboardButton(text="🏷️ Cek Harga (MD)", callback_data="menu_harga"),
+            InlineKeyboardButton(text="🏷️ Cek Harga (ADP)", callback_data="menu_harga"),
             InlineKeyboardButton(text="💰 Cek Saldo", callback_data="menu_saldo")
         ],
         [
@@ -78,7 +78,7 @@ async def cmd_start(message: Message):
     welcome_text = (
         f"👋 Halo *{user_name}*!\n\n"
         "Saya **Selobrow**. Kirim teks atau Voice Note untuk:\n"
-        "• 🏷️ *Cek Harga Pricelist (MD)* (ketik tipe / model produk)\n"
+        "• 🏷️ *Cek Harga Pricelist (ADP)* (ketik tipe / model produk)\n"
         "• 💸 Catat uang & pantau saldo\n"
         "• 📊 Laporan & ekspor Excel / PDF\n"
         "• 📋 To-do list & catatan\n"
@@ -93,15 +93,15 @@ async def cmd_harga(message: Message):
     parts = message.text.split(maxsplit=1)
     if len(parts) > 1:
         query = parts[1].strip()
-        ans = pricelist.query_pricelist_tool(query, "MD")
+        ans = pricelist.query_pricelist_tool(query, "ADP")
         await message.answer(ans, reply_markup=get_main_keyboard())
     else:
         await message.answer(
-            "🏷️ *CEK HARGA PRICELIST (MD)*\n\n"
+            "🏷️ *CEK HARGA PRICELIST (ADP)*\n\n"
             "Ketik tipe/kode produk di chat, contoh:\n"
             "• `EW1200G` atau `/harga EW1200G`\n"
             "• `RG-RAP2260`\n"
-            "• Atau tanya: _\"Harga MD EW3000GX beli 5 unit diskon 5%?\"_",
+            "• Atau tanya: _\"Harga EW3000GX beli 5 unit diskon 5%?\"_",
             reply_markup=get_main_keyboard(),
             parse_mode=ParseMode.MARKDOWN
         )
@@ -300,11 +300,11 @@ async def handle_callbacks(callback: CallbackQuery):
         await send_excel_selection_or_direct(callback, user_id)
     elif data == "menu_harga":
         await callback.message.answer(
-            "🏷️ *CEK HARGA PRICELIST (MD)*\n\n"
+            "🏷️ *CEK HARGA PRICELIST (ADP)*\n\n"
             "Ketik tipe/kode produk di chat, contoh:\n"
             "• `EW1200G` atau `/harga EW1200G`\n"
             "• `RG-RAP2260`\n"
-            "• Atau tanya: _\"Harga MD EW3000GX beli 5 unit diskon 5%?\"_",
+            "• Atau tanya: _\"Harga EW3000GX beli 5 unit diskon 5%?\"_",
             reply_markup=get_main_keyboard(),
             parse_mode=ParseMode.MARKDOWN
         )

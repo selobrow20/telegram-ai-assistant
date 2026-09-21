@@ -152,7 +152,7 @@ def format_single_product_answer(product: Dict[str, Any], tier: str = "ADP") -> 
     elif brand.lower() == "ruijie":
         price_val = product.get("Harga_ADP") or product.get("Harga_MD")
     elif brand.lower() == "hilook":
-        price_val = product.get("Harga_MSRP") or product.get("Harga_MD") or product.get("Harga_ADP")
+        price_val = product.get("Harga_MD") or product.get("Harga_ADP") or product.get("Harga_MSRP")
     elif brand.lower() == "hiview":
         price_val = product.get("Harga_MD") or product.get("Harga_ADP") or product.get("Harga_MSRP")
     else:

@@ -43,7 +43,7 @@ TUGAS UTAMA:
       DH-H3A : Rp 292.211
       DS-2CD1023G2-LIUF : Rp 1.131.300
       RG-EW1200G PRO : Rp 557.220
-      IPC-B121HE-UC : Rp 496.600
+      IPC-B121HE-UC : Rp 415.200
       HV-T127PS : Rp 225.000
       JANGAN MENAMBAHKAN kata 'Merek:', 'Sumber:', deskripsi, atau basa-basi apa pun.
    2. Jika pengguna menanyakan banyak tipe sekaligus, jawab langsung per baris:

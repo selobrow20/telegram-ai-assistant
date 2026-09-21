@@ -14,6 +14,9 @@ ADMIN_USER_ID = os.getenv("ADMIN_USER_ID", "").strip()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.1-flash-lite").strip()
 VOICE_REPLY_ENABLED = os.getenv("VOICE_REPLY_ENABLED", "true").lower() in ("true", "1", "yes")
-TTS_VOICE = os.getenv("TTS_VOICE", "id-ID-GadisNeural").strip()  # Pilihan: id-ID-GadisNeural (wanita), id-ID-ArdiNeural (pria)
+TTS_VOICE = os.getenv("TTS_VOICE", "id-ID-GadisNeural").strip()  # id-ID-GadisNeural (suara cewek natural & ramah)
+TTS_RATE = os.getenv("TTS_RATE", "+8%").strip()  # Kecepatan lebih hidup (+8%)
+TTS_PITCH = os.getenv("TTS_PITCH", "+2Hz").strip()  # Nada lebih cerah (+2Hz)
+TTS_ENGINE = os.getenv("TTS_ENGINE", "edge-tts").strip()  # 'edge-tts' atau 'gemini'
 
 DATABASE_PATH = DATA_DIR / "assistant.db"

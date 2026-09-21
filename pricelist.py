@@ -40,7 +40,7 @@ def format_rupiah_num(val: Any) -> str:
     except Exception:
         return f"Rp {val}"
 
-def search_pricelist(query: str, price_tier: str = "ADP") -> Dict[str, Any]:
+def search_pricelist(query: str, price_tier: str = "", brand_filter: str = "") -> Dict[str, Any]:
     """
     Cari produk di pricelist berdasarkan kode, model, atau nama.
     Menerapkan Aturan 1, 2, 3, 4, 5.
@@ -53,17 +53,43 @@ def search_pricelist(query: str, price_tier: str = "ADP") -> Dict[str, Any]:
         }
     
     q_raw = query.strip()
+    
+    # Deteksi merek dalam query jika ada (Aturan 3)
+    detected_brand = brand_filter.strip().lower() if brand_filter else ""
+    brands = ["hikvision", "dahua", "ruijie", "hilook", "hiview"]
+    if not detected_brand:
+        for b in brands:
+            pattern = rf'\b{b}\b'
+            if re.search(pattern, q_raw, flags=re.IGNORECASE):
+                detected_brand = b
+                q_raw = re.sub(pattern, '', q_raw, flags=re.IGNORECASE).strip()
+                break
+                
+    if detected_brand:
+        products = [p for p in products if p.get("Brand", "").lower() == detected_brand]
+        if not products:
+            return {
+                "status": "not_found",
+                "query": query,
+                "suggestions": []
+            }
+
     q_norm = normalize_code(q_raw)
     
     # 1. Cari exact match (persis sama setelah dinormalisasi)
-    for p in products:
-        m_norm = normalize_code(p.get("Model", ""))
-        if q_norm == m_norm:
-            return {
-                "status": "exact",
-                "product": p,
-                "price_tier": price_tier
-            }
+    exact_matches = [p for p in products if q_norm == normalize_code(p.get("Model", ""))]
+    if len(exact_matches) == 1:
+        return {
+            "status": "exact",
+            "product": exact_matches[0],
+            "price_tier": price_tier
+        }
+    elif len(exact_matches) > 1:
+        return {
+            "status": "ambiguous",
+            "matches": exact_matches,
+            "price_tier": price_tier
+        }
     
     # 2. Coba tanpa awalan brand jika ada ('dhi', 'dh', 'ids', 'ds', 'rg', 'reyee', 'hilook', 'hiview', 'thc', 'ipc', 'th', 'hv', 'hik')
     def strip_brand_pfx(s: str) -> str:
@@ -73,15 +99,25 @@ def search_pricelist(query: str, price_tier: str = "ADP") -> Dict[str, Any]:
         return s
 
     q_stripped = strip_brand_pfx(q_norm)
+    pfx_matches = []
     for p in products:
         m_norm = normalize_code(p.get("Model", ""))
         m_stripped = strip_brand_pfx(m_norm)
         if q_stripped == m_stripped:
-            return {
-                "status": "exact",
-                "product": p,
-                "price_tier": price_tier
-            }
+            pfx_matches.append(p)
+            
+    if len(pfx_matches) == 1:
+        return {
+            "status": "exact",
+            "product": pfx_matches[0],
+            "price_tier": price_tier
+        }
+    elif len(pfx_matches) > 1:
+        return {
+            "status": "ambiguous",
+            "matches": pfx_matches,
+            "price_tier": price_tier
+        }
 
     # 3. Cari matches awalan / substring
     substring_matches = []
@@ -138,46 +174,123 @@ def search_pricelist(query: str, price_tier: str = "ADP") -> Dict[str, Any]:
         "suggestions": similar_models[:3]
     }
 
-def format_single_product_answer(product: Dict[str, Any], tier: str = "ADP") -> str:
-    """Format: Model dan Harga saja untuk semua tipe dan merek."""
+def format_single_product_answer(product: Dict[str, Any], tier: str = "") -> str:
+    """Format jawaban sesuai Aturan 7 & 8:
+    Merek: ...
+    Model: ...
+    <tingkatan harga>: Rp ... (satu baris per tingkatan)
+    Sumber: <kolom "sumber" atau "kategori" baris itu>
+    """
     model = product.get("Model", "N/A")
     brand = product.get("Brand", "General")
+    tier_upper = tier.upper().strip() if tier else ""
     
-    tier_upper = tier.upper() if tier else ""
+    price_lines = []
+    brand_lower = brand.lower()
     
-    if brand.lower() == "hikvision":
-        price_val = product.get("Harga_DPP") or product.get("Harga_ADP") or product.get("Harga_MD")
-    elif brand.lower() == "dahua":
-        price_val = product.get("Harga_MDP") or product.get("Harga_MD") or product.get("Harga_ADP")
-    elif brand.lower() == "ruijie":
-        price_val = product.get("Harga_ADP") or product.get("Harga_MD")
-    elif brand.lower() == "hilook":
-        price_val = product.get("Harga_MD") or product.get("Harga_ADP") or product.get("Harga_MSRP")
-    elif brand.lower() == "hiview":
-        price_val = product.get("Harga_MD") or product.get("Harga_ADP") or product.get("Harga_MSRP")
+    if brand_lower == "hikvision":
+        dpp = product.get("Harga_DPP")
+        non_dpp = product.get("Harga_Non_DPP")
+        msrp = product.get("Harga_MSRP")
+        if tier_upper == "DPP":
+            price_lines.append(f"DPP: {format_rupiah_num(dpp)}" if dpp and str(dpp) != "0" else "DPP: harga tidak tersedia")
+        elif tier_upper in ("NON-DPP", "NONDPP"):
+            price_lines.append(f"Non-DPP: {format_rupiah_num(non_dpp)}" if non_dpp and str(non_dpp) != "0" else "Non-DPP: harga tidak tersedia")
+        elif tier_upper == "MSRP":
+            price_lines.append(f"MSRP: {format_rupiah_num(msrp)}" if msrp and str(msrp) != "0" else "MSRP: harga tidak tersedia")
+        else:
+            if dpp and str(dpp) != "0":
+                price_lines.append(f"DPP: {format_rupiah_num(dpp)}")
+            if non_dpp and str(non_dpp) != "0" and non_dpp != dpp:
+                price_lines.append(f"Non-DPP: {format_rupiah_num(non_dpp)}")
+            if msrp and str(msrp) != "0" and msrp != dpp:
+                price_lines.append(f"MSRP: {format_rupiah_num(msrp)}")
+                
+    elif brand_lower == "dahua":
+        mdp = product.get("Harga_MDP") or product.get("Harga_MD") or product.get("Harga_ADP")
+        dpp = product.get("Harga_DPP")
+        msrp = product.get("Harga_MSRP")
+        if tier_upper in ("MDP", "MD"):
+            price_lines.append(f"MDP: {format_rupiah_num(mdp)}" if mdp and str(mdp) != "0" else "MDP: harga tidak tersedia")
+        elif tier_upper == "DPP":
+            price_lines.append(f"DPP: {format_rupiah_num(dpp)}" if dpp and str(dpp) != "0" else "DPP: harga tidak tersedia")
+        elif tier_upper == "MSRP":
+            price_lines.append(f"MSRP: {format_rupiah_num(msrp)}" if msrp and str(msrp) != "0" else "MSRP: harga tidak tersedia")
+        else:
+            if mdp and str(mdp) != "0":
+                price_lines.append(f"MDP: {format_rupiah_num(mdp)}")
+            if dpp and str(dpp) != "0" and dpp != mdp:
+                price_lines.append(f"DPP: {format_rupiah_num(dpp)}")
+            if msrp and str(msrp) != "0" and msrp != mdp:
+                price_lines.append(f"MSRP: {format_rupiah_num(msrp)}")
+
+    elif brand_lower == "ruijie":
+        adp = product.get("Harga_ADP") or product.get("Harga_MD")
+        msrp = product.get("Harga_MSRP")
+        if tier_upper in ("ADP", "MD"):
+            price_lines.append(f"ADP: {format_rupiah_num(adp)}" if adp and str(adp) != "0" else "ADP: harga tidak tersedia")
+        elif tier_upper == "MSRP":
+            price_lines.append(f"MSRP: {format_rupiah_num(msrp)}" if msrp and str(msrp) != "0" else "MSRP: harga tidak tersedia")
+        else:
+            if adp and str(adp) != "0":
+                price_lines.append(f"ADP: {format_rupiah_num(adp)}")
+            if msrp and str(msrp) != "0" and msrp != adp:
+                price_lines.append(f"MSRP: {format_rupiah_num(msrp)}")
+
+    elif brand_lower == "hilook":
+        dealer = product.get("Harga_MD") or product.get("Harga_ADP")
+        msrp = product.get("Harga_MSRP")
+        if tier_upper in ("DEALER", "MD"):
+            price_lines.append(f"Dealer: {format_rupiah_num(dealer)}" if dealer and str(dealer) != "0" else "Dealer: harga tidak tersedia")
+        elif tier_upper == "MSRP":
+            price_lines.append(f"MSRP: {format_rupiah_num(msrp)}" if msrp and str(msrp) != "0" else "MSRP: harga tidak tersedia")
+        else:
+            if dealer and str(dealer) != "0":
+                price_lines.append(f"Dealer: {format_rupiah_num(dealer)}")
+            if msrp and str(msrp) != "0" and msrp != dealer:
+                price_lines.append(f"MSRP: {format_rupiah_num(msrp)}")
+
+    elif brand_lower == "hiview":
+        md = product.get("Harga_MD") or product.get("Harga_ADP")
+        non_md = product.get("Harga_Non_DPP")
+        msrp = product.get("Harga_MSRP")
+        if tier_upper in ("MD", "DEALER"):
+            price_lines.append(f"MD: {format_rupiah_num(md)}" if md and str(md) != "0" else "MD: harga tidak tersedia")
+        elif tier_upper in ("NON-MD", "NONMD"):
+            price_lines.append(f"Non-MD: {format_rupiah_num(non_md)}" if non_md and str(non_md) != "0" else "Non-MD: harga tidak tersedia")
+        elif tier_upper == "MSRP":
+            price_lines.append(f"MSRP: {format_rupiah_num(msrp)}" if msrp and str(msrp) != "0" else "MSRP: harga tidak tersedia")
+        else:
+            if md and str(md) != "0":
+                price_lines.append(f"MD: {format_rupiah_num(md)}")
+            if non_md and str(non_md) != "0" and non_md != md:
+                price_lines.append(f"Non-MD: {format_rupiah_num(non_md)}")
+            if msrp and str(msrp) != "0" and msrp != md:
+                price_lines.append(f"MSRP: {format_rupiah_num(msrp)}")
+
     else:
-        price_val = product.get("Harga_ADP") or product.get("Harga_MD") or product.get("Harga_MSRP")
+        p = product.get("Harga_ADP") or product.get("Harga_MD") or product.get("Harga_DPP")
+        if p and str(p) != "0":
+            price_lines.append(f"Harga: {format_rupiah_num(p)}")
 
-    if tier_upper == "MSRP" and product.get("Harga_MSRP"):
-        price_val = product.get("Harga_MSRP")
-    elif tier_upper in ("NON-DPP", "NONDPP") and product.get("Harga_Non_DPP"):
-        price_val = product.get("Harga_Non_DPP")
-    elif tier_upper in ("DEALER", "MD") and product.get("Harga_MD"):
-        price_val = product.get("Harga_MD")
+    if not price_lines:
+        price_lines.append("Harga: harga tidak tersedia")
 
-    if not price_val or str(price_val).strip() in ("", "0"):
-        formatted_price = "harga tidak tersedia"
-    else:
-        formatted_price = format_rupiah_num(price_val)
+    sumber = product.get("Sumber") or product.get("Category") or f"{brand} Pricelist"
 
-    return f"{model} : {formatted_price}"
+    lines = [
+        f"Merek: {brand}",
+        f"Model: {model}",
+        *price_lines,
+        f"Sumber: {sumber}"
+    ]
+    return "\n".join(lines)
 
-def query_pricelist_tool(query: str, tier: str = "ADP") -> str:
+def query_pricelist_tool(query: str, tier: str = "") -> str:
     """Fungsi pembantu yang dipanggil oleh Gemini Agent atau command bot.
     Mendukung pencarian 1 tipe maupun sekaligus banyak tipe.
-    Format ringkas: Model dan Harga saja.
+    Mengikuti Aturan 1-11 secara konsisten.
     """
-    # Deteksi apakah query berisi banyak tipe (dipisah newline, koma, semicolon, atau 'dan')
     cleaned = query.replace(";", "\n").replace(",", "\n")
     cleaned = re.sub(r'\s+(?:dan|&)\s+', '\n', cleaned, flags=re.IGNORECASE)
     parts = [p.strip() for p in cleaned.split("\n") if p.strip()]
@@ -185,7 +298,7 @@ def query_pricelist_tool(query: str, tier: str = "ADP") -> str:
     if len(parts) > 1:
         results = []
         for part in parts:
-            p_clean = re.sub(r'^(?:tolong\s+)?(?:carikan\s+)?(?:harga\s+)?(?:adp\s+)?(?:md\s+)?(?:dpp\s+)?(?:untuk\s+)?', '', part, flags=re.IGNORECASE).strip()
+            p_clean = re.sub(r'^(?:tolong\s+)?(?:carikan\s+)?(?:harga\s+)?(?:adp\s+)?(?:md\s+)?(?:dpp\s+)?(?:dealer\s+)?(?:untuk\s+)?', '', part, flags=re.IGNORECASE).strip()
             p_clean = re.sub(r'\s+(?:berapa|dong|ya|unit|pcs)$', '', p_clean, flags=re.IGNORECASE).strip()
             if not p_clean:
                 continue
@@ -194,32 +307,35 @@ def query_pricelist_tool(query: str, tier: str = "ADP") -> str:
             if st == "exact":
                 results.append(format_single_product_answer(res["product"], tier))
             elif st == "ambiguous":
-                m_list = [format_single_product_answer(m, tier) for m in res['matches'][:5]]
-                results.append("\n".join(m_list))
+                m_list = [format_single_product_answer(m, tier) for m in res['matches'][:4]]
+                results.append(f"Ditemukan beberapa baris yang cocok untuk '{p_clean}':\n\n" + "\n\n".join(m_list) + "\n\nMana yang Anda maksud?")
             elif st == "not_found_with_suggestions" and res.get("suggestions"):
                 sugs = [f"• {s}" for s in res["suggestions"]]
-                results.append(f"Model {p_clean} tidak ada di pricelist. Mungkin yang mirip:\n" + "\n".join(sugs))
+                results.append(f"Model {p_clean} tidak ada di pricelist.\n\nBerikut model yang mirip:\n" + "\n".join(sugs))
             else:
                 results.append(f"Model {p_clean} tidak ada di pricelist.")
-        return "\n".join(results)
+        return "\n\n".join(results)
     
     # 1 tipe saja
     result = search_pricelist(query, tier)
     st = result.get("status")
     
     if st == "exact":
-        return format_single_product_answer(result["product"], result.get("price_tier", "ADP"))
+        return format_single_product_answer(result["product"], tier)
         
     elif st == "ambiguous":
         items = result["matches"]
-        lines = [format_single_product_answer(p, tier) for p in items[:6]]
-        return "\n".join(lines)
+        lines = [f"Ditemukan beberapa baris yang cocok untuk '{query}':\n"]
+        for p in items:
+            lines.append(format_single_product_answer(p, tier))
+        lines.append("\nMana yang Anda maksud?")
+        return "\n\n".join(lines)
         
     elif st == "not_found_with_suggestions":
         sug = result.get("suggestions", [])
         if sug:
             sugs = [f"• {s}" for s in sug]
-            return f"Model {query} tidak ada di pricelist. Mungkin yang mirip:\n" + "\n".join(sugs)
+            return f"Model {query} tidak ada di pricelist.\n\nBerikut model yang mirip:\n" + "\n".join(sugs)
         return f"Model {query} tidak ada di pricelist."
         
     else:

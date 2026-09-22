@@ -279,13 +279,19 @@ def create_tools_for_user(user_id: int, user_name: str = "Teman", chat_id: int =
         else:
             return notifications.build_daily_recap_message(user_id, user_name)
 
-    def cari_harga_pricelist(kode_atau_nama_produk: str, jenis_harga: str = "ADP") -> str:
+    def cari_harga_pricelist(kode_atau_nama_produk: str, jenis_harga: str = "") -> str:
         """Mencari harga produk di database pricelist berdasarkan kode, model, atau nama.
         Gunakan fungsi ini jika pengguna menyebut tipe/kode produk atau menanyakan harga.
-        Standar harga untuk semua barang Ruijie adalah ADP-Price (IDR) Inc PPN.
+        Default harga otomatis per merek:
+        - Dahua: WAJIB Harga MDP (Inc Tax)
+        - Ruijie: ADP-Price (IDR) Inc PPN
+        - HiLook: Dealer Price
+        - Hiview: MD PRICE
+        - Imou: IPP (Inc PPN)
+        - Hikvision: DPP
         Args:
-            kode_atau_nama_produk: Tipe, kode, atau nama produk (contoh: 'EW1200G', 'RG-RAP62', 'RG-ES205GC')
-            jenis_harga: 'ADP' (default ADP-Price Inc PPN)
+            kode_atau_nama_produk: Tipe, kode, atau nama produk
+            jenis_harga: Kosongkan untuk harga default resmi masing-masing merek (Dahua=MDP, Ruijie=ADP, dsb)
         """
         return pricelist.query_pricelist_tool(kode_atau_nama_produk, jenis_harga)
 

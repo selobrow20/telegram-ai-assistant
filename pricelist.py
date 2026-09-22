@@ -188,6 +188,14 @@ def search_pricelist(query: str, price_tier: str = "", brand_filter: str = "") -
         "suggestions": similar_models[:3]
     }
 
+def _get_price(product: Dict[str, Any], *keys: str) -> Optional[str]:
+    """Mengambil harga pertama yang tersedia dan valid (bukan 0 atau kosong)."""
+    for k in keys:
+        v = product.get(k)
+        if v is not None and str(v).strip() not in ("", "0", "/"):
+            return str(v).strip()
+    return None
+
 def format_single_product_answer(product: Dict[str, Any], tier: str = "") -> str:
     """Format: Model dan Harga saja untuk semua tipe dan merek."""
     model = product.get("Model", "N/A")
@@ -196,38 +204,40 @@ def format_single_product_answer(product: Dict[str, Any], tier: str = "") -> str
     
     brand_lower = brand.lower()
     if brand_lower == "hikvision":
-        price_val = product.get("Harga_DPP") or product.get("Harga_ADP") or product.get("Harga_MD")
+        price_val = _get_price(product, "Harga_DPP", "Harga_ADP", "Harga_MD", "Harga_MSRP")
     elif brand_lower == "dahua":
-        price_val = product.get("Harga_MDP") or product.get("Harga_MD") or product.get("Harga_ADP")
+        # Wajib utamakan harga MD/MDP, tapi kalau tidak ada harga MD dan cuma ada MSRP, berikan MSRP
+        price_val = _get_price(product, "Harga_MDP", "Harga_MD", "Harga_ADP", "Harga_DPP", "Harga_MSRP")
     elif brand_lower == "ruijie":
-        price_val = product.get("Harga_ADP") or product.get("Harga_MD")
+        price_val = _get_price(product, "Harga_ADP", "Harga_MD", "Harga_MSRP")
     elif brand_lower == "hilook":
-        price_val = product.get("Harga_MD") or product.get("Harga_ADP") or product.get("Harga_MSRP")
+        price_val = _get_price(product, "Harga_MD", "Harga_ADP", "Harga_MSRP")
     elif brand_lower == "hiview":
-        price_val = product.get("Harga_MD") or product.get("Harga_ADP") or product.get("Harga_MSRP")
+        price_val = _get_price(product, "Harga_MD", "Harga_ADP", "Harga_MSRP")
     elif brand_lower == "imou":
         if tier_upper == "SDP":
-            price_val = product.get("Harga_SDP") or product.get("Harga_ADP")
+            price_val = _get_price(product, "Harga_SDP", "Harga_ADP", "Harga_MSRP")
         elif tier_upper in ("SRP", "MSRP"):
-            price_val = product.get("Harga_MSRP") or product.get("Harga_SRP")
+            price_val = _get_price(product, "Harga_MSRP", "Harga_SRP")
         elif tier_upper == "ONLINE":
-            price_val = product.get("Harga_Non_DPP") or product.get("Harga_Online")
+            price_val = _get_price(product, "Harga_Non_DPP", "Harga_Online", "Harga_MSRP")
         else:
-            # Default IPP (sesuai instruksi user)
-            price_val = product.get("Harga_IPP") or product.get("Harga_MD") or product.get("Harga_ADP")
+            # Default IPP
+            price_val = _get_price(product, "Harga_IPP", "Harga_MD", "Harga_ADP", "Harga_MSRP")
     else:
-        price_val = product.get("Harga_ADP") or product.get("Harga_MD") or product.get("Harga_MSRP")
+        price_val = _get_price(product, "Harga_ADP", "Harga_MD", "Harga_MSRP")
 
-    if tier_upper == "MSRP" and product.get("Harga_MSRP"):
-        price_val = product.get("Harga_MSRP")
-    elif tier_upper in ("NON-DPP", "NONDPP", "NON-MD", "NONMD") and product.get("Harga_Non_DPP"):
-        price_val = product.get("Harga_Non_DPP")
+    if tier_upper == "MSRP":
+        msrp_candidate = _get_price(product, "Harga_MSRP")
+        if msrp_candidate:
+            price_val = msrp_candidate
+    elif tier_upper in ("NON-DPP", "NONDPP", "NON-MD", "NONMD"):
+        nondpp_candidate = _get_price(product, "Harga_Non_DPP")
+        if nondpp_candidate:
+            price_val = nondpp_candidate
 
-    if not price_val or str(price_val).strip() in ("", "0"):
-        if brand_lower == "dahua":
-            formatted_price = "harga MD tidak tersedia di pricelist"
-        else:
-            formatted_price = "harga tidak tersedia"
+    if not price_val:
+        formatted_price = "harga tidak tersedia"
     else:
         formatted_price = format_rupiah_num(price_val)
 

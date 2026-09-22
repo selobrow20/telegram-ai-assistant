@@ -904,7 +904,7 @@ async def handle_document_message(message: Message, bot: Bot):
             return
         elif file_name.lower().endswith((".xlsx", ".xls")) or "spreadsheet" in mime_type or "excel" in mime_type:
             # 1. Coba deteksi apakah ini file pricelist produk
-            ok, msg, count = pricelist.import_pricelist_from_excel(doc_bytes)
+            ok, msg, count = pricelist.import_pricelist_from_excel(doc_bytes, file_name)
             if ok:
                 total_all = len(pricelist.load_pricelist())
                 await message.answer(

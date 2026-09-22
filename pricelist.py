@@ -324,25 +324,101 @@ def extract_text_from_excel(doc_bytes: bytes, max_rows: int = 150) -> str:
         logger.error(f"Gagal ekstrak excel: {e}")
         return ""
 
-def import_pricelist_from_excel(doc_bytes: bytes) -> Tuple[bool, str, int]:
+def import_pricelist_from_excel(doc_bytes: bytes, file_name: str = "") -> Tuple[bool, str, int]:
     """Membaca file Excel (.xlsx) semua sheet dan menggabungkan (merge) ke data/pricelist.csv tanpa menghapus data produk yang sudah ada."""
     import openpyxl
     try:
         wb = openpyxl.load_workbook(io.BytesIO(doc_bytes), data_only=True)
         new_extracted = {}
 
+        def clean_num(val):
+            if not val:
+                return ""
+            try:
+                if isinstance(val, (int, float)):
+                    v = int(round(val))
+                    return str(v) if v > 0 else ""
+            except Exception:
+                pass
+            s = str(val).strip()
+            if s.lower() in ("none", "n/a", "-", "null", "tbd", "na", "--"):
+                return ""
+            c = re.sub(r'[^0-9]', '', s)
+            return c if c and int(c) > 0 else ""
+
         for sname in wb.sheetnames:
-            if sname.lower() in ["update", "history", "changelog", "hot model list for retail", "hot model list for smb project"]:
+            sname_clean = sname.strip()
+            if sname_clean.lower() in ["update", "history", "changelog", "hot model list for retail", "hot model list for smb project"]:
                 continue
             ws = wb[sname]
             rows = list(ws.iter_rows(values_only=True))
             if not rows or len(rows) < 2:
                 continue
 
+            # Kasus khusus: Hik-Connect Team
+            if "hik-connect team" in sname_clean.lower():
+                for r in rows[2:]:
+                    if len(r) > 4 and r[4]:
+                        name = str(r[4]).strip()
+                        if name.startswith("HC-"):
+                            dpp = clean_num(r[8]) if len(r) > 8 else ""
+                            msrp = clean_num(r[7]) if len(r) > 7 else ""
+                            nondpp = clean_num(r[9]) if len(r) > 9 else ""
+                            desc = str(r[5]).strip() if len(r) > 5 and r[5] else ""
+                            final_dpp = dpp or nondpp or msrp
+                            if final_dpp:
+                                new_extracted[name] = {
+                                    "Model": name,
+                                    "Description": re.sub(r'\s+', ' ', desc)[:200],
+                                    "Harga_MD": final_dpp,
+                                    "Harga_IPP": final_dpp,
+                                    "Harga_SDP": final_dpp,
+                                    "Harga_ADP": final_dpp,
+                                    "Harga_DPP": final_dpp,
+                                    "Harga_MDP": final_dpp,
+                                    "Harga_MSRP": msrp or final_dpp,
+                                    "Harga_Non_DPP": nondpp,
+                                    "Category": "Hik-Connect Team",
+                                    "Sumber": "Hikvision Hik-Connect Team",
+                                    "Warranty": "2 Years Warranty",
+                                    "Brand": "Hikvision"
+                                }
+                continue
+
+            # Kasus khusus: Hik-Partner Pro
+            if "hik-partner pro" in sname_clean.lower():
+                for r in rows[3:]:
+                    if len(r) > 1 and r[1]:
+                        name = str(r[1]).strip()
+                        if name.startswith("HPP-") or "Co-Branding" in name:
+                            msrp = clean_num(r[5]) if len(r) > 5 else ""
+                            dpp = clean_num(r[6]) if len(r) > 6 else ""
+                            nondpp = clean_num(r[7]) if len(r) > 7 else ""
+                            desc = str(r[3]).strip() if len(r) > 3 and r[3] else ""
+                            final_dpp = dpp or nondpp or msrp
+                            if final_dpp:
+                                new_extracted[name] = {
+                                    "Model": name,
+                                    "Description": re.sub(r'\s+', ' ', desc)[:200],
+                                    "Harga_MD": final_dpp,
+                                    "Harga_IPP": final_dpp,
+                                    "Harga_SDP": final_dpp,
+                                    "Harga_ADP": final_dpp,
+                                    "Harga_DPP": final_dpp,
+                                    "Harga_MDP": final_dpp,
+                                    "Harga_MSRP": msrp or final_dpp,
+                                    "Harga_Non_DPP": nondpp,
+                                    "Category": "Hik-Partner Pro",
+                                    "Sumber": "Hikvision Hik-Partner Pro",
+                                    "Warranty": "2 Years Warranty",
+                                    "Brand": "Hikvision"
+                                }
+                continue
+
             header_idx = -1
-            for idx, r in enumerate(rows[:12]):
+            for idx, r in enumerate(rows[:15]):
                 r_str = [str(cell or "").lower().strip() for cell in r]
-                if any("model" in c or "tipe" in c or "type" in c or (c == "name" and any("price" in x or "dpp" in x for x in r_str)) for c in r_str):
+                if any("model" in c or "tipe" in c or "type" in c or "dpp" in c or (c == "name" and any("price" in x or "dpp" in x for x in r_str)) for c in r_str):
                     header_idx = idx
                     break
 
@@ -352,9 +428,11 @@ def import_pricelist_from_excel(doc_bytes: bytes) -> Tuple[bool, str, int]:
             header_row = [str(cell or "").lower().strip() for cell in rows[header_idx]]
 
             col_order = -1
+            col_basic = -1
             col_model = -1
             col_desc = -1
             col_dpp = -1
+            col_nondpp = -1
             col_adp = -1
             col_md = -1
             col_msrp = -1
@@ -363,98 +441,115 @@ def import_pricelist_from_excel(doc_bytes: bytes) -> Tuple[bool, str, int]:
             for i, col_name in enumerate(header_row):
                 if "order" in col_name and ("model" in col_name or "name" in col_name):
                     col_order = i
+                elif "basic" in col_name and ("model" in col_name or "name" in col_name):
+                    col_basic = i
                 elif ("model" in col_name or "tipe" in col_name or "type" in col_name or col_name == "name") and col_model == -1:
                     col_model = i
-                elif "desc" in col_name or "keterangan" in col_name or "deskripsi" in col_name or "spesifikasi" in col_name:
-                    col_desc = i
-                elif "dpp" in col_name:
+                elif any(k in col_name for k in ["desc", "keterangan", "deskripsi", "spesifikasi", "feature"]):
+                    if col_desc == -1:
+                        col_desc = i
+                elif "non-dpp" in col_name or "non dpp" in col_name or "nondpp" in col_name:
+                    col_nondpp = i
+                elif "dpp" in col_name and "non" not in col_name:
                     col_dpp = i
                 elif "adp" in col_name:
                     col_adp = i
                 elif "bottom" in col_name or "md" in col_name or "dealer" in col_name:
                     col_md = i
-                elif "msrp" in col_name or "srp" in col_name or "retail" in col_name:
-                    col_msrp = i
+                elif any(k in col_name for k in ["msrp", "srp", "retail", "price list"]):
+                    if col_msrp == -1 and "dpp" not in col_name:
+                        col_msrp = i
                 elif "warranty" in col_name or "garansi" in col_name:
                     col_warranty = i
 
-            # Fallback untuk kolom harga jika belum ketemu
             if col_dpp == -1 and col_adp == -1 and col_md == -1:
                 for i, col_name in enumerate(header_row):
                     if "price" in col_name or "harga" in col_name:
                         col_dpp = i
                         break
 
-            def clean_num(val):
-                if not val:
-                    return "0"
-                try:
-                    if isinstance(val, (int, float)):
-                        return str(int(round(val)))
-                except Exception:
-                    pass
-                c = re.sub(r'[^0-9]', '', str(val))
-                return c if c else "0"
+            last_basic = ""
+            last_desc = ""
 
             for r in rows[header_idx + 1:]:
-                if not r:
+                if not r or not any(r):
                     continue
+
+                curr_basic = str(r[col_basic]).strip() if col_basic != -1 and len(r) > col_basic and r[col_basic] is not None else ""
+                if curr_basic and curr_basic.lower() not in ("none", "null", "-", "standard"):
+                    last_basic = curr_basic
+
+                curr_desc = str(r[col_desc]).strip() if col_desc != -1 and len(r) > col_desc and r[col_desc] is not None else ""
+                if curr_desc and curr_desc.lower() not in ("none", "null", "-"):
+                    last_desc = curr_desc
 
                 raw_order = str(r[col_order]).strip() if col_order != -1 and len(r) > col_order and r[col_order] else ""
                 raw_model = str(r[col_model]).strip() if col_model != -1 and len(r) > col_model and r[col_model] else ""
 
                 candidates = []
                 for rm in [raw_order, raw_model]:
-                    if not rm or rm.lower() in ("none", "model", "tipe", "type", "order model", "basic model", "name"):
+                    if not rm or rm.lower() in ("none", "model", "tipe", "type", "order model", "basic model", "name", "null", "-"):
                         continue
-                    cm = re.sub(r'[\（\(](?:hot\s*sku|project|new)[^\）\)]*[\）\)]', '', rm, flags=re.IGNORECASE).strip()
+                    cm = re.sub(r'[\（\(](?:hot\s*sku|project|new|standard)[^\）\)]*[\）\)]', '', rm, flags=re.IGNORECASE).strip()
                     cm = cm.split('\n')[0].strip()
                     if len(cm) >= 3 and cm not in candidates:
+                        candidates.append(cm)
+
+                if not candidates and last_basic and len(last_basic) >= 3:
+                    cm = re.sub(r'[\（\(](?:hot\s*sku|project|new|standard)[^\）\)]*[\）\)]', '', last_basic, flags=re.IGNORECASE).strip()
+                    cm = cm.split('\n')[0].strip()
+                    if cm and cm not in candidates:
                         candidates.append(cm)
 
                 if not candidates:
                     continue
 
                 # Ambil harga
-                p_dpp = clean_num(r[col_dpp]) if col_dpp != -1 and len(r) > col_dpp else "0"
-                p_adp = clean_num(r[col_adp]) if col_adp != -1 and len(r) > col_adp else p_dpp
-                p_md = clean_num(r[col_md]) if col_md != -1 and len(r) > col_md else (p_dpp or p_adp)
-                p_final = p_dpp if int(p_dpp) > 0 else (p_adp if int(p_adp) > 0 else p_md)
-
+                p_dpp = clean_num(r[col_dpp]) if col_dpp != -1 and len(r) > col_dpp else ""
+                p_nondpp = clean_num(r[col_nondpp]) if col_nondpp != -1 and len(r) > col_nondpp else ""
+                p_adp = clean_num(r[col_adp]) if col_adp != -1 and len(r) > col_adp else ""
+                p_md = clean_num(r[col_md]) if col_md != -1 and len(r) > col_md else ""
+                
+                p_final = p_dpp or p_adp or p_md or p_nondpp
                 if not p_final or int(p_final) == 0:
                     continue
 
-                desc = str(r[col_desc]).strip() if col_desc != -1 and len(r) > col_desc and r[col_desc] else ""
-                desc = desc.replace('\n', ' ')
+                desc = curr_desc or last_desc
+                desc = re.sub(r'\s+', ' ', desc).strip()[:200]
                 msrp = clean_num(r[col_msrp]) if col_msrp != -1 and len(r) > col_msrp else p_final
                 warranty = str(r[col_warranty]).strip() if col_warranty != -1 and len(r) > col_warranty and r[col_warranty] else "2 Years Warranty"
 
                 # Deteksi Brand otomatis
                 brand = "General"
                 first_cand = candidates[0].upper()
-                file_str = str(file_path).lower()
+                file_str = (file_name or "").lower()
                 if "hilook" in file_str or first_cand.startswith("THC-") or first_cand.startswith("IPC-B12") or first_cand.startswith("IPC-D12") or first_cand.startswith("IPC-B14") or first_cand.startswith("IPC-D14") or first_cand.startswith("DVR-2") or first_cand.startswith("NVR-1"):
                     brand = "HiLook"
                 elif "hiview" in file_str or first_cand.startswith("HV-") or first_cand.startswith("TH-") or first_cand.startswith("T1A20") or first_cand.startswith("B1A20") or first_cand.startswith("T1290") or first_cand.startswith("B1290"):
                     brand = "Hiview"
-                elif first_cand.startswith("DS-") or first_cand.startswith("IDS-") or first_cand.startswith("HC-"):
+                elif "hik" in file_str or first_cand.startswith("DS-") or first_cand.startswith("IDS-") or first_cand.startswith("HC-") or first_cand.startswith("HPP-"):
                     brand = "Hikvision"
-                elif first_cand.startswith("DH-") or first_cand.startswith("DHI-") or first_cand.startswith("XVR") or first_cand.startswith("NVR") or first_cand.startswith("HAC"):
+                elif "dahua" in file_str or first_cand.startswith("DH-") or first_cand.startswith("DHI-") or first_cand.startswith("XVR") or first_cand.startswith("NVR") or first_cand.startswith("HAC"):
                     brand = "Dahua"
-                elif first_cand.startswith("RG-") or first_cand.startswith("REYEE") or "RUIJIE" in first_cand:
+                elif "ruijie" in file_str or "reyee" in file_str or first_cand.startswith("RG-") or first_cand.startswith("REYEE") or "RUIJIE" in first_cand:
                     brand = "Ruijie"
 
                 for cand in candidates:
+                    if cand.lower() in ("outdoor", "indoor", "waterproof", "analog", "bullet", "dome", "turret", "ptz", "accessories", "switch"):
+                        continue
                     new_extracted[cand] = {
                         "Model": cand,
-                        "Description": desc[:150],
-                        "Harga_MD": p_final,
-                        "Harga_ADP": p_final,
+                        "Description": desc,
+                        "Harga_MD": p_md or p_final,
+                        "Harga_IPP": p_final,
+                        "Harga_SDP": p_final,
+                        "Harga_ADP": p_adp or p_final,
                         "Harga_DPP": p_dpp or p_final,
+                        "Harga_MDP": p_final,
                         "Harga_MSRP": msrp or p_final,
-                        "Harga_Non_DPP": "",
-                        "Category": sname,
-                        "Sumber": f"{brand} {sname}",
+                        "Harga_Non_DPP": p_nondpp or "",
+                        "Category": sname_clean,
+                        "Sumber": f"{brand} {sname_clean}",
                         "Warranty": warranty,
                         "Brand": brand
                     }
@@ -476,7 +571,11 @@ def import_pricelist_from_excel(doc_bytes: bytes) -> Tuple[bool, str, int]:
         for m, item in new_extracted.items():
             existing[m] = item
 
-        fieldnames = ["Model", "Description", "Harga_MD", "Harga_ADP", "Harga_DPP", "Harga_MSRP", "Harga_Non_DPP", "Category", "Sumber", "Warranty", "Brand"]
+        fieldnames = [
+            "Model", "Description", "Harga_MD", "Harga_IPP", "Harga_SDP",
+            "Harga_ADP", "Harga_DPP", "Harga_MDP", "Harga_MSRP", "Harga_Non_DPP",
+            "Category", "Sumber", "Warranty", "Brand"
+        ]
         with open(PRICELIST_PATH, "w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
@@ -485,6 +584,7 @@ def import_pricelist_from_excel(doc_bytes: bytes) -> Tuple[bool, str, int]:
 
         return True, f"Berhasil mengimpor {len(new_extracted)} produk ke database (Total sekarang: {len(existing)} produk).", len(new_extracted)
     except Exception as e:
+        logger.error(f"Gagal membaca file Excel: {e}")
         return False, f"Gagal membaca file Excel: {e}", 0
 
 def update_product_price(model_query: str, new_price: Any) -> Tuple[bool, str]:

@@ -193,15 +193,14 @@ async def cmd_harga(message: Message):
     if len(parts) > 1:
         query = parts[1].strip()
         ans = pricelist.query_pricelist_tool(query)
-        await message.answer(ans, reply_markup=get_main_keyboard())
+        await message.answer(ans)
     else:
         await message.answer(
-            "🏷️ *CEK HARGA PRICELIST (ADP)*\n\n"
+            "🏷️ *CEK HARGA PRICELIST*\n\n"
             "Ketik tipe/kode produk di chat, contoh:\n"
-            "• `EW1200G` atau `/harga EW1200G`\n"
             "• `RG-RAP2260`\n"
-            "• Atau tanya: _\"Harga EW3000GX beli 5 unit diskon 5%?\"_",
-            reply_markup=get_main_keyboard(),
+            "• `DH-IPC-HDW1230`\n"
+            "• `RG-RAP62-OD, RG-RAP2260`",
             parse_mode=ParseMode.MARKDOWN
         )
 
@@ -231,14 +230,14 @@ async def cmd_set_harga(message: Message):
             "```\n"
             "_Harga langsung tersimpan permanen di database pricelist!_ 🚀"
         )
-        await message.answer(guide, reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
+        await message.answer(guide, parse_mode=ParseMode.MARKDOWN)
         return
 
     content = parts[1].strip()
     lines = [l for l in content.splitlines() if l.strip()]
     if len(lines) > 1:
         ok, res_text, count = pricelist.batch_update_product_prices(content)
-        await message.answer(res_text, reply_markup=get_main_keyboard())
+        await message.answer(res_text)
         return
 
     m = re.search(r'^(.*?)(?::\s*|=\s*|\s+(?:jadi|menjadi)\s*|\s+)(?:Rp\.?\s*)?([0-9\.\,]+)$', content, flags=re.IGNORECASE)
@@ -246,11 +245,11 @@ async def cmd_set_harga(message: Message):
         model = m.group(1).strip()
         price = m.group(2).strip()
         ok, res_text = pricelist.update_product_price(model, price)
-        await message.answer(res_text, reply_markup=get_main_keyboard())
+        await message.answer(res_text)
     else:
         ok, res_text, count = pricelist.batch_update_product_prices(content)
         if ok:
-            await message.answer(res_text, reply_markup=get_main_keyboard())
+            await message.answer(res_text)
         else:
             await message.answer(
                 "⚠️ Format salah, bor. Gunakan format:\n"
@@ -1075,7 +1074,7 @@ async def handle_text_message(message: Message, bot: Bot):
         lines = [l for l in user_text.strip().splitlines() if l.strip()]
         if len(lines) > 1:
             ok, res_msg, count = pricelist.batch_update_product_prices(user_text)
-            await message.answer(res_msg, reply_markup=get_main_keyboard())
+            await message.answer(res_msg)
             return
         else:
             line_clean = re.sub(r'^(?:/setharga|/updateharga|/ubahharga|/gantiharga|ubah harga|ganti harga|update harga|set harga|perbaiki harga|benerin harga)[:\s]*', '', user_text, flags=re.IGNORECASE).strip()
@@ -1084,18 +1083,18 @@ async def handle_text_message(message: Message, bot: Bot):
                 model = m.group(1).strip()
                 price = m.group(2).strip()
                 ok, res_msg = pricelist.update_product_price(model, price)
-                await message.answer(res_msg, reply_markup=get_main_keyboard())
+                await message.answer(res_msg)
                 return
             else:
                 ok, res_msg, count = pricelist.batch_update_product_prices(user_text)
                 if ok:
-                    await message.answer(res_msg, reply_markup=get_main_keyboard())
+                    await message.answer(res_msg)
                     return
 
     # Intersep langsung kueri kode model produk (Cek Harga Instan tanpa LLM)
     direct_price_ans = pricelist.try_direct_pricelist_query(user_text)
     if direct_price_ans:
-        await message.answer(direct_price_ans, reply_markup=get_main_keyboard())
+        await message.answer(direct_price_ans)
         return
 
     # Intersep permintaan Excel khusus dari PDF

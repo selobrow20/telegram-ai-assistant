@@ -224,7 +224,10 @@ def format_single_product_answer(product: Dict[str, Any], tier: str = "") -> str
         price_val = product.get("Harga_Non_DPP")
 
     if not price_val or str(price_val).strip() in ("", "0"):
-        formatted_price = "harga tidak tersedia"
+        if brand_lower == "dahua":
+            formatted_price = "harga MD tidak tersedia di pricelist"
+        else:
+            formatted_price = "harga tidak tersedia"
     else:
         formatted_price = format_rupiah_num(price_val)
 
@@ -454,6 +457,8 @@ def import_pricelist_from_excel(doc_bytes: bytes, file_name: str = "") -> Tuple[
                     col_dpp = i
                 elif "adp" in col_name:
                     col_adp = i
+                elif "mdp" in col_name:
+                    col_md = i
                 elif "bottom" in col_name or "md" in col_name or "dealer" in col_name:
                     col_md = i
                 elif any(k in col_name for k in ["msrp", "srp", "retail", "price list"]):
@@ -537,22 +542,41 @@ def import_pricelist_from_excel(doc_bytes: bytes, file_name: str = "") -> Tuple[
                 for cand in candidates:
                     if cand.lower() in ("outdoor", "indoor", "waterproof", "analog", "bullet", "dome", "turret", "ptz", "accessories", "switch"):
                         continue
-                    new_extracted[cand] = {
-                        "Model": cand,
-                        "Description": desc,
-                        "Harga_MD": p_md or p_final,
-                        "Harga_IPP": p_final,
-                        "Harga_SDP": p_final,
-                        "Harga_ADP": p_adp or p_final,
-                        "Harga_DPP": p_dpp or p_final,
-                        "Harga_MDP": p_final,
-                        "Harga_MSRP": msrp or p_final,
-                        "Harga_Non_DPP": p_nondpp or "",
-                        "Category": sname_clean,
-                        "Sumber": f"{brand} {sname_clean}",
-                        "Warranty": warranty,
-                        "Brand": brand
-                    }
+                    if brand == "Dahua":
+                        dahua_md = p_md or p_dpp
+                        new_extracted[cand] = {
+                            "Model": cand,
+                            "Description": desc,
+                            "Harga_MD": dahua_md,
+                            "Harga_IPP": dahua_md,
+                            "Harga_SDP": p_dpp or dahua_md,
+                            "Harga_ADP": dahua_md,
+                            "Harga_DPP": p_dpp,
+                            "Harga_MDP": dahua_md,
+                            "Harga_MSRP": msrp,
+                            "Harga_Non_DPP": p_nondpp or "",
+                            "Category": sname_clean,
+                            "Sumber": f"{brand} {sname_clean}",
+                            "Warranty": warranty,
+                            "Brand": brand
+                        }
+                    else:
+                        new_extracted[cand] = {
+                            "Model": cand,
+                            "Description": desc,
+                            "Harga_MD": p_md or p_final,
+                            "Harga_IPP": p_final,
+                            "Harga_SDP": p_final,
+                            "Harga_ADP": p_adp or p_final,
+                            "Harga_DPP": p_dpp or p_final,
+                            "Harga_MDP": p_final,
+                            "Harga_MSRP": msrp or p_final,
+                            "Harga_Non_DPP": p_nondpp or "",
+                            "Category": sname_clean,
+                            "Sumber": f"{brand} {sname_clean}",
+                            "Warranty": warranty,
+                            "Brand": brand
+                        }
 
         if not new_extracted:
             return False, "Tidak ada data produk yang berhasil diekstrak dari seluruh sheet.", 0

@@ -191,7 +191,7 @@ async def cmd_harga(message: Message):
     parts = message.text.split(maxsplit=1)
     if len(parts) > 1:
         query = parts[1].strip()
-        ans = pricelist.query_pricelist_tool(query, "ADP")
+        ans = pricelist.query_pricelist_tool(query)
         await message.answer(ans, reply_markup=get_main_keyboard())
     else:
         await message.answer(

@@ -56,12 +56,12 @@ def search_pricelist(query: str, price_tier: str = "", brand_filter: str = "") -
     
     # Deteksi merek dalam query jika ada (Aturan 3)
     detected_brand = brand_filter.strip().lower() if brand_filter else ""
-    brands = ["hikvision", "dahua", "ruijie", "hilook", "hiview", "imou"]
+    brands = ["hikvision", "dahua", "ruijie", "hilook", "hiview", "imou", "reyee"]
     if not detected_brand:
         for b in brands:
             pattern = rf'\b{b}\b'
             if re.search(pattern, q_raw, flags=re.IGNORECASE):
-                detected_brand = b
+                detected_brand = "ruijie" if b == "reyee" else b
                 q_raw = re.sub(pattern, '', q_raw, flags=re.IGNORECASE).strip()
                 break
                 
@@ -75,7 +75,21 @@ def search_pricelist(query: str, price_tier: str = "", brand_filter: str = "") -
             }
 
     q_norm = normalize_code(q_raw)
-    
+
+    # Deteksi pencarian kategori umum (misal: "home router", "router wifi", "home router wifi")
+    if q_norm in [
+        "homerouter", "homerouterwifi", "routerwifi", "wifirouter",
+        "routerhome", "reyerouter", "ruijierouter", "routerruijie",
+        "homerouterreyee", "daftarmodelrouter", "homerouterruijie", "router"
+    ]:
+        router_matches = [p for p in products if p.get("Category") == "Home Router Wi-Fi" or "Home Router" in p.get("Category", "")]
+        if router_matches:
+            return {
+                "status": "ambiguous",
+                "matches": router_matches,
+                "price_tier": price_tier
+            }
+
     # 1. Cari exact match (persis sama setelah dinormalisasi)
     exact_matches = [p for p in products if q_norm == normalize_code(p.get("Model", ""))]
     if len(exact_matches) == 1:
@@ -255,7 +269,7 @@ def query_pricelist_tool(query: str, tier: str = "") -> str:
         
     elif st == "ambiguous":
         items = result["matches"]
-        lines = [format_single_product_answer(p, tier) for p in items[:6]]
+        lines = [format_single_product_answer(p, tier) for p in items[:15]]
         return "\n".join(lines)
         
     elif st == "not_found_with_suggestions":

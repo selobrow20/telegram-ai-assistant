@@ -295,12 +295,12 @@ def create_tools_for_user(user_id: int, user_name: str = "Teman", chat_id: int =
         """
         return pricelist.query_pricelist_tool(kode_atau_nama_produk, jenis_harga)
 
-    def update_harga_produk(model_produk: str, harga_baru: float) -> str:
+    def update_harga_produk(model_produk: str, harga_baru: str) -> str:
         """Memperbarui atau mengubah harga suatu produk di database pricelist.
-        Gunakan fungsi ini jika pengguna meminta update/ubah/ganti harga produk tertentu.
+        Gunakan fungsi ini jika pengguna meminta update/ubah/ganti/perbaiki harga produk tertentu.
         Args:
-            model_produk: Tipe/kode produk yang ingin diubah (contoh: 'DH-IPC-B1E20-A')
-            harga_baru: Angka nominal harga baru dalam rupiah (contoh: 399000)
+            model_produk: Tipe/kode produk yang ingin diubah (contoh: 'DH-IPC-B1E20-A' atau 'RG-RAP2260')
+            harga_baru: Angka nominal harga baru dalam rupiah (contoh: '399000' atau 'Rp 399.000')
         """
         ok, msg = pricelist.update_product_price(model_produk, harga_baru)
         return msg

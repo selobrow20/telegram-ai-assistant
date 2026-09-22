@@ -4,6 +4,7 @@ import logging
 import os
 import sys
 from pathlib import Path
+import re
 
 from typing import Callable, Dict, Any, Awaitable
 from aiogram import Bot, Dispatcher, F, BaseMiddleware
@@ -203,6 +204,60 @@ async def cmd_harga(message: Message):
             reply_markup=get_main_keyboard(),
             parse_mode=ParseMode.MARKDOWN
         )
+
+@dp.message(Command("setharga"))
+@dp.message(Command("updateharga"))
+@dp.message(Command("ubahharga"))
+@dp.message(Command("gantiharga"))
+async def cmd_set_harga(message: Message):
+    text = message.text.strip()
+    parts = text.split(maxsplit=1)
+    if len(parts) == 1:
+        guide = (
+            "🛠️ *FITUR UBAH / PERBAIKI HARGA CEPAT*\n"
+            "━━━━━━━━━━━━━━━━━━━━━━\n"
+            "Lu bisa langsung perbaiki atau update harga produk di database, bor!\n\n"
+            "📌 *1. Ubah 1 Produk:*\n"
+            "• `/setharga RG-RAP2260 4908420`\n"
+            "• `/setharga DH-IPC-HFW1230 475.324`\n"
+            "• Atau ketik biasa di chat: `ubah harga RG-RAP2260 jadi 4908420`\n\n"
+            "📌 *2. Ubah Banyak Sekaligus:*\n"
+            "Ketik perintah diikuti daftar tipe & harga:\n"
+            "```\n"
+            "/setharga\n"
+            "RG-RAP62-OD 2035740\n"
+            "RG-RAP2260 4908420\n"
+            "DH-IPC-HFW1230 475324\n"
+            "```\n"
+            "_Harga langsung tersimpan permanen di database pricelist!_ 🚀"
+        )
+        await message.answer(guide, reply_markup=get_main_keyboard(), parse_mode=ParseMode.MARKDOWN)
+        return
+
+    content = parts[1].strip()
+    lines = [l for l in content.splitlines() if l.strip()]
+    if len(lines) > 1:
+        ok, res_text, count = pricelist.batch_update_product_prices(content)
+        await message.answer(res_text, reply_markup=get_main_keyboard())
+        return
+
+    m = re.search(r'^(.*?)(?::\s*|=\s*|\s+(?:jadi|menjadi)\s*|\s+)(?:Rp\.?\s*)?([0-9\.\,]+)$', content, flags=re.IGNORECASE)
+    if m:
+        model = m.group(1).strip()
+        price = m.group(2).strip()
+        ok, res_text = pricelist.update_product_price(model, price)
+        await message.answer(res_text, reply_markup=get_main_keyboard())
+    else:
+        ok, res_text, count = pricelist.batch_update_product_prices(content)
+        if ok:
+            await message.answer(res_text, reply_markup=get_main_keyboard())
+        else:
+            await message.answer(
+                "⚠️ Format salah, bor. Gunakan format:\n"
+                "`/setharga <tipe> <harga>`\n"
+                "Contoh: `/setharga RG-RAP2260 4908420`",
+                parse_mode=ParseMode.MARKDOWN
+            )
 
 @dp.message(Command("notifikasi"))
 @dp.message(Command("notif"))
@@ -1013,6 +1068,34 @@ async def handle_text_message(message: Message, bot: Bot):
             reply_markup=get_main_keyboard(),
             parse_mode=ParseMode.MARKDOWN
         )
+        return
+
+    # Intersep langsung update / perbaiki harga (natural language & multi-line)
+    if re.search(r'^(?:/setharga|/updateharga|/ubahharga|/gantiharga|ubah harga|ganti harga|update harga|set harga|perbaiki harga|benerin harga)\b', lower_text):
+        lines = [l for l in user_text.strip().splitlines() if l.strip()]
+        if len(lines) > 1:
+            ok, res_msg, count = pricelist.batch_update_product_prices(user_text)
+            await message.answer(res_msg, reply_markup=get_main_keyboard())
+            return
+        else:
+            line_clean = re.sub(r'^(?:/setharga|/updateharga|/ubahharga|/gantiharga|ubah harga|ganti harga|update harga|set harga|perbaiki harga|benerin harga)[:\s]*', '', user_text, flags=re.IGNORECASE).strip()
+            m = re.search(r'^(.*?)(?::\s*|=\s*|\s+(?:jadi|menjadi)\s*|\s+)(?:Rp\.?\s*)?([0-9\.\,]+)$', line_clean, flags=re.IGNORECASE)
+            if m:
+                model = m.group(1).strip()
+                price = m.group(2).strip()
+                ok, res_msg = pricelist.update_product_price(model, price)
+                await message.answer(res_msg, reply_markup=get_main_keyboard())
+                return
+            else:
+                ok, res_msg, count = pricelist.batch_update_product_prices(user_text)
+                if ok:
+                    await message.answer(res_msg, reply_markup=get_main_keyboard())
+                    return
+
+    # Intersep langsung kueri kode model produk (Cek Harga Instan tanpa LLM)
+    direct_price_ans = pricelist.try_direct_pricelist_query(user_text)
+    if direct_price_ans:
+        await message.answer(direct_price_ans, reply_markup=get_main_keyboard())
         return
 
     # Intersep permintaan Excel khusus dari PDF

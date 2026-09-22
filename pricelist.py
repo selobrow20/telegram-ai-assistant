@@ -9,6 +9,28 @@ from typing import Dict, Any, List, Optional, Tuple
 logger = logging.getLogger(__name__)
 
 PRICELIST_PATH = Path("data/pricelist.csv")
+PRICELIST_FIELDNAMES = [
+    "Model", "Description", "Harga_MD", "Harga_IPP", "Harga_SDP",
+    "Harga_ADP", "Harga_DPP", "Harga_MDP", "Harga_MSRP", "Harga_Non_DPP",
+    "Category", "Sumber", "Warranty", "Brand"
+]
+
+def infer_brand(model: str) -> str:
+    """Menebak merek produk berdasarkan kode atau awalan model."""
+    m = model.strip().upper()
+    if m.startswith("DH-") or m.startswith("DHI-") or m.startswith("DH") or m.startswith("DHI"):
+        return "Dahua"
+    if m.startswith("DS-") or m.startswith("IDS-") or m.startswith("HC-") or m.startswith("HIK"):
+        return "Hikvision"
+    if m.startswith("RG-") or m.startswith("REYEE") or m.startswith("ES-") or m.startswith("NBS-") or m.startswith("RAP"):
+        return "Ruijie"
+    if m.startswith("THC-") or m.startswith("HL-") or m.startswith("HILOOK"):
+        return "HiLook"
+    if m.startswith("HV-") or m.startswith("HIVIEW"):
+        return "Hiview"
+    if m.startswith("IPC-") or m.startswith("IMOU"):
+        return "Imou"
+    return "Umum"
 
 def normalize_code(code: str) -> str:
     """Bersihkan kode: lowercase, hapus spasi, tanda hubung, dan tanda baca."""
@@ -294,6 +316,59 @@ def query_pricelist_tool(query: str, tier: str = "") -> str:
         
     else:
         return f"Model {query} tidak ada di pricelist."
+
+def try_direct_pricelist_query(text: str) -> Optional[str]:
+    """
+    Mendeteksi apakah teks pengguna adalah murni kueri model/tipe produk.
+    Jika ya, langsung kembalikan format jawaban harga tanpa melalui LLM.
+    """
+    t = text.strip()
+    if not t or t.startswith('/'):
+        return None
+
+    lower = t.lower()
+    conv_words = [
+        'catat', 'beli', 'makan', 'pengeluaran', 'pemasukan', 'saldo', 'reset',
+        'laporan', 'excel', 'jadwal', 'ingatkan', 'alarm', 'tugas', 'todo',
+        'halo', 'hai', 'pagi', 'siang', 'malam', 'siapa', 'kamu', 'bisa apa',
+        'kenapa', 'gimana', 'bagaimana', 'diskon', 'total', 'kalau', 'unit',
+        'pcs', 'ubah', 'ganti', 'set', 'update', 'perbaiki', 'benerin', 'tolong'
+    ]
+    words_in_text = lower.split()
+    if any(w in words_in_text for w in conv_words):
+        return None
+
+    # Hapus awalan cek harga jika ada
+    candidate = re.sub(r'^(?:cek\s+harga|berapa\s+harga|harga|pricelist)\s+', '', t, flags=re.IGNORECASE).strip()
+    if not candidate:
+        return None
+
+    # Pisahkan bagian dengan koma, titik koma, atau newline
+    raw_parts = [p.strip() for p in re.split(r'[,;\n]+', candidate) if p.strip()]
+    if not raw_parts or len(raw_parts) > 30:
+        return None
+
+    # Setiap bagian harus mirip kode model produk
+    for p in raw_parts:
+        if len(p) < 2 or len(p) > 40:
+            return None
+        if not re.match(r'^[a-zA-Z0-9\-\(\)\/\.\_\+\s]+$', p):
+            return None
+        # Harus mengandung angka atau awalan merek resmi
+        p_low = p.lower()
+        has_digit = bool(re.search(r'[0-9]', p))
+        has_brand_pfx = bool(re.search(r'^(?:rg|reyee|dh|dhi|ds|ids|hc|thc|hilook|imou|hiview|hv|es|nbs)', p_low))
+        if not (has_digit or has_brand_pfx):
+            return None
+
+    res = query_pricelist_tool(candidate)
+    # Jika semua bagian dinyatakan tidak ada di pricelist, serahkan ke LLM/Gemini
+    if 'tidak ada di pricelist' in res:
+        all_not_found = all(f'Model {p} tidak ada di pricelist' in res for p in raw_parts)
+        if all_not_found:
+            return None
+
+    return res
 
 def save_new_pricelist_csv(content: str) -> Tuple[bool, str, int]:
     """Menyimpan file CSV pricelist baru yang diupload user."""
@@ -621,43 +696,170 @@ def import_pricelist_from_excel(doc_bytes: bytes, file_name: str = "") -> Tuple[
         logger.error(f"Gagal membaca file Excel: {e}")
         return False, f"Gagal membaca file Excel: {e}", 0
 
-def update_product_price(model_query: str, new_price: Any) -> Tuple[bool, str]:
+def update_product_price(model_query: str, new_price: Any, create_if_missing: bool = True) -> Tuple[bool, str]:
     """Mengubah atau memperbarui harga suatu produk di data/pricelist.csv."""
     clean_price = re.sub(r'[^0-9]', '', str(new_price))
     if not clean_price:
-        return False, "Nominal harga tidak valid."
+        return False, "Nominal harga tidak valid. Masukkan angka nominal yang benar, contoh: 450000 atau Rp 450.000."
 
     products = load_pricelist()
     q_norm = normalize_code(model_query)
+    if not q_norm:
+        return False, "Model produk tidak boleh kosong."
 
-    found = False
-    updated_model = ""
-    for p in products:
+    found_idx = -1
+    # 1. Exact match
+    for idx, p in enumerate(products):
         m_norm = normalize_code(p.get("Model", ""))
-        if q_norm == m_norm or (q_norm.startswith("rg") and q_norm[2:] == m_norm[2:]) or (q_norm.startswith("dh") and q_norm[2:] == m_norm[2:]):
-            p["Harga_ADP"] = clean_price
-            p["Harga_MD"] = clean_price
-            updated_model = p.get("Model", model_query)
-            found = True
+        if q_norm == m_norm:
+            found_idx = idx
             break
 
-    if not found:
-        for p in products:
+    # 2. Match without brand prefix
+    if found_idx == -1:
+        for idx, p in enumerate(products):
             m_norm = normalize_code(p.get("Model", ""))
-            if q_norm in m_norm:
-                p["Harga_ADP"] = clean_price
-                p["Harga_MD"] = clean_price
-                updated_model = p.get("Model", model_query)
-                found = True
+            if (q_norm.startswith("rg") and q_norm[2:] == m_norm[2:]) or (q_norm.startswith("dh") and q_norm[2:] == m_norm[2:]):
+                found_idx = idx
                 break
 
-    if not found:
+    # 3. Substring match
+    if found_idx == -1:
+        for idx, p in enumerate(products):
+            m_norm = normalize_code(p.get("Model", ""))
+            if q_norm in m_norm or (len(q_norm) >= 5 and m_norm in q_norm):
+                found_idx = idx
+                break
+
+    if found_idx != -1:
+        p = products[found_idx]
+        p["Harga_MD"] = clean_price
+        p["Harga_ADP"] = clean_price
+        p["Harga_MDP"] = clean_price
+        p["Harga_DPP"] = clean_price
+        p["Harga_IPP"] = clean_price
+        p["Harga_SDP"] = clean_price
+        updated_model = p.get("Model", model_query)
+        action_desc = f"✅ Harga {updated_model} berhasil diupdate menjadi {format_rupiah_num(clean_price)}."
+    elif create_if_missing:
+        brand = infer_brand(model_query)
+        new_prod = {k: "" for k in PRICELIST_FIELDNAMES}
+        new_prod["Model"] = model_query.strip()
+        new_prod["Brand"] = brand
+        new_prod["Description"] = f"{brand} {model_query.strip()}"
+        new_prod["Harga_MD"] = clean_price
+        new_prod["Harga_ADP"] = clean_price
+        new_prod["Harga_MDP"] = clean_price
+        new_prod["Harga_DPP"] = clean_price
+        new_prod["Harga_IPP"] = clean_price
+        new_prod["Harga_SDP"] = clean_price
+        new_prod["Category"] = "Manual Update"
+        new_prod["Sumber"] = "User Direct Update"
+        new_prod["Warranty"] = "Official Warranty"
+        products.append(new_prod)
+        updated_model = model_query.strip()
+        action_desc = f"✅ Produk baru {updated_model} ({brand}) berhasil ditambahkan ke database dengan harga {format_rupiah_num(clean_price)}."
+    else:
         return False, f"Produk '{model_query}' tidak ditemukan di database pricelist."
 
-    fieldnames = ["Model", "Description", "Harga_MD", "Harga_ADP", "Harga_Installer", "Harga_Online", "Harga_MSRP", "Warranty", "Brand"]
     with open(PRICELIST_PATH, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=PRICELIST_FIELDNAMES)
         writer.writeheader()
-        writer.writerows(products)
+        for r in products:
+            writer.writerow({k: r.get(k, "") for k in PRICELIST_FIELDNAMES})
 
-    return True, f"✅ Harga {updated_model} berhasil diupdate menjadi {format_rupiah_num(clean_price)}."
+    return True, action_desc
+
+def batch_update_product_prices(input_text: str) -> Tuple[bool, str, int]:
+    """
+    Memperbarui banyak harga produk sekaligus dari teks multiline.
+    Mendukung format:
+    Model Rp100.000
+    Model 100000
+    Model : 100.000
+    Model = 100.000
+    """
+    lines = [l.strip() for l in input_text.strip().splitlines() if l.strip()]
+    if not lines:
+        return False, "Teks pembaruan harga kosong.", 0
+
+    products = load_pricelist()
+    prod_map = {normalize_code(p.get("Model", "")): p for p in products}
+
+    updated_count = 0
+    added_count = 0
+    results_detail = []
+
+    for line in lines:
+        line_clean = re.sub(r'^(?:/setharga|/updateharga|/ubahharga|/gantiharga|update harga|ubah harga|ganti harga|set harga|perbaiki harga)[:\s]*', '', line, flags=re.IGNORECASE).strip()
+        if not line_clean:
+            continue
+
+        m = re.search(r'^(.*?)(?::\s*|=\s*|\s+(?:jadi|menjadi)\s*|\s+)(?:Rp\.?\s*)?([0-9\.\,]+)$', line_clean, flags=re.IGNORECASE)
+        if not m:
+            continue
+
+        model_part = m.group(1).strip()
+        price_part = m.group(2).strip()
+        clean_price = re.sub(r'[^0-9]', '', price_part)
+        if not clean_price or not model_part:
+            continue
+
+        q_norm = normalize_code(model_part)
+        found_p = prod_map.get(q_norm)
+
+        if not found_p:
+            for p_norm, p in prod_map.items():
+                if (q_norm.startswith("rg") and q_norm[2:] == p_norm[2:]) or (q_norm.startswith("dh") and q_norm[2:] == p_norm[2:]):
+                    found_p = p
+                    break
+
+        if not found_p:
+            for p_norm, p in prod_map.items():
+                if q_norm in p_norm or (len(q_norm) >= 5 and p_norm in q_norm):
+                    found_p = p
+                    break
+
+        if found_p:
+            found_p["Harga_MD"] = clean_price
+            found_p["Harga_ADP"] = clean_price
+            found_p["Harga_MDP"] = clean_price
+            found_p["Harga_DPP"] = clean_price
+            found_p["Harga_IPP"] = clean_price
+            found_p["Harga_SDP"] = clean_price
+            updated_count += 1
+            results_detail.append(f"• {found_p.get('Model', model_part)} : {format_rupiah_num(clean_price)}")
+        else:
+            brand = infer_brand(model_part)
+            new_p = {k: "" for k in PRICELIST_FIELDNAMES}
+            new_p["Model"] = model_part
+            new_p["Brand"] = brand
+            new_p["Description"] = f"{brand} {model_part}"
+            new_p["Harga_MD"] = clean_price
+            new_p["Harga_ADP"] = clean_price
+            new_p["Harga_MDP"] = clean_price
+            new_p["Harga_DPP"] = clean_price
+            new_p["Harga_IPP"] = clean_price
+            new_p["Harga_SDP"] = clean_price
+            new_p["Category"] = "Manual Update"
+            new_p["Sumber"] = "User Direct Update"
+            new_p["Warranty"] = "Official Warranty"
+            products.append(new_p)
+            prod_map[q_norm] = new_p
+            added_count += 1
+            results_detail.append(f"• {model_part} (Baru) : {format_rupiah_num(clean_price)}")
+
+    total_modified = updated_count + added_count
+    if total_modified == 0:
+        return False, "Tidak ditemukan pasangan model dan harga yang valid dalam teks tersebut.", 0
+
+    with open(PRICELIST_PATH, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=PRICELIST_FIELDNAMES)
+        writer.writeheader()
+        for r in products:
+            writer.writerow({k: r.get(k, "") for k in PRICELIST_FIELDNAMES})
+
+    summary = f"✅ Berhasil memperbarui {total_modified} produk ({updated_count} diupdate, {added_count} baru):\n" + "\n".join(results_detail[:25])
+    if len(results_detail) > 25:
+        summary += f"\n... dan {len(results_detail) - 25} produk lainnya."
+    return True, summary, total_modified
